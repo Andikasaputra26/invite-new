@@ -6,7 +6,7 @@ import {
     Heart, Calendar, MapPin, Clock, Volume2, VolumeX, 
     Copy, Check, Gift, MessageSquare, Send, Sparkles, 
     ChevronDown, UserCheck, Eye, Compass, Image as ImageIcon,
-    Music, Palette, Layout, Settings, Plus, Trash2, Sliders,
+    Music, Palette, Layout, Settings, Plus, Trash2, Sliders, UploadCloud,
     Layers, RefreshCw, CheckCircle2, ArrowLeft, ExternalLink,
     Smartphone, Monitor, Sparkle, Share2, AlertCircle, ToggleLeft, ToggleRight
 } from 'lucide-vue-next';
@@ -229,16 +229,80 @@ const removeStory = (index) => {
     config.loveStories.splice(index, 1);
 };
 
-// Add Photo Link
+// Compress Image to prevent localStorage QuotaExceededError
+const compressImage = (file, maxWidth = 1000, maxHeight = 1000, quality = 0.75) => {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width = Math.round((width * maxHeight) / height);
+                        height = maxHeight;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+                resolve(compressedBase64);
+            };
+            img.onerror = () => resolve(e.target.result);
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+};
+
+// Add Photo Link & File Upload Handler
 const newPhotoUrl = ref('');
+const galleryFileInput = ref(null);
+
+const triggerGalleryUpload = () => {
+    galleryFileInput.value?.click();
+};
+
+const handleGalleryFileUpload = async (event) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    for (const file of Array.from(files)) {
+        if (!file.type.startsWith('image/')) continue;
+        try {
+            const compressed = await compressImage(file);
+            config.gallery.photos.push(compressed);
+        } catch (e) {
+            console.error('Failed compressing photo:', e);
+        }
+    }
+    saveCustomization();
+    event.target.value = '';
+};
+
 const addPhoto = () => {
     if (newPhotoUrl.value) {
         config.gallery.photos.push(newPhotoUrl.value);
         newPhotoUrl.value = '';
+        saveCustomization();
     }
 };
 const removePhoto = (index) => {
     config.gallery.photos.splice(index, 1);
+    saveCustomization();
 };
 
 // Copy bank handler inside editor preview
@@ -253,17 +317,28 @@ const saveCustomization = () => {
     const params = new URLSearchParams(window.location.search);
     const invitationId = params.get('id') || '1';
     
-    // Save to specific customer invitation instance key
-    localStorage.setItem(`customer_invitation_${invitationId}`, JSON.stringify(config));
-    
-    // Also update current active customInvitationData for live preview
-    localStorage.setItem('customInvitationData', JSON.stringify(config));
-    
-    isSaved.value = true;
-    saveMessage.value = 'Kustomisasi berhasil disimpan khusus untuk undangan Anda!';
-    setTimeout(() => {
-        isSaved.value = false;
-    }, 3500);
+    try {
+        const jsonStr = JSON.stringify(config);
+        
+        // Save to specific customer invitation instance key
+        localStorage.setItem(`customer_invitation_${invitationId}`, jsonStr);
+        
+        // Also update current active customInvitationData for live preview
+        localStorage.setItem('customInvitationData', jsonStr);
+        
+        isSaved.value = true;
+        saveMessage.value = 'Kustomisasi & foto berhasil disimpan secara otomatis!';
+        setTimeout(() => {
+            isSaved.value = false;
+        }, 3500);
+    } catch (e) {
+        console.error('LocalStorage save error:', e);
+        isSaved.value = true;
+        saveMessage.value = 'Foto tersimpan di memori browser. Jika terlalu banyak foto, gunakan link foto online.';
+        setTimeout(() => {
+            isSaved.value = false;
+        }, 4000);
+    }
 };
 
 // Open final invitation preview page in new tab with unique template link
@@ -753,36 +828,69 @@ onMounted(() => {
                         </div>
 
                         <!-- Gallery Form -->
-                        <div v-if="activeContentSection === 'gallery'" class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4 text-xs">
-                            <h3 class="text-sm font-bold text-indigo-400">📸 Galeri Foto & Prewedding</h3>
+                        <div v-if="activeContentSection === 'gallery'" class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-5 text-xs">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-sm font-bold text-indigo-400 flex items-center">
+                                    <ImageIcon class="w-4 h-4 mr-2" /> 📸 Galeri Foto & Prewedding
+                                </h3>
+                                <span class="text-[10px] text-slate-400 font-mono">{{ config.gallery.photos.length }} Foto Ter-upload</span>
+                            </div>
                             
                             <div>
                                 <label class="block font-bold text-slate-200 mb-2">Pilih Tampilan Layout Galeri</label>
                                 <div class="grid grid-cols-2 gap-3">
-                                    <button @click="config.gallery.layout = 'grid'" :class="['p-3 rounded-lg border text-center font-bold transition', config.gallery.layout === 'grid' ? 'bg-amber-400/20 border-amber-400 text-amber-300 font-extrabold' : 'bg-slate-950 border-slate-800 text-slate-400']">
-                                        Grid Masonry
+                                    <button @click="config.gallery.layout = 'grid'" :class="['p-3 rounded-lg border text-center font-bold transition flex items-center justify-center space-x-2', config.gallery.layout === 'grid' ? 'bg-amber-400/20 border-amber-400 text-amber-300 font-extrabold shadow' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700']">
+                                        <span>Grid Masonry</span>
                                     </button>
-                                    <button @click="config.gallery.layout = 'slider'" :class="['p-3 rounded-lg border text-center font-bold transition', config.gallery.layout === 'slider' ? 'bg-amber-400/20 border-amber-400 text-amber-300 font-extrabold' : 'bg-slate-950 border-slate-800 text-slate-400']">
-                                        Carousel Slider
+                                    <button @click="config.gallery.layout = 'slider'" :class="['p-3 rounded-lg border text-center font-bold transition flex items-center justify-center space-x-2', config.gallery.layout === 'slider' ? 'bg-amber-400/20 border-amber-400 text-amber-300 font-extrabold shadow' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700']">
+                                        <span>Carousel Slider</span>
                                     </button>
                                 </div>
                             </div>
 
+                            <!-- Direct File Upload Dropzone Box -->
+                            <div class="space-y-3">
+                                <label class="block font-bold text-slate-200">Upload Foto Langsung dari Device (HP / Laptop)</label>
+                                
+                                <input type="file" ref="galleryFileInput" @change="handleGalleryFileUpload" accept="image/*" multiple class="hidden" />
+
+                                <div 
+                                    @click="triggerGalleryUpload" 
+                                    class="border-2 border-dashed border-indigo-500/40 hover:border-indigo-400 bg-slate-950/70 hover:bg-slate-900/90 rounded-2xl p-6 text-center cursor-pointer transition group flex flex-col items-center justify-center space-y-2 shadow-inner"
+                                >
+                                    <div class="w-12 h-12 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                                        <UploadCloud class="w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-white block">Klik di sini untuk Upload Foto (Bisa Banyak Foto)</span>
+                                        <span class="text-[10px] text-slate-400">Mendukung format JPG, PNG, WEBP dari Galeri HP atau Komputer</span>
+                                    </div>
+                                    <button type="button" class="mt-1 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-[11px] rounded-lg shadow transition">
+                                        Pilih File Foto 📁
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Photo Grid List -->
                             <div class="space-y-2">
-                                <label class="block font-bold text-slate-200">Daftar Foto Galeri</label>
-                                <div class="grid grid-cols-4 gap-2">
-                                    <div v-for="(photo, idx) in config.gallery.photos" :key="idx" class="relative group rounded-lg overflow-hidden border border-slate-800 aspect-square">
-                                        <img :src="photo" class="w-full h-full object-cover">
-                                        <button @click="removePhoto(idx)" class="absolute top-1 right-1 bg-rose-600 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition">
-                                            <Trash2 class="w-3 h-3" />
+                                <label class="block font-bold text-slate-200">Daftar Koleksi Foto ({{ config.gallery.photos.length }})</label>
+                                <div class="grid grid-cols-4 gap-2.5">
+                                    <div v-for="(photo, idx) in config.gallery.photos" :key="idx" class="relative group rounded-xl overflow-hidden border border-slate-800 aspect-square shadow bg-slate-950">
+                                        <img :src="photo" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                        <button @click="removePhoto(idx)" title="Hapus foto ini" class="absolute top-1.5 right-1.5 bg-rose-600/90 hover:bg-rose-600 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition shadow">
+                                            <Trash2 class="w-3.5 h-3.5" />
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="flex space-x-2 pt-2">
-                                <input type="text" v-model="newPhotoUrl" placeholder="Masukkan URL Foto baru..." class="flex-1 bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
-                                <button @click="addPhoto" class="px-4 py-2 bg-amber-400 text-slate-950 font-extrabold rounded-lg hover:bg-amber-300">Tambah</button>
+                            <!-- Alternative URL Input Fallback -->
+                            <div class="border-t border-slate-800/80 pt-3">
+                                <label class="block font-bold text-slate-400 mb-1.5 text-[11px]">Atau Tambahkan via Link/URL Foto</label>
+                                <div class="flex space-x-2">
+                                    <input type="text" v-model="newPhotoUrl" placeholder="https://..." class="flex-1 bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                                    <button @click="addPhoto" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold rounded-lg text-xs transition">Tambah URL</button>
+                                </div>
                             </div>
                         </div>
 

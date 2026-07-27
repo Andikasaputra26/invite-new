@@ -432,6 +432,68 @@ const initScrollAnimations = () => {
     });
 };
 
+const defaultMasterConfig = {
+    templateId: 'midnight-gold',
+    paletteId: 'gold',
+    fontId: 'serif',
+    groom: {
+        name: 'Raden Arya Putra, S.T.',
+        nickname: 'Arya',
+        father: 'Bpk. Hendra Wijaya',
+        mother: 'Ibu Ratna Wijaya',
+        photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'
+    },
+    bride: {
+        name: 'Putri Sekar Saraswati, S.Ked',
+        nickname: 'Sekar',
+        father: 'Bpk. Bambang Sudiro',
+        mother: 'Ibu Rahayu Sudiro',
+        photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'
+    },
+    event: {
+        date: '2026-08-24',
+        locationCity: 'Jakarta Pusat',
+        akadVenue: 'Masjid Agung Sunda Kelapa',
+        akadTime: '08:00 WIB',
+        venueName: 'Hotel Indonesia Kempinski (Bali Room)',
+        resepsiTime: '11:00 - 14:00 WIB',
+        address: 'Jl. M.H. Thamrin No.1, Menteng, Jakarta Pusat, DKI Jakarta 10310',
+        mapsUrl: 'https://maps.google.com'
+    },
+    quote: {
+        selectedPresetIndex: 0,
+        customText: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang.'
+    },
+    loveStories: [
+        { year: '2020', title: 'Pertemuan Pertama', description: 'Pertama kali bertemu di bangku kuliah Universitas Indonesia.', bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80' },
+        { year: '2023', title: 'Momen Lamaran', description: 'Arya meminang Sekar secara resmi di hadapan kedua keluarga besar.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
+        { year: '2026', title: 'Menuju Pernikahan', description: 'Mengikat janji suci pernikahan untuk sehidup semati.', bgImage: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80' }
+    ],
+    gallery: {
+        layout: 'grid',
+        photos: [
+            'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'
+        ]
+    },
+    gift: {
+        bankName1: 'Bank Central Asia (BCA)',
+        accountNo1: '8830912384',
+        accountName1: 'Arya Putra',
+        shippingAddress: 'Jl. Wijaya Kusuma No. 45, Kebayoran Baru, Jakarta Selatan (UP: Arya & Sekar)'
+    },
+    components: {
+        music: true,
+        countdown: true,
+        story: true,
+        gallery: true,
+        gift: true,
+        rsvp: true
+    }
+};
+
 onMounted(() => {
     const params = new URLSearchParams(window.location.search);
     const invitationId = params.get('id');
@@ -445,26 +507,24 @@ onMounted(() => {
     }
 
     let stored = null;
+    // CRITICAL: Only load customized customer invitation if an explicit customer invitation ID is provided in query params or props!
     if (invitationId) {
-        stored = localStorage.getItem(`customer_invitation_${invitationId}`);
-    }
-    if (!stored) {
-        stored = localStorage.getItem('customInvitationData');
+        stored = localStorage.getItem(`customer_invitation_${invitationId}`) || localStorage.getItem('customInvitationData');
     }
 
-    if (stored) {
+    if (stored && invitationId) {
         try {
             customConfig.value = JSON.parse(stored);
         } catch(e) {
             console.error('Failed parsing custom config:', e);
+            customConfig.value = JSON.parse(JSON.stringify(defaultMasterConfig));
         }
+    } else {
+        // Pure Master Demo Preview: Use default master config object
+        customConfig.value = JSON.parse(JSON.stringify(defaultMasterConfig));
     }
 
-    if (!customConfig.value) {
-        customConfig.value = { templateId: routeTemplate || 'midnight-gold' };
-    }
-
-    if (routeTemplate) {
+    if (customConfig.value && routeTemplate) {
         customConfig.value.templateId = routeTemplate;
     }
 
