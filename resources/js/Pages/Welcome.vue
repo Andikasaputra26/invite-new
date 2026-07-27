@@ -92,13 +92,73 @@ const isMobileMenuOpen = ref(false);
                         </div>
                     </div>
                     
-                    <div class="relative lg:ml-auto" v-motion-slide-visible-right :delay="200">
-                        <!-- Decorative background shapes -->
-                        <div class="absolute -inset-4 bg-gradient-to-tr from-red-100 to-amber-50 rounded-[3rem] blur-2xl opacity-60 -z-10 animate-pulse-slow"></div>
-                        <img src="/hero_mockup.png" alt="Digital Invitation Mockup" class="w-full max-w-[320px] mx-auto drop-shadow-2xl rounded-[2.5rem]" />
-                        <!-- Floating chat bubble -->
-                        <div class="absolute -right-6 top-1/2 transform -translate-y-1/2 bg-white p-3.5 rounded-2xl shadow-xl animate-bounce-slow hidden sm:block">
-                            <MessageSquareHeart class="h-6 w-6 text-green-500" />
+                    <!-- Realistic Smartphone Mockup Display -->
+                    <div class="relative lg:ml-auto max-w-[340px] mx-auto" v-motion-slide-visible-right :delay="200">
+                        <!-- Glowing Aura Backdrop -->
+                        <div class="absolute -inset-4 bg-gradient-to-tr from-red-500/20 via-amber-400/20 to-pink-500/20 rounded-[3.5rem] blur-3xl opacity-70 -z-10 animate-pulse-slow"></div>
+
+                        <!-- Smartphone Mockup Frame -->
+                        <div class="relative bg-slate-950 border-[7px] border-slate-900 rounded-[3rem] shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden aspect-[9/17.5]">
+                            <!-- Notch / Camera Pill -->
+                            <div class="absolute top-3 inset-x-0 z-30 flex justify-center pointer-events-none">
+                                <div class="w-20 h-3.5 bg-slate-900 rounded-full flex items-center justify-end px-2">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-slate-800 border border-slate-700"></div>
+                                </div>
+                            </div>
+
+                            <!-- Phone Display Screen Content (Live Invitation Preview) -->
+                            <div class="relative w-full h-full bg-slate-950 text-white flex flex-col justify-between overflow-hidden">
+                                <!-- Background Cover Image -->
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Mockup Invitation Cover" class="absolute inset-0 w-full h-full object-cover opacity-80" />
+                                
+                                <!-- Dark Gradient Vignette Overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-slate-950/60"></div>
+
+                                <!-- Top Header Badge -->
+                                <div class="relative z-10 pt-10 px-4 text-center">
+                                    <span class="text-[9px] font-extrabold tracking-[0.25em] text-amber-400 uppercase bg-slate-950/60 px-3 py-1 rounded-full border border-amber-400/30 backdrop-blur-md">THE WEDDING OF</span>
+                                </div>
+
+                                <!-- Center Names & Photo Card -->
+                                <div class="relative z-10 px-4 text-center space-y-2 py-4">
+                                    <h3 class="font-serif text-2xl font-bold text-white tracking-wide">Arya &amp; Sekar</h3>
+                                    <p class="text-[10px] text-slate-300 font-mono">Sabtu, 24 Agustus 2026</p>
+                                    <div class="inline-block bg-amber-400 text-slate-950 text-[10px] font-extrabold px-4 py-1.5 rounded-full shadow-lg">
+                                        Buka Undangan 💌
+                                    </div>
+                                </div>
+
+                                <!-- Bottom Floating Live RSVP Badge -->
+                                <div class="relative z-10 p-3 bg-slate-950/90 backdrop-blur-md border-t border-white/10 flex items-center justify-between">
+                                    <div class="flex items-center space-x-2 text-[10px]">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span class="text-emerald-300 font-bold">142 Tamu RSVP Hadir</span>
+                                    </div>
+                                    <span class="text-[9px] text-amber-300 font-mono">LIVE PREVIEW</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge 1: WhatsApp Invitation Sent -->
+                        <div class="absolute -left-8 top-1/3 bg-white p-3 rounded-2xl shadow-2xl border border-slate-100 flex items-center space-x-3 hidden sm:flex animate-bounce-slow">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                                <MessageSquareHeart class="w-5 h-5" />
+                            </div>
+                            <div class="text-xs text-left">
+                                <strong class="text-slate-900 block font-bold">WhatsApp Shared</strong>
+                                <span class="text-[10px] text-slate-500">Link personal terkirim</span>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge 2: QR Check-in Success -->
+                        <div class="absolute -right-8 bottom-1/4 bg-slate-900 text-white p-3 rounded-2xl shadow-2xl border border-slate-800 flex items-center space-x-3 hidden sm:flex">
+                            <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center">
+                                <QrCode class="w-5 h-5" />
+                            </div>
+                            <div class="text-xs text-left">
+                                <strong class="text-white block font-bold">QR Venue Check-In</strong>
+                                <span class="text-[10px] text-amber-400 font-mono">Checked-In 100%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,23 +263,23 @@ const isMobileMenuOpen = ref(false);
                         <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
                             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Midnight Serenade Gold" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
                             
+                            <!-- Dark Vignette Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+
                             <!-- Top Overlay Badges -->
-                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none">
-                                <span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-                                    Template #1
-                                </span>
+                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none z-10">
                                 <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
                                     HEMAT 40%
                                 </span>
                             </div>
 
                             <!-- Glassmorphism Floating Price Tag -->
-                            <div class="absolute bottom-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md border border-amber-400/40 text-amber-400 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
+                            <div class="absolute bottom-3.5 right-3.5 z-10 bg-slate-950/85 backdrop-blur-md border border-amber-400/40 text-amber-400 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
                                 Rp 149.000
                             </div>
 
                             <!-- Hover Action Overlay -->
-                            <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
+                            <div class="absolute inset-0 z-20 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
                                 <a href="/demo/invitation/1" target="_blank" class="w-full max-w-[170px] bg-amber-400 hover:bg-amber-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
                                     <Eye class="w-3.5 h-3.5" />
                                     <span>Lihat Preview</span>
@@ -249,23 +309,23 @@ const isMobileMenuOpen = ref(false);
                         <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
                             <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="Floral Garden Romance" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
                             
+                            <!-- Dark Vignette Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+
                             <!-- Top Overlay Badges -->
-                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none">
-                                <span class="bg-pink-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-                                    Template #2
-                                </span>
+                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none z-10">
                                 <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
                                     HEMAT 47%
                                 </span>
                             </div>
 
                             <!-- Glassmorphism Floating Price Tag -->
-                            <div class="absolute bottom-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md border border-pink-400/40 text-pink-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
+                            <div class="absolute bottom-3.5 right-3.5 z-10 bg-slate-950/85 backdrop-blur-md border border-pink-400/40 text-pink-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
                                 Rp 99.000
                             </div>
 
                             <!-- Hover Action Overlay -->
-                            <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
+                            <div class="absolute inset-0 z-20 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
                                 <a href="/demo/invitation/2" target="_blank" class="w-full max-w-[170px] bg-pink-500 hover:bg-pink-400 text-white py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
                                     <Eye class="w-3.5 h-3.5" />
                                     <span>Lihat Preview</span>
@@ -295,23 +355,23 @@ const isMobileMenuOpen = ref(false);
                         <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
                             <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Emerald Botanical Haven" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
                             
+                            <!-- Dark Vignette Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+
                             <!-- Top Overlay Badges -->
-                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none">
-                                <span class="bg-emerald-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-                                    Template #3
-                                </span>
+                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none z-10">
                                 <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
                                     HEMAT 43%
                                 </span>
                             </div>
 
                             <!-- Glassmorphism Floating Price Tag -->
-                            <div class="absolute bottom-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
+                            <div class="absolute bottom-3.5 right-3.5 z-10 bg-slate-950/85 backdrop-blur-md border border-emerald-400/40 text-emerald-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
                                 Rp 119.000
                             </div>
 
                             <!-- Hover Action Overlay -->
-                            <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
+                            <div class="absolute inset-0 z-20 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
                                 <a href="/demo/invitation/3" target="_blank" class="w-full max-w-[170px] bg-emerald-400 hover:bg-emerald-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
                                     <Eye class="w-3.5 h-3.5" />
                                     <span>Lihat Preview</span>
@@ -341,23 +401,23 @@ const isMobileMenuOpen = ref(false);
                         <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
                             <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80" alt="Royal Velvet Sapphire" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
                             
+                            <!-- Dark Vignette Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+
                             <!-- Top Overlay Badges -->
-                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none">
-                                <span class="bg-sky-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
-                                    Template #4
-                                </span>
+                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none z-10">
                                 <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
                                     HEMAT 42%
                                 </span>
                             </div>
 
                             <!-- Glassmorphism Floating Price Tag -->
-                            <div class="absolute bottom-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md border border-sky-400/40 text-sky-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
+                            <div class="absolute bottom-3.5 right-3.5 z-10 bg-slate-950/85 backdrop-blur-md border border-sky-400/40 text-sky-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
                                 Rp 139.000
                             </div>
 
                             <!-- Hover Action Overlay -->
-                            <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
+                            <div class="absolute inset-0 z-20 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
                                 <a href="/demo/invitation/4" target="_blank" class="w-full max-w-[170px] bg-sky-400 hover:bg-sky-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
                                     <Eye class="w-3.5 h-3.5" />
                                     <span>Lihat Preview</span>
