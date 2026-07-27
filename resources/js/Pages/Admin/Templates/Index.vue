@@ -44,137 +44,150 @@ import { Head } from '@inertiajs/vue3';
                 </div>
             </div>
 
-            <!-- Templates Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Templates Grid (4 Unique Master Templates) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <!-- Template 1: Floral -->
+                <!-- Template 1: Midnight Gold -->
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition">
-                    <div class="h-56 bg-gray-100 relative overflow-hidden flex items-center justify-center p-4">
-                        <div class="w-full h-full bg-[#fdfbf7] shadow-sm flex flex-col items-center justify-center border border-gray-200">
-                            <h3 class="text-xl text-yellow-700 italic font-serif">Floral Suite</h3>
+                    <div class="h-48 bg-[#090d16] relative overflow-hidden flex items-center justify-center p-4">
+                        <div class="w-full h-full bg-[#051711] shadow-sm flex flex-col items-center justify-center border border-amber-500/40 rounded-xl p-3 text-center">
+                            <h3 class="text-lg text-amber-400 font-serif font-bold italic">Midnight Gold</h3>
+                            <span class="text-[10px] text-slate-300">Royal Emerald & Gold</span>
                         </div>
-                        <span class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-800 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-wider">FLORAL</span>
+                        <span class="absolute top-3 right-3 bg-amber-400 text-slate-950 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">LUXURY</span>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div class="mb-4">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-lg font-bold text-gray-900 leading-tight mb-1">Peony Blossom Suite</h3>
-                                <button class="text-gray-400 hover:text-gray-600">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
-                                </button>
-                            </div>
-                            <p class="text-sm text-gray-500">Complete wedding stationery set</p>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="mb-3">
+                            <h3 class="text-base font-bold text-gray-900 leading-tight mb-1">Midnight Serenade Gold</h3>
+                            <p class="text-xs text-gray-500">Royal Emerald & Gold Luxury Suite</p>
                         </div>
                         <div>
-                            <div class="flex justify-between items-end mb-4">
+                            <div class="flex justify-between items-end mb-3">
                                 <div>
-                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Price</p>
-                                    <p class="text-lg font-bold text-gray-900">Rp 150.000</p>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Price</p>
+                                    <p class="text-base font-bold text-gray-900">Rp 149.000</p>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Total Sold</p>
-                                    <p class="text-lg font-bold text-gray-900">1,204</p>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Terjual</p>
+                                    <p class="text-base font-bold text-gray-900">1,204</p>
                                 </div>
                             </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                                <div class="flex items-center">
-                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-                                    <span class="text-xs font-bold text-green-700 uppercase tracking-wider">PUBLISHED</span>
-                                </div>
-                                <a href="#" class="text-sm font-semibold text-gray-900 hover:text-blue-600 flex items-center group-hover:underline">
-                                    Edit Details <span class="ml-1">&rarr;</span>
-                                </a>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                                <span class="text-xs font-bold text-green-700 uppercase flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
+                                </span>
+                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Template 2: Modern -->
+                <!-- Template 2: Floral Rose -->
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition">
-                    <div class="h-56 bg-gray-100 relative overflow-hidden flex items-center justify-center p-4">
-                        <div class="w-full h-full bg-gray-50 shadow-sm flex flex-col items-center justify-center border border-gray-200">
-                            <h3 class="text-xl text-gray-900 font-bold uppercase tracking-widest font-sans">The Minimal</h3>
+                    <div class="h-48 bg-[#1f1318] relative overflow-hidden flex items-center justify-center p-4">
+                        <div class="w-full h-full bg-[#2a1720] shadow-sm flex flex-col items-center justify-center border border-pink-400/40 rounded-xl p-3 text-center">
+                            <h3 class="text-lg text-pink-300 font-serif font-bold italic">Floral Garden</h3>
+                            <span class="text-[10px] text-pink-200">Blush Rose & Pastel</span>
                         </div>
-                        <span class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-800 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-wider">MODERN</span>
+                        <span class="absolute top-3 right-3 bg-pink-400 text-slate-950 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">ROMANTIC</span>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div class="mb-4">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-lg font-bold text-gray-900 leading-tight mb-1">The Bauhaus Minimal</h3>
-                                <button class="text-gray-400 hover:text-gray-600">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
-                                </button>
-                            </div>
-                            <p class="text-sm text-gray-500">Editorial style event flyer</p>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="mb-3">
+                            <h3 class="text-base font-bold text-gray-900 leading-tight mb-1">Floral Garden Romance</h3>
+                            <p class="text-xs text-gray-500">Sweet Soft Rose & Cream Suite</p>
                         </div>
                         <div>
-                            <div class="flex justify-between items-end mb-4">
+                            <div class="flex justify-between items-end mb-3">
                                 <div>
-                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Price</p>
-                                    <p class="text-lg font-bold text-gray-900">Rp 100.000</p>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Price</p>
+                                    <p class="text-base font-bold text-gray-900">Rp 129.000</p>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Total Sold</p>
-                                    <p class="text-lg font-bold text-gray-900">856</p>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Terjual</p>
+                                    <p class="text-base font-bold text-gray-900">856</p>
                                 </div>
                             </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                                <div class="flex items-center">
-                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-                                    <span class="text-xs font-bold text-green-700 uppercase tracking-wider">PUBLISHED</span>
-                                </div>
-                                <a href="#" class="text-sm font-semibold text-gray-900 hover:text-blue-600 flex items-center group-hover:underline">
-                                    Edit Details <span class="ml-1">&rarr;</span>
-                                </a>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                                <span class="text-xs font-bold text-green-700 uppercase flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
+                                </span>
+                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Template 3: Traditional -->
+                <!-- Template 3: Emerald Botanical -->
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition">
-                    <div class="h-56 bg-[#2A2A2A] relative overflow-hidden flex items-center justify-center p-4">
-                        <div class="w-full h-full bg-[#1A1A1A] shadow-sm flex flex-col items-center justify-center border border-gray-700">
-                            <h3 class="text-xl text-yellow-500 font-serif font-bold tracking-widest text-center px-4">Damask<br>Gold</h3>
+                    <div class="h-48 bg-[#062c1e] relative overflow-hidden flex items-center justify-center p-4">
+                        <div class="w-full h-full bg-[#0a422e] shadow-sm flex flex-col items-center justify-center border border-emerald-400/40 rounded-xl p-3 text-center">
+                            <h3 class="text-lg text-emerald-300 font-serif font-bold italic">Emerald Botanical</h3>
+                            <span class="text-[10px] text-emerald-200">Mint Glassmorphism</span>
                         </div>
-                        <div class="absolute inset-0 bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                            <span class="bg-white/90 text-gray-900 font-bold px-4 py-2 rounded shadow-lg tracking-wider text-sm">IN PROGRESS</span>
-                        </div>
-                        <span class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-800 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-wider z-10">TRADITIONAL</span>
+                        <span class="absolute top-3 right-3 bg-emerald-400 text-slate-950 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">BOTANICAL</span>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col justify-between">
-                        <div class="mb-4">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-lg font-bold text-gray-900 leading-tight mb-1">Regal Damask Gold</h3>
-                                <button class="text-gray-400 hover:text-gray-600">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
-                                </button>
-                            </div>
-                            <p class="text-sm text-gray-500">Classic wedding gala set</p>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="mb-3">
+                            <h3 class="text-base font-bold text-gray-900 leading-tight mb-1">Emerald Botanical Haven</h3>
+                            <p class="text-xs text-gray-500">Nature Glassmorphism & Mint</p>
                         </div>
                         <div>
-                            <div class="flex justify-between items-end mb-4">
+                            <div class="flex justify-between items-end mb-3">
                                 <div>
-                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Price</p>
-                                    <p class="text-lg font-bold text-gray-900">Rp 250.000</p>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Price</p>
+                                    <p class="text-base font-bold text-gray-900">Rp 139.000</p>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Total Sold</p>
-                                    <p class="text-lg font-bold text-gray-900">0</p>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Terjual</p>
+                                    <p class="text-base font-bold text-gray-900">512</p>
                                 </div>
                             </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                                <div class="flex items-center">
-                                    <span class="w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>
-                                    <span class="text-xs font-bold text-yellow-700 uppercase tracking-wider">DRAFT</span>
-                                </div>
-                                <a href="#" class="text-sm font-semibold text-gray-900 hover:text-blue-600 flex items-center group-hover:underline">
-                                    Complete Setup <span class="ml-1">&rarr;</span>
-                                </a>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                                <span class="text-xs font-bold text-green-700 uppercase flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
+                                </span>
+                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Template 4: Royal Velvet Sapphire -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition">
+                    <div class="h-48 bg-[#09132b] relative overflow-hidden flex items-center justify-center p-4">
+                        <div class="w-full h-full bg-[#0d1b3e] shadow-sm flex flex-col items-center justify-center border border-sky-400/40 rounded-xl p-3 text-center">
+                            <h3 class="text-lg text-sky-300 font-serif font-bold italic">Royal Sapphire</h3>
+                            <span class="text-[10px] text-sky-200">Platinum & Ice Blue</span>
+                        </div>
+                        <span class="absolute top-3 right-3 bg-sky-400 text-slate-950 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">SAPPHIRE</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="mb-3">
+                            <h3 class="text-base font-bold text-gray-900 leading-tight mb-1">Royal Velvet Sapphire</h3>
+                            <p class="text-xs text-gray-500">Regal Sapphire & Silver Platinum</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-end mb-3">
+                                <div>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Price</p>
+                                    <p class="text-base font-bold text-gray-900">Rp 169.000</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Terjual</p>
+                                    <p class="text-base font-bold text-gray-900">420</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                                <span class="text-xs font-bold text-green-700 uppercase flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
+                                </span>
+                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
             </div>
         </div>

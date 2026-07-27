@@ -20,6 +20,7 @@ const templates = [
         badge: 'Terpopuler',
         primaryColor: '#fbbf24',
         accentColor: '#f59e0b',
+        paletteId: 'gold',
         previewImg: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80'
     },
     {
@@ -29,34 +30,37 @@ const templates = [
         badge: 'Terbaru',
         primaryColor: '#f472b6',
         accentColor: '#fb7185',
+        paletteId: 'rose',
         previewImg: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80'
     },
     {
         id: 'emerald-botanical',
-        name: 'Emerald Grace Botanical',
-        category: 'Nature & Elegant',
-        badge: 'Trending',
+        name: 'Emerald Botanical Haven',
+        category: 'Nature & Glassmorphism',
+        badge: 'Unik & Mint',
         primaryColor: '#34d399',
         accentColor: '#10b981',
+        paletteId: 'emerald',
         previewImg: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80'
     },
     {
-        id: 'modern-slate',
-        name: 'Minimalist Modern Slate',
-        category: 'Minimal & Clean',
-        badge: 'Klasik',
-        primaryColor: '#cbd5e1',
-        accentColor: '#94a3b8',
-        previewImg: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80'
+        id: 'royal-velvet',
+        name: 'Royal Velvet Sapphire',
+        category: 'Regal Sapphire & Silver',
+        badge: 'Eksklusif',
+        primaryColor: '#38bdf8',
+        accentColor: '#818cf8',
+        paletteId: 'sapphire',
+        previewImg: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80'
     }
 ];
 
-// --- Theme Palettes (High Contrast) ---
+// --- Theme Palettes (High Contrast & Unique Styles) ---
 const colorPalettes = [
-    { id: 'gold', name: 'Royal Gold', main: '#fbbf24', sub: '#22c55e', bg: '#090d16' },
-    { id: 'rose', name: 'Rose Romance', main: '#f472b6', sub: '#fb7185', bg: '#1c1917' },
-    { id: 'emerald', name: 'Emerald Gem', main: '#34d399', sub: '#6ee7b7', bg: '#064e3b' },
-    { id: 'amber', name: 'Warm Amber', main: '#f59e0b', sub: '#d97706', bg: '#18181b' },
+    { id: 'gold', name: 'Royal Gold', main: '#fbbf24', sub: '#22c55e', bg: '#090d16', text: '#f4efe6', cardBg: '#051711', border: '#d4af37' },
+    { id: 'rose', name: 'Rose Romance', main: '#f472b6', sub: '#fb7185', bg: '#1f1318', text: '#fff1f2', cardBg: '#2a1720', border: '#f472b6' },
+    { id: 'emerald', name: 'Emerald Gem', main: '#34d399', sub: '#6ee7b7', bg: '#062c1e', text: '#ecfdf5', cardBg: '#0a422e', border: '#34d399' },
+    { id: 'sapphire', name: 'Royal Sapphire', main: '#38bdf8', sub: '#818cf8', bg: '#09132b', text: '#f0f9ff', cardBg: '#0d1b3e', border: '#38bdf8' }
 ];
 
 const fontStyles = [
@@ -208,13 +212,17 @@ const activePalette = computed(() => {
 });
 
 // Add Story Item
-const newStory = reactive({ year: '', title: '', description: '' });
+const newStory = reactive({ year: '', title: '', description: '', bgImage: '' });
 const addStory = () => {
     if (newStory.title && newStory.year) {
-        config.loveStories.push({ ...newStory });
+        config.loveStories.push({ 
+            ...newStory,
+            bgImage: newStory.bgImage || 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'
+        });
         newStory.year = '';
         newStory.title = '';
         newStory.description = '';
+        newStory.bgImage = '';
     }
 };
 const removeStory = (index) => {
@@ -258,11 +266,21 @@ const saveCustomization = () => {
     }, 3500);
 };
 
-// Open final invitation preview page in new tab
+// Open final invitation preview page in new tab with unique template link
 const openFinalPreview = () => {
     saveCustomization();
-    window.open('/demo/invitation', '_blank');
+    const params = new URLSearchParams(window.location.search);
+    const invitationId = params.get('id') || '1';
+    window.open(`/demo/invitation/${config.templateId}?id=${invitationId}`, '_blank');
 };
+
+// Watch templateId to automatically sync default palette & theme style
+watch(() => config.templateId, (newId) => {
+    const found = templates.find(t => t.id === newId);
+    if (found && found.paletteId) {
+        config.paletteId = found.paletteId;
+    }
+}, { immediate: true });
 
 const isTemplateLocked = ref(false);
 
@@ -390,19 +408,11 @@ onMounted(() => {
                     </button>
 
                     <button 
-                        @click="activeTab = 'template'" 
-                        :class="[activeTab === 'template' ? 'border-amber-400 text-amber-400' : 'border-transparent text-slate-400 hover:text-slate-200', 'py-3.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap']"
-                    >
-                        <Layout class="w-4 h-4" />
-                        <span>3. Desain Template</span>
-                    </button>
-
-                    <button 
                         @click="activeTab = 'theme'" 
                         :class="[activeTab === 'theme' ? 'border-amber-400 text-amber-400' : 'border-transparent text-slate-400 hover:text-slate-200', 'py-3.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap']"
                     >
                         <Palette class="w-4 h-4" />
-                        <span>4. Warna & Typography</span>
+                        <span>3. Tampilan & Warna</span>
                     </button>
                 </div>
 
@@ -705,30 +715,39 @@ onMounted(() => {
 
                         <!-- Story Form -->
                         <div v-if="activeContentSection === 'story'" class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4 text-xs">
-                            <h3 class="text-sm font-bold text-rose-400">💖 Kisah Cinta & Milestone</h3>
+                            <h3 class="text-sm font-bold text-rose-400">💖 Kisah Cinta & Milestone (Foto Background Editable)</h3>
                             
-                            <div class="space-y-3">
-                                <div v-for="(story, idx) in config.loveStories" :key="idx" class="p-3 bg-slate-950 border border-slate-800 rounded-lg flex justify-between items-start">
-                                    <div>
-                                        <span class="bg-amber-400/20 text-amber-300 font-extrabold border border-amber-400/30 px-2 py-0.5 rounded text-[10px] mr-2">{{ story.year }}</span>
-                                        <span class="font-bold text-white">{{ story.title }}</span>
-                                        <p class="text-slate-300 text-[11px] mt-1">{{ story.description }}</p>
+                            <div class="space-y-4">
+                                <div v-for="(story, idx) in config.loveStories" :key="idx" class="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="bg-amber-400/20 text-amber-300 font-extrabold border border-amber-400/30 px-2.5 py-0.5 rounded text-[10px]">{{ story.year }}</span>
+                                            <span class="font-bold text-white text-xs">{{ story.title }}</span>
+                                        </div>
+                                        <button @click="removeStory(idx)" class="text-rose-400 hover:text-rose-300 p-1">
+                                            <Trash2 class="w-4 h-4" />
+                                        </button>
                                     </div>
-                                    <button @click="removeStory(idx)" class="text-rose-400 hover:text-rose-300 p-1">
-                                        <Trash2 class="w-4 h-4" />
-                                    </button>
+                                    <p class="text-slate-300 text-[11px] leading-relaxed">{{ story.description }}</p>
+                                    
+                                    <!-- Story Background Image Edit Input -->
+                                    <div class="pt-1 flex items-center space-x-2">
+                                        <img :src="story.bgImage || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=150&q=80'" class="w-10 h-10 rounded-lg object-cover border border-slate-700 flex-shrink-0" />
+                                        <input type="text" v-model="story.bgImage" placeholder="URL Foto Background Momen Cerita..." class="flex-1 bg-slate-900 border border-slate-700 rounded-lg p-2 text-[11px] text-white">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="border-t border-slate-800 pt-3 space-y-2">
+                            <div class="border-t border-slate-800 pt-4 space-y-2">
                                 <div class="font-bold text-white">Tambah Momen Cerita Baru</div>
                                 <div class="grid grid-cols-3 gap-2">
                                     <input type="text" placeholder="Tahun (cth: 2022)" v-model="newStory.year" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                                     <input type="text" placeholder="Judul Momen" v-model="newStory.title" class="col-span-2 bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                                 </div>
                                 <textarea rows="2" placeholder="Deskripsi cerita singkat..." v-model="newStory.description" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white"></textarea>
+                                <input type="text" placeholder="URL Foto Background Cerita (Opsional)..." v-model="newStory.bgImage" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                                 <button @click="addStory" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg transition flex items-center justify-center border border-slate-700">
-                                    <Plus class="w-4 h-4 mr-1" /> Tambah Milestone
+                                    <Plus class="w-4 h-4 mr-1" /> Tambah Milestone Cerita
                                 </button>
                             </div>
                         </div>
@@ -792,44 +811,7 @@ onMounted(() => {
 
                     </div>
 
-                    <!-- TAB 3: TEMPLATES SELECTOR -->
-                    <div v-if="activeTab === 'template'" class="space-y-4">
-                        <div class="bg-amber-500/10 border border-amber-400/40 rounded-xl p-4 flex items-start space-x-3">
-                            <span class="text-xl">🔒</span>
-                            <div>
-                                <h3 class="text-sm font-bold text-amber-300">Template Terpilih: {{ activeTemplate.name }}</h3>
-                                <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-                                    Anda sedang mengkustomisasi komponen & isi data khusus untuk proyek undangan Anda. 
-                                    <strong class="text-emerald-400">Template master asli dari Admin tetap aman dan tidak akan berubah.</strong>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div v-for="t in templates" :key="t.id" 
-                                 @click="config.templateId = t.id"
-                                 :class="['border rounded-xl overflow-hidden cursor-pointer transition relative group', config.templateId === t.id ? 'border-amber-400 ring-2 ring-amber-400/40 bg-slate-900' : 'border-slate-800 hover:border-slate-700 bg-slate-950 opacity-60 hover:opacity-100']">
-                                <div class="h-32 relative overflow-hidden">
-                                    <img :src="t.previewImg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                                    <span class="absolute top-2 right-2 bg-amber-400 text-slate-950 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full shadow">
-                                        {{ t.badge }}
-                                    </span>
-                                </div>
-                                <div class="p-4">
-                                    <div class="text-sm font-bold text-white mb-1">{{ t.name }}</div>
-                                    <div class="text-xs text-slate-400 mb-3">{{ t.category }}</div>
-                                    <div class="flex items-center justify-between">
-                                        <span :class="['text-xs font-bold uppercase tracking-wider', config.templateId === t.id ? 'text-amber-400' : 'text-slate-500']">
-                                            {{ config.templateId === t.id ? '✓ Template Terpilih' : 'Ganti ke Template Ini' }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAB 4: THEME & COLOR -->
+                    <!-- TAB 3: THEME & COLOR -->
                     <div v-if="activeTab === 'theme'" class="space-y-6">
                         <!-- Color Palette Picker -->
                         <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">

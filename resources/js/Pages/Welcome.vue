@@ -3,7 +3,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { 
     CheckCircle2, Users, MessageSquareHeart, 
-    Gift, QrCode, Music, Menu, X 
+    Gift, QrCode, Music, Menu, X, Eye, Sparkles, ChevronRight
 } from 'lucide-vue-next';
 
 defineProps({
@@ -89,16 +89,6 @@ const isMobileMenuOpen = ref(false);
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                 Lihat Contoh Demo
                             </a>
-                        </div>
-                        
-                        <div class="flex items-center gap-4">
-                            <div class="flex -space-x-3">
-                                <img class="w-10 h-10 rounded-full border-2 border-white object-cover shadow-sm" src="https://i.pravatar.cc/100?img=1" alt="User 1" />
-                                <img class="w-10 h-10 rounded-full border-2 border-white object-cover shadow-sm" src="https://i.pravatar.cc/100?img=2" alt="User 2" />
-                                <img class="w-10 h-10 rounded-full border-2 border-white object-cover shadow-sm" src="https://i.pravatar.cc/100?img=3" alt="User 3" />
-                                <div class="w-10 h-10 rounded-full border-2 border-white bg-slate-800 flex items-center justify-center text-xs font-bold text-white shadow-sm">9k+</div>
-                            </div>
-                            <p class="text-sm text-slate-500 font-medium">Dipercaya 10.000+ Pasangan Bahagia</p>
                         </div>
                     </div>
                     
@@ -206,70 +196,199 @@ const isMobileMenuOpen = ref(false);
                     </div>
                 </div>
                 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-14">
-                    <!-- Template Card 1 -->
-                    <div class="group cursor-pointer" v-motion-slide-visible-bottom :delay="100">
-                        <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 aspect-[3/4.2] mb-5 shadow-sm border border-slate-200/60">
-                            <img src="/template_1_rustic.png" alt="Rustic Botanical" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                <a href="/demo/invitation" target="_blank" class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-red-50 hover:text-red-700">Lihat Preview</a>
+                               <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
+                    
+                    <!-- Template Card 1: Midnight Gold -->
+                    <div class="group bg-white rounded-3xl border border-slate-200/80 hover:border-amber-400/60 shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden flex flex-col justify-between" v-motion-slide-visible-bottom :delay="100">
+                        <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Midnight Serenade Gold" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
+                            
+                            <!-- Top Overlay Badges -->
+                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none">
+                                <span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+                                    Template #1
+                                </span>
+                                <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
+                                    HEMAT 40%
+                                </span>
                             </div>
-                            <div class="absolute top-5 left-5 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded shadow-sm">Best Seller</div>
+
+                            <!-- Glassmorphism Floating Price Tag -->
+                            <div class="absolute bottom-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md border border-amber-400/40 text-amber-400 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
+                                Rp 149.000
+                            </div>
+
+                            <!-- Hover Action Overlay -->
+                            <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
+                                <a href="/demo/invitation/1" target="_blank" class="w-full max-w-[170px] bg-amber-400 hover:bg-amber-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
+                                    <Eye class="w-3.5 h-3.5" />
+                                    <span>Lihat Preview</span>
+                                </a>
+                                <a href="/customer/invitations/edit?template=midnight-gold&id=1" class="w-full max-w-[170px] bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2 rounded-full font-bold text-xs backdrop-blur-md transition flex items-center justify-center space-x-1.5">
+                                    <Sparkles class="w-3.5 h-3.5 text-amber-300" />
+                                    <span>Pilih Template</span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-start px-2">
+
+                        <!-- Card Text Details -->
+                        <div class="p-5 flex justify-between items-end bg-white border-t border-slate-100">
                             <div>
-                                <h4 class="text-xl font-bold text-slate-900 mb-1">Rustic Botanical</h4>
-                                <p class="text-sm text-slate-500">Floral, Earthy, Romantic</p>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-600">Royal Gold Luxury</span>
+                                <h4 class="text-base font-bold text-slate-900 leading-snug">Midnight Serenade Gold</h4>
                             </div>
-                            <button class="text-red-600 hover:bg-red-50 p-2.5 rounded-full transition-colors border border-transparent hover:border-red-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                            </button>
+                            <div class="text-right">
+                                <span class="text-[11px] text-slate-400 line-through block font-mono">Rp 249.000</span>
+                                <span class="text-base font-black text-amber-600 font-mono">Rp 149.000</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="group cursor-pointer" v-motion-slide-visible-bottom :delay="200">
-                        <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 aspect-[3/4.2] mb-5 shadow-sm border border-slate-200/60">
-                            <img src="/template_2_modern.png" alt="Modern Slate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                <a href="/demo/invitation" target="_blank" class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-red-50 hover:text-red-700">Lihat Preview</a>
+                    <!-- Template Card 2: Floral Rose -->
+                    <div class="group bg-white rounded-3xl border border-slate-200/80 hover:border-pink-400/60 shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden flex flex-col justify-between" v-motion-slide-visible-bottom :delay="200">
+                        <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
+                            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="Floral Garden Romance" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
+                            
+                            <!-- Top Overlay Badges -->
+                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none">
+                                <span class="bg-pink-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+                                    Template #2
+                                </span>
+                                <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
+                                    HEMAT 47%
+                                </span>
+                            </div>
+
+                            <!-- Glassmorphism Floating Price Tag -->
+                            <div class="absolute bottom-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md border border-pink-400/40 text-pink-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
+                                Rp 99.000
+                            </div>
+
+                            <!-- Hover Action Overlay -->
+                            <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
+                                <a href="/demo/invitation/2" target="_blank" class="w-full max-w-[170px] bg-pink-500 hover:bg-pink-400 text-white py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
+                                    <Eye class="w-3.5 h-3.5" />
+                                    <span>Lihat Preview</span>
+                                </a>
+                                <a href="/customer/invitations/edit?template=rose-romance&id=2" class="w-full max-w-[170px] bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2 rounded-full font-bold text-xs backdrop-blur-md transition flex items-center justify-center space-x-1.5">
+                                    <Sparkles class="w-3.5 h-3.5 text-pink-300" />
+                                    <span>Pilih Template</span>
+                                </a>
                             </div>
                         </div>
-                        <div class="flex justify-between items-start px-2">
+
+                        <!-- Card Text Details -->
+                        <div class="p-5 flex justify-between items-end bg-white border-t border-slate-100">
                             <div>
-                                <h4 class="text-xl font-bold text-slate-900 mb-1">Modern Slate</h4>
-                                <p class="text-sm text-slate-500">Geometric, Bold, Contemporary</p>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-pink-600">Blush Rose & Pastel</span>
+                                <h4 class="text-base font-bold text-slate-900 leading-snug">Floral Garden Romance</h4>
                             </div>
-                            <button class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2.5 rounded-full transition-colors border border-transparent hover:border-red-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                            </button>
+                            <div class="text-right">
+                                <span class="text-[11px] text-slate-400 line-through block font-mono">Rp 189.000</span>
+                                <span class="text-base font-black text-pink-600 font-mono">Rp 99.000</span>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="group cursor-pointer" v-motion-slide-visible-bottom :delay="300">
-                        <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 aspect-[3/4.2] mb-5 shadow-sm border border-slate-200/60">
-                            <img src="/template_1_rustic.png" alt="Islamic Royal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                <a href="/demo/invitation" target="_blank" class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-red-50 hover:text-red-700">Lihat Preview</a>
+                    <!-- Template Card 3: Emerald Botanical -->
+                    <div class="group bg-white rounded-3xl border border-slate-200/80 hover:border-emerald-400/60 shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden flex flex-col justify-between" v-motion-slide-visible-bottom :delay="300">
+                        <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
+                            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Emerald Botanical Haven" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
+                            
+                            <!-- Top Overlay Badges -->
+                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none">
+                                <span class="bg-emerald-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+                                    Template #3
+                                </span>
+                                <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
+                                    HEMAT 43%
+                                </span>
                             </div>
-                            <div class="absolute top-5 left-5 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded shadow-sm">New</div>
+
+                            <!-- Glassmorphism Floating Price Tag -->
+                            <div class="absolute bottom-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
+                                Rp 119.000
+                            </div>
+
+                            <!-- Hover Action Overlay -->
+                            <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
+                                <a href="/demo/invitation/3" target="_blank" class="w-full max-w-[170px] bg-emerald-400 hover:bg-emerald-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
+                                    <Eye class="w-3.5 h-3.5" />
+                                    <span>Lihat Preview</span>
+                                </a>
+                                <a href="/customer/invitations/edit?template=emerald-botanical&id=3" class="w-full max-w-[170px] bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2 rounded-full font-bold text-xs backdrop-blur-md transition flex items-center justify-center space-x-1.5">
+                                    <Sparkles class="w-3.5 h-3.5 text-emerald-300" />
+                                    <span>Pilih Template</span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-start px-2">
+
+                        <!-- Card Text Details -->
+                        <div class="p-5 flex justify-between items-end bg-white border-t border-slate-100">
                             <div>
-                                <h4 class="text-xl font-bold text-slate-900 mb-1">Islamic Royal</h4>
-                                <p class="text-sm text-slate-500">Calligraphy, Classic, Traditional</p>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600">Nature & Mint Glass</span>
+                                <h4 class="text-base font-bold text-slate-900 leading-snug">Emerald Botanical</h4>
                             </div>
-                            <button class="text-slate-400 hover:text-red-600 hover:bg-red-50 p-2.5 rounded-full transition-colors border border-transparent hover:border-red-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                            </button>
+                            <div class="text-right">
+                                <span class="text-[11px] text-slate-400 line-through block font-mono">Rp 209.000</span>
+                                <span class="text-base font-black text-emerald-600 font-mono">Rp 119.000</span>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Template Card 4: Royal Velvet Sapphire -->
+                    <div class="group bg-white rounded-3xl border border-slate-200/80 hover:border-sky-400/60 shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden flex flex-col justify-between" v-motion-slide-visible-bottom :delay="400">
+                        <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
+                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80" alt="Royal Velvet Sapphire" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
+                            
+                            <!-- Top Overlay Badges -->
+                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none">
+                                <span class="bg-sky-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+                                    Template #4
+                                </span>
+                                <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
+                                    HEMAT 42%
+                                </span>
+                            </div>
+
+                            <!-- Glassmorphism Floating Price Tag -->
+                            <div class="absolute bottom-3.5 right-3.5 bg-slate-950/80 backdrop-blur-md border border-sky-400/40 text-sky-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
+                                Rp 139.000
+                            </div>
+
+                            <!-- Hover Action Overlay -->
+                            <div class="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
+                                <a href="/demo/invitation/4" target="_blank" class="w-full max-w-[170px] bg-sky-400 hover:bg-sky-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
+                                    <Eye class="w-3.5 h-3.5" />
+                                    <span>Lihat Preview</span>
+                                </a>
+                                <a href="/customer/invitations/edit?template=royal-velvet&id=4" class="w-full max-w-[170px] bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2 rounded-full font-bold text-xs backdrop-blur-md transition flex items-center justify-center space-x-1.5">
+                                    <Sparkles class="w-3.5 h-3.5 text-sky-300" />
+                                    <span>Pilih Template</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Card Text Details -->
+                        <div class="p-5 flex justify-between items-end bg-white border-t border-slate-100">
+                            <div>
+                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600">Regal Platinum Sapphire</span>
+                                <h4 class="text-base font-bold text-slate-900 leading-snug">Royal Velvet Sapphire</h4>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-[11px] text-slate-400 line-through block font-mono">Rp 239.000</span>
+                                <span class="text-base font-black text-sky-600 font-mono">Rp 139.000</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 
                 <div class="text-center">
-                    <a href="#" class="inline-flex items-center gap-2 text-slate-700 font-semibold hover:text-red-700 transition border-b-2 border-slate-300 hover:border-red-700 pb-1 px-1">
-                        Lihat Semua Katalog
+                    <Link href="/dashboard" class="inline-flex items-center gap-2 text-slate-700 font-semibold hover:text-red-700 transition border-b-2 border-slate-300 hover:border-red-700 pb-1 px-1">
+                        Lihat Semua Katalog & Kelola Undangan
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>
