@@ -254,19 +254,13 @@ onUnmounted(() => {
 
     <div :class="{'h-screen overflow-hidden': !isOpen}" class="bg-[#092219] text-[#f4efe6] font-sans min-h-screen relative overflow-x-hidden selection:bg-[#d4af37] selection:text-black">
         
-        <!-- ============================================================== -->
-        <!-- COVER / ENVELOPE OVERLAY SECTION -->
-        <!-- ============================================================== -->
         <div id="envelope-cover" class="fixed inset-0 z-50 bg-[#061811] flex flex-col justify-between items-center p-6 text-center shadow-2xl overflow-hidden">
-            <!-- Prewedding Background Overlay -->
             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-25 mix-blend-luminosity pointer-events-none"></div>
-            <!-- Decorative Top Pattern -->
             <div class="pt-8 flex flex-col items-center">
                 <span class="text-[#d4af37] text-xs font-bold tracking-[0.3em] uppercase mb-2">WALIMATUL 'URSYSY</span>
                 <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"></div>
             </div>
 
-            <!-- Envelope Center Content -->
             <div class="max-w-md w-full bg-[#0d2f23]/80 backdrop-blur-md border border-[#d4af37]/30 rounded-3xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center relative overflow-hidden group">
                 <div class="absolute -top-12 -right-12 w-32 h-32 bg-[#d4af37]/10 rounded-full blur-xl group-hover:scale-150 transition-transform"></div>
                 
