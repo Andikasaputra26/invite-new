@@ -31,7 +31,7 @@ const isMobileMenuOpen = ref(false);
                     <div class="hidden md:flex space-x-8">
                         <a href="#fitur" class="text-sm font-medium text-slate-600 hover:text-red-600 transition">Fitur</a>
                         <a href="#katalog" class="text-sm font-medium text-slate-600 hover:text-red-600 transition">Katalog</a>
-                        <a href="#harga" class="text-sm font-medium text-slate-600 hover:text-red-600 transition">Harga</a>
+
                         <a href="#faq" class="text-sm font-medium text-slate-600 hover:text-red-600 transition">FAQ</a>
                     </div>
                     
@@ -58,7 +58,7 @@ const isMobileMenuOpen = ref(false);
             <div v-show="isMobileMenuOpen" class="md:hidden bg-white border-b border-gray-100 p-4 space-y-4 shadow-lg absolute w-full">
                 <a href="#fitur" class="block text-base font-medium text-slate-700 hover:text-red-600" @click="isMobileMenuOpen = false">Fitur</a>
                 <a href="#katalog" class="block text-base font-medium text-slate-700 hover:text-red-600" @click="isMobileMenuOpen = false">Katalog</a>
-                <a href="#harga" class="block text-base font-medium text-slate-700 hover:text-red-600" @click="isMobileMenuOpen = false">Harga</a>
+
                 <hr />
                 <Link :href="route('login')" class="block text-base font-medium text-slate-700 hover:text-red-600">Masuk</Link>
                 <Link :href="route('register')" class="block text-base font-medium text-red-700">Mulai Sekarang</Link>
@@ -227,7 +227,6 @@ const isMobileMenuOpen = ref(false);
                         </div>
                     </div>
                     
-                    <!-- Template Card 2 -->
                     <div class="group cursor-pointer" v-motion-slide-visible-bottom :delay="200">
                         <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 aspect-[3/4.2] mb-5 shadow-sm border border-slate-200/60">
                             <img src="/template_2_modern.png" alt="Modern Slate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -246,10 +245,8 @@ const isMobileMenuOpen = ref(false);
                         </div>
                     </div>
                     
-                    <!-- Template Card 3 -->
                     <div class="group cursor-pointer" v-motion-slide-visible-bottom :delay="300">
                         <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 aspect-[3/4.2] mb-5 shadow-sm border border-slate-200/60">
-                            <!-- Using rustic as fallback since generation failed -->
                             <img src="/template_1_rustic.png" alt="Islamic Royal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
                                 <span class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Lihat Preview</span>
@@ -277,7 +274,6 @@ const isMobileMenuOpen = ref(false);
             </div>
         </section>
 
-        <!-- How it works -->
         <section class="py-24 bg-slate-900 text-white overflow-hidden relative">
             <div class="absolute inset-0 bg-[url('https://laravel.com/assets/img/welcome/background.svg')] bg-cover bg-center opacity-10"></div>
             
@@ -288,24 +284,20 @@ const isMobileMenuOpen = ref(false);
                 </div>
                 
                 <div class="grid md:grid-cols-3 gap-12 relative max-w-5xl mx-auto">
-                    <!-- Connecting line -->
                     <div class="hidden md:block absolute top-[2.5rem] left-[15%] right-[15%] h-px bg-slate-700 -z-0"></div>
                     
-                    <!-- Step 1 -->
                     <div class="text-center relative z-10 group" v-motion-slide-visible-bottom :delay="100">
                         <div class="w-20 h-20 bg-slate-800 text-white rounded-full flex items-center justify-center text-3xl font-serif mx-auto mb-8 border-[6px] border-slate-900 group-hover:scale-110 group-hover:bg-red-900 transition-all duration-300">1</div>
                         <h4 class="text-2xl font-bold mb-4">Login & Pilih Template</h4>
                         <p class="text-slate-400 leading-relaxed px-4">Daftar akun gratis dan pilih dari puluhan template premium yang tersedia.</p>
                     </div>
                     
-                    <!-- Step 2 -->
                     <div class="text-center relative z-10 group" v-motion-slide-visible-bottom :delay="300">
                         <div class="w-20 h-20 bg-slate-800 text-white rounded-full flex items-center justify-center text-3xl font-serif mx-auto mb-8 border-[6px] border-slate-900 group-hover:scale-110 group-hover:bg-red-900 transition-all duration-300">2</div>
                         <h4 class="text-2xl font-bold mb-4">Sesuaikan Konten</h4>
                         <p class="text-slate-400 leading-relaxed px-4">Isi data, upload foto, dan atur fitur-fitur undangan sesuai kebutuhan.</p>
                     </div>
                     
-                    <!-- Step 3 -->
                     <div class="text-center relative z-10 group" v-motion-slide-visible-bottom :delay="500">
                         <div class="w-20 h-20 bg-red-600 text-white rounded-full flex items-center justify-center text-3xl font-serif mx-auto mb-8 border-[6px] border-slate-900 shadow-[0_0_30px_rgba(220,38,38,0.4)] group-hover:scale-110 group-hover:shadow-[0_0_40px_rgba(220,38,38,0.6)] transition-all duration-300">3</div>
                         <h4 class="text-2xl font-bold mb-4">Sebar & Kelola</h4>
@@ -315,98 +307,6 @@ const isMobileMenuOpen = ref(false);
             </div>
         </section>
 
-        <!-- Pricing Section -->
-        <section id="harga" class="py-24 bg-red-50/40">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-2xl mx-auto mb-16" v-motion-slide-visible-bottom>
-                    <h2 class="text-sm font-bold text-red-600 tracking-widest uppercase mb-2">Investasi Kebahagiaan</h2>
-                    <h3 class="text-3xl md:text-5xl font-serif text-slate-900 mb-6">Paket Harga Transparan</h3>
-                    <p class="text-slate-600 text-lg md:text-xl">Satu kali bayar untuk selamanya. Tanpa biaya langganan bulanan.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <!-- Basic Plan -->
-                    <div class="bg-white rounded-[2.5rem] p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col" v-motion-slide-visible-left>
-                        <h4 class="text-xl font-bold text-slate-500 mb-2">Paket Basic</h4>
-                        <div class="flex items-baseline gap-2 mb-6">
-                            <span class="text-5xl font-extrabold text-slate-900 tracking-tight">Rp 99k</span>
-                            <span class="text-slate-500 font-medium">/ selamanya</span>
-                        </div>
-                        <p class="text-slate-600 mb-8 pb-8 border-b border-slate-100 text-lg">Cocok untuk undangan sederhana dengan fitur esensial.</p>
-                        
-                        <ul class="space-y-5 mb-10 flex-1">
-                            <li class="flex items-center gap-4 text-slate-700">
-                                <CheckCircle2 class="h-6 w-6 text-green-500 shrink-0" />
-                                <span class="text-lg">Template Standar</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-slate-700">
-                                <CheckCircle2 class="h-6 w-6 text-green-500 shrink-0" />
-                                <span class="text-lg">Masa Aktif 1 Tahun</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-slate-700">
-                                <CheckCircle2 class="h-6 w-6 text-green-500 shrink-0" />
-                                <span class="text-lg">Tanpa Batas Tamu</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-slate-700">
-                                <CheckCircle2 class="h-6 w-6 text-green-500 shrink-0" />
-                                <span class="text-lg">RSVP & Ucapan</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-slate-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                                <span class="text-lg line-through">Custom Domain</span>
-                            </li>
-                        </ul>
-                        
-                        <Link :href="route('register')" class="block w-full py-4 px-6 text-center rounded-2xl font-bold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200 transition text-lg">
-                            Pilih Paket Basic
-                        </Link>
-                    </div>
-                    
-                    <!-- Premium Plan -->
-                    <div class="bg-slate-900 rounded-[2.5rem] p-10 shadow-[0_20px_40px_rgb(0,0,0,0.2)] relative flex flex-col overflow-hidden" v-motion-slide-visible-right>
-                        <div class="absolute top-0 right-0 bg-amber-500 text-slate-900 text-xs font-black uppercase tracking-widest py-2 px-6 rounded-bl-2xl">Recommended</div>
-                        <div class="absolute -right-20 -top-20 w-48 h-48 bg-red-600/30 blur-[50px] rounded-full"></div>
-                        <div class="absolute -left-20 -bottom-20 w-48 h-48 bg-blue-600/20 blur-[50px] rounded-full"></div>
-                        
-                        <h4 class="text-xl font-bold text-red-400 mb-2 relative z-10">Paket Premium</h4>
-                        <div class="flex items-baseline gap-2 mb-6 relative z-10">
-                            <span class="text-5xl font-extrabold text-white tracking-tight">Rp 149k</span>
-                            <span class="text-slate-400 font-medium">/ selamanya</span>
-                        </div>
-                        <p class="text-slate-300 mb-8 pb-8 border-b border-slate-700 text-lg relative z-10">Fitur lengkap dan eksklusif untuk kesan yang tak terlupakan.</p>
-                        
-                        <ul class="space-y-5 mb-10 flex-1 relative z-10">
-                            <li class="flex items-center gap-4 text-slate-100">
-                                <CheckCircle2 class="h-6 w-6 text-red-500 shrink-0" />
-                                <span class="text-lg">Akses Semua Template</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-slate-100">
-                                <CheckCircle2 class="h-6 w-6 text-red-500 shrink-0" />
-                                <span class="text-lg">Masa Aktif Selamanya</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-slate-100">
-                                <CheckCircle2 class="h-6 w-6 text-red-500 shrink-0" />
-                                <span class="text-lg">Custom Domain (.com / .id)</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-slate-100">
-                                <CheckCircle2 class="h-6 w-6 text-red-500 shrink-0" />
-                                <span class="text-lg">Fitur Kirim WhatsApp Blast</span>
-                            </li>
-                            <li class="flex items-center gap-4 text-slate-100">
-                                <CheckCircle2 class="h-6 w-6 text-red-500 shrink-0" />
-                                <span class="text-lg">Hapus Logo UndanganKu</span>
-                            </li>
-                        </ul>
-                        
-                        <Link :href="route('register')" class="block w-full py-4 px-6 text-center rounded-2xl font-bold text-white bg-red-600 hover:bg-red-700 shadow-xl shadow-red-900/50 transition text-lg relative z-10">
-                            Pilih Paket Premium
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
         <footer class="bg-slate-950 pt-20 pb-10 border-t border-slate-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
@@ -431,7 +331,6 @@ const isMobileMenuOpen = ref(false);
                         <ul class="space-y-4">
                             <li><a href="#fitur" class="text-slate-400 hover:text-white transition font-medium">Fitur Utama</a></li>
                             <li><a href="#katalog" class="text-slate-400 hover:text-white transition font-medium">Katalog Template</a></li>
-                            <li><a href="#harga" class="text-slate-400 hover:text-white transition font-medium">Daftar Harga</a></li>
                             <li><a href="#faq" class="text-slate-400 hover:text-white transition font-medium">Pertanyaan Umum</a></li>
                         </ul>
                     </div>

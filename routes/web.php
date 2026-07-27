@@ -22,6 +22,20 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Admin Routes
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/admin/templates', function () {
+        return Inertia::render('Admin/Templates/Index');
+    })->name('admin.templates.index');
+});
+
+// Customer Routes
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/customer/invitations/edit', function () {
+        return Inertia::render('Customer/Invitations/Edit');
+    })->name('customer.invitations.edit');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
