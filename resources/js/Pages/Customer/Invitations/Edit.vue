@@ -21,9 +21,9 @@ import { Head, Link } from '@inertiajs/vue3';
                         <p class="text-sm text-gray-500 font-medium">Midnight Serenade Gold</p>
                     </div>
                     <div class="flex space-x-3">
-                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
+                        <a href="/demo/invitation" target="_blank" class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 transition flex items-center">
                             Lihat Hasil Akhir
-                        </button>
+                        </a>
                         <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow-sm transition">
                             Simpan Perubahan
                         </button>

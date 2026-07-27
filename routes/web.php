@@ -14,8 +14,12 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/demo/invitation', function () {
+    return Inertia::render('Demo/Invitation');
+});
+
 Route::get('/demo/timeless-snapshot', function () {
-    return Inertia::render('Demo/TimelessSnapshot');
+    return Inertia::render('Demo/Invitation');
 });
 
 Route::get('/dashboard', function () {

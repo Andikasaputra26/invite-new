@@ -242,7 +242,7 @@ import { Head, Link } from '@inertiajs/vue3';
                         </div>
                         <div class="space-y-2">
                             <Link :href="route('customer.invitations.edit')" class="block text-center w-full bg-[#111827] text-white py-2.5 rounded-lg text-sm font-bold hover:bg-gray-800 transition">Edit Detail Undangan</Link>
-                            <button class="w-full bg-white text-gray-700 border border-gray-300 py-2.5 rounded-lg text-sm font-bold hover:bg-gray-50 transition">Lihat Preview</button>
+                            <a href="/demo/invitation" target="_blank" class="block text-center w-full bg-white text-gray-700 border border-gray-300 py-2.5 rounded-lg text-sm font-bold hover:bg-gray-50 transition">Lihat Preview</a>
                         </div>
                     </div>
                 </div>
@@ -265,7 +265,7 @@ import { Head, Link } from '@inertiajs/vue3';
                         </div>
                         <div class="space-y-2">
                             <Link :href="route('customer.invitations.edit')" class="block text-center w-full bg-[#111827] text-white py-2.5 rounded-lg text-sm font-bold hover:bg-gray-800 transition">Edit Detail Undangan</Link>
-                            <button class="w-full bg-white text-gray-700 border border-gray-300 py-2.5 rounded-lg text-sm font-bold hover:bg-gray-50 transition">Lihat Preview</button>
+                            <a href="/demo/invitation" target="_blank" class="block text-center w-full bg-white text-gray-700 border border-gray-300 py-2.5 rounded-lg text-sm font-bold hover:bg-gray-50 transition">Lihat Preview</a>
                         </div>
                     </div>
                 </div>

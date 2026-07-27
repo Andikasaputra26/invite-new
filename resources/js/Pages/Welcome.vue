@@ -85,7 +85,7 @@ const isMobileMenuOpen = ref(false);
                                 Coba Gratis Sekarang
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                             </Link>
-                            <a href="#katalog" class="px-8 py-3.5 text-base font-medium text-slate-700 bg-white border border-slate-200 rounded-full hover:bg-slate-50 hover:border-slate-300 transition text-center flex items-center justify-center gap-2">
+                            <a href="/demo/invitation" target="_blank" class="px-8 py-3.5 text-base font-medium text-slate-700 bg-white border border-slate-200 rounded-full hover:bg-slate-50 hover:border-slate-300 transition text-center flex items-center justify-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                 Lihat Contoh Demo
                             </a>
@@ -212,7 +212,7 @@ const isMobileMenuOpen = ref(false);
                         <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 aspect-[3/4.2] mb-5 shadow-sm border border-slate-200/60">
                             <img src="/template_1_rustic.png" alt="Rustic Botanical" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                <span class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Lihat Preview</span>
+                                <a href="/demo/invitation" target="_blank" class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-red-50 hover:text-red-700">Lihat Preview</a>
                             </div>
                             <div class="absolute top-5 left-5 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded shadow-sm">Best Seller</div>
                         </div>
@@ -231,7 +231,7 @@ const isMobileMenuOpen = ref(false);
                         <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 aspect-[3/4.2] mb-5 shadow-sm border border-slate-200/60">
                             <img src="/template_2_modern.png" alt="Modern Slate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                <span class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Lihat Preview</span>
+                                <a href="/demo/invitation" target="_blank" class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-red-50 hover:text-red-700">Lihat Preview</a>
                             </div>
                         </div>
                         <div class="flex justify-between items-start px-2">
@@ -249,7 +249,7 @@ const isMobileMenuOpen = ref(false);
                         <div class="relative rounded-[2rem] overflow-hidden bg-slate-100 aspect-[3/4.2] mb-5 shadow-sm border border-slate-200/60">
                             <img src="/template_1_rustic.png" alt="Islamic Royal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-                                <span class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Lihat Preview</span>
+                                <a href="/demo/invitation" target="_blank" class="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-red-50 hover:text-red-700">Lihat Preview</a>
                             </div>
                             <div class="absolute top-5 left-5 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded shadow-sm">New</div>
                         </div>
