@@ -7,10 +7,8 @@ import { Head, Link } from '@inertiajs/vue3';
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <!-- TAMPILAN UNTUK OWNER (ADMIN) -->
         <div v-if="$page.props.auth.user.role === 'owner'" class="p-8 max-w-7xl mx-auto">
             
-            <!-- Header Section -->
             <div class="flex justify-between items-start mb-8">
                 <div>
                     <h1 class="text-3xl font-serif font-bold text-gray-900 tracking-tight">Ringkasan Dashboard</h1>
@@ -22,9 +20,7 @@ import { Head, Link } from '@inertiajs/vue3';
                 </button>
             </div>
 
-            <!-- Stats Cards -->
             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-                <!-- Card 1: Total Pendapatan -->
                 <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <div class="text-[10px] font-bold text-gray-400 tracking-wider uppercase">Total Pendapatan</div>
@@ -38,7 +34,6 @@ import { Head, Link } from '@inertiajs/vue3';
                     </div>
                 </div>
 
-                <!-- Card 2: Pesanan Hari Ini -->
                 <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <div class="text-[10px] font-bold text-gray-400 tracking-wider uppercase">Pesanan Hari Ini</div>
@@ -52,7 +47,6 @@ import { Head, Link } from '@inertiajs/vue3';
                     </div>
                 </div>
 
-                <!-- Card 3: Template Aktif -->
                 <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <div class="text-[10px] font-bold text-gray-400 tracking-wider uppercase">Template Aktif</div>
@@ -66,7 +60,6 @@ import { Head, Link } from '@inertiajs/vue3';
                     </div>
                 </div>
 
-                <!-- Card 4: Total Pelanggan -->
                 <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden">
                     <div class="flex justify-between items-start">
                         <div class="text-[10px] font-bold text-gray-400 tracking-wider uppercase">Total Pelanggan</div>
@@ -81,9 +74,7 @@ import { Head, Link } from '@inertiajs/vue3';
                 </div>
             </div>
 
-            <!-- Chart and Report Row -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                <!-- Chart Area -->
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-span-2 flex flex-col">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-sm font-semibold text-gray-800">Tren Penjualan Bulanan</h3>
