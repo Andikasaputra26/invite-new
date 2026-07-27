@@ -18,6 +18,10 @@ Route::get('/demo/invitation', function () {
     return Inertia::render('Demo/Invitation');
 });
 
+Route::get('/demo/editor', function () {
+    return Inertia::render('Customer/Invitations/Edit');
+});
+
 Route::get('/demo/timeless-snapshot', function () {
     return Inertia::render('Demo/Invitation');
 });

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, reactive } from 'vue';
+import { ref, onMounted, onUnmounted, reactive, computed } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -18,6 +18,9 @@ const audioRef = ref(null);
 const copiedBank = ref(null);
 const activeLightbox = ref(null);
 const activeTabNav = ref('home');
+
+// Custom Config from LocalStorage (Customer Customizer)
+const customConfig = ref(null);
 
 // Form RSVP
 const rsvpForm = reactive({
@@ -61,9 +64,9 @@ const countdown = reactive({
 
 let timerInterval = null;
 
-const targetDate = new Date('2026-08-24T08:00:00+07:00').getTime();
-
 const updateCountdown = () => {
+    const rawDate = customConfig.value?.event?.date || '2026-08-24';
+    const targetDate = new Date(`${rawDate}T08:00:00+07:00`).getTime();
     const now = new Date().getTime();
     const difference = targetDate - now;
 
@@ -77,6 +80,11 @@ const updateCountdown = () => {
         countdown.hours = h < 10 ? `0${h}` : `${h}`;
         countdown.minutes = m < 10 ? `0${m}` : `${m}`;
         countdown.seconds = s < 10 ? `0${s}` : `${s}`;
+    } else {
+        countdown.days = '00';
+        countdown.hours = '00';
+        countdown.minutes = '00';
+        countdown.seconds = '00';
     }
 };
 
@@ -113,7 +121,7 @@ const openInvitation = () => {
 
 // Play/Pause Audio
 const playAudio = () => {
-    if (audioRef.value) {
+    if (audioRef.value && (!customConfig.value || customConfig.value.components?.music !== false)) {
         audioRef.value.play().then(() => {
             isPlayingMusic.value = true;
         }).catch(err => {
@@ -179,7 +187,6 @@ const scrollToSection = (id) => {
 
 // Initialize GSAP ScrollTrigger Animations
 const initScrollAnimations = () => {
-    // Reveal Fade Up items
     gsap.utils.toArray('.gsap-fade-up').forEach((el) => {
         gsap.from(el, {
             scrollTrigger: {
@@ -194,7 +201,6 @@ const initScrollAnimations = () => {
         });
     });
 
-    // Reveal Scale items (Couple cards)
     gsap.utils.toArray('.gsap-scale-up').forEach((el) => {
         gsap.from(el, {
             scrollTrigger: {
@@ -207,33 +213,28 @@ const initScrollAnimations = () => {
             ease: 'back.out(1.7)'
         });
     });
-
-    // Parallax background or ornaments
-    gsap.utils.toArray('.gsap-parallax').forEach((el) => {
-        gsap.to(el, {
-            scrollTrigger: {
-                trigger: el,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1
-            },
-            y: -40,
-            ease: 'none'
-        });
-    });
-
-    // Floating continuous animation for floral elements
-    gsap.to('.floating-element', {
-        y: 12,
-        rotation: 3,
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-    });
 };
 
 onMounted(() => {
+    const params = new URLSearchParams(window.location.search);
+    const invitationId = params.get('id');
+
+    let stored = null;
+    if (invitationId) {
+        stored = localStorage.getItem(`customer_invitation_${invitationId}`);
+    }
+    if (!stored) {
+        stored = localStorage.getItem('customInvitationData');
+    }
+
+    if (stored) {
+        try {
+            customConfig.value = JSON.parse(stored);
+        } catch(e) {
+            console.error('Failed parsing custom config:', e);
+        }
+    }
+
     updateCountdown();
     timerInterval = setInterval(updateCountdown, 1000);
 });
@@ -245,7 +246,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <Head title="Undangan Pernikahan - Raden Arya & Putri Sekar" />
+    <Head :title="`Undangan Pernikahan - ${customConfig?.groom?.nickname || 'Arya'} & ${customConfig?.bride?.nickname || 'Sekar'}`" />
 
     <!-- Audio BGM -->
     <audio ref="audioRef" loop preload="auto">
@@ -254,21 +255,22 @@ onUnmounted(() => {
 
     <div :class="{'h-screen overflow-hidden': !isOpen}" class="bg-[#092219] text-[#f4efe6] font-sans min-h-screen relative overflow-x-hidden selection:bg-[#d4af37] selection:text-black">
         
+        <!-- COVER ENVELOPE OVERLAY -->
         <div id="envelope-cover" class="fixed inset-0 z-50 bg-[#061811] flex flex-col justify-between items-center p-6 text-center shadow-2xl overflow-hidden">
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-25 mix-blend-luminosity pointer-events-none"></div>
-            <div class="pt-8 flex flex-col items-center">
-                <span class="text-[#d4af37] text-xs font-bold tracking-[0.3em] uppercase mb-2">WALIMATUL 'URSYSY</span>
+            <div v-if="!customConfig || customConfig.background?.useImage !== false" class="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity pointer-events-none" :style="{ backgroundImage: `url(${customConfig?.background?.imageUrl || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80'})` }"></div>
+            <div class="pt-8 flex flex-col items-center z-10">
+                <span class="text-[#d4af37] text-xs font-bold tracking-[0.3em] uppercase mb-2">WALIMATUL 'URSY</span>
                 <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"></div>
             </div>
 
-            <div class="max-w-md w-full bg-[#0d2f23]/80 backdrop-blur-md border border-[#d4af37]/30 rounded-3xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center relative overflow-hidden group">
+            <div class="max-w-md w-full bg-[#0d2f23]/80 backdrop-blur-md border border-[#d4af37]/30 rounded-3xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col items-center relative overflow-hidden group z-10">
                 <div class="absolute -top-12 -right-12 w-32 h-32 bg-[#d4af37]/10 rounded-full blur-xl group-hover:scale-150 transition-transform"></div>
                 
                 <p class="text-[#d4af37] font-serif italic text-xl mb-1">The Wedding of</p>
                 <h1 class="font-script text-5xl md:text-6xl font-normal text-white tracking-wide mb-6 leading-relaxed">
-                    Raden Arya <br />
+                    {{ customConfig?.groom?.nickname || 'Raden Arya' }} <br />
                     <span class="text-[#d4af37] font-serif italic text-3xl">&amp;</span> <br />
-                    Putri Sekar
+                    {{ customConfig?.bride?.nickname || 'Putri Sekar' }}
                 </h1>
 
                 <!-- Recipient Card Box -->
@@ -278,66 +280,55 @@ onUnmounted(() => {
                     <p class="text-[10px] text-[#d4af37] mt-1 font-mono">Di Tempat</p>
                 </div>
 
-                <!-- Wax Seal / Open Button -->
+                <!-- Open Button -->
                 <button @click="openInvitation" class="relative group/btn bg-gradient-to-r from-[#d4af37] via-[#f3e5ab] to-[#c5a059] text-[#092219] font-bold px-8 py-3.5 rounded-full shadow-lg shadow-[#d4af37]/20 hover:shadow-[#d4af37]/40 hover:scale-105 transition-all duration-300 flex items-center space-x-3 cursor-pointer">
                     <Sparkles class="w-5 h-5 text-[#092219] animate-spin" style="animation-duration: 8s;" />
                     <span class="tracking-wider text-sm font-extrabold uppercase">Buka Undangan</span>
                 </button>
             </div>
 
-            <!-- Footer Quote Cover -->
-            <div class="pb-6 text-xs text-gray-400 font-light">
+            <div class="pb-6 text-xs text-gray-400 font-light z-10">
                 <p>Mohon maaf bila ada kesalahan penulisan nama/gelar</p>
             </div>
         </div>
 
-
-        <!-- ============================================================== -->
         <!-- FLOATING MUSIC CONTROLLER -->
-        <!-- ============================================================== -->
-        <button v-if="isOpen" @click="toggleMusic" class="fixed top-6 right-6 z-40 bg-[#0d2f23]/90 border border-[#d4af37]/40 text-[#d4af37] p-3 rounded-full shadow-xl hover:scale-110 transition-all cursor-pointer flex items-center justify-center">
+        <button v-if="isOpen && (!customConfig || customConfig.components?.music !== false)" @click="toggleMusic" class="fixed top-6 right-6 z-40 bg-[#0d2f23]/90 border border-[#d4af37]/40 text-[#d4af37] p-3 rounded-full shadow-xl hover:scale-110 transition-all cursor-pointer flex items-center justify-center">
             <div :class="{'animate-spin': isPlayingMusic}" style="animation-duration: 4s;" class="flex items-center justify-center">
                 <Volume2 v-if="isPlayingMusic" class="w-5 h-5" />
                 <VolumeX v-else class="w-5 h-5 opacity-50" />
             </div>
         </button>
 
-        <!-- ============================================================== -->
         <!-- FLOATING MOBILE BOTTOM NAVIGATION DOCK -->
-        <!-- ============================================================== -->
         <div v-if="isOpen" class="fixed bottom-4 inset-x-0 z-40 flex justify-center px-4">
             <div class="bg-[#061811]/90 backdrop-blur-lg border border-[#d4af37]/30 rounded-full px-5 py-2.5 shadow-2xl flex items-center space-x-6 text-[#f4efe6]">
                 <button @click="scrollToSection('hero')" :class="{'text-[#d4af37]': activeTabNav === 'hero'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
                     <Sparkles class="w-4 h-4" />
                     <span class="text-[9px] font-bold mt-0.5 uppercase tracking-wider">Home</span>
                 </button>
-                <button @click="scrollToSection('mempelai')" :class="{'text-[#d4af37]': activeTabNav === 'mempelai'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
+                <button v-if="!customConfig || customConfig.components?.mempelai !== false" @click="scrollToSection('mempelai')" :class="{'text-[#d4af37]': activeTabNav === 'mempelai'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
                     <Heart class="w-4 h-4" />
                     <span class="text-[9px] font-bold mt-0.5 uppercase tracking-wider">Mempelai</span>
                 </button>
-                <button @click="scrollToSection('acara')" :class="{'text-[#d4af37]': activeTabNav === 'acara'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
+                <button v-if="!customConfig || customConfig.components?.acara !== false" @click="scrollToSection('acara')" :class="{'text-[#d4af37]': activeTabNav === 'acara'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
                     <Calendar class="w-4 h-4" />
                     <span class="text-[9px] font-bold mt-0.5 uppercase tracking-wider">Acara</span>
                 </button>
-                <button @click="scrollToSection('galeri')" :class="{'text-[#d4af37]': activeTabNav === 'galeri'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
+                <button v-if="!customConfig || customConfig.components?.gallery !== false" @click="scrollToSection('galeri')" :class="{'text-[#d4af37]': activeTabNav === 'galeri'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
                     <ImageIcon class="w-4 h-4" />
                     <span class="text-[9px] font-bold mt-0.5 uppercase tracking-wider">Galeri</span>
                 </button>
-                <button @click="scrollToSection('rsvp')" :class="{'text-[#d4af37]': activeTabNav === 'rsvp'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
+                <button v-if="!customConfig || customConfig.components?.rsvp !== false" @click="scrollToSection('rsvp')" :class="{'text-[#d4af37]': activeTabNav === 'rsvp'}" class="hover:text-[#d4af37] transition flex flex-col items-center">
                     <MessageSquare class="w-4 h-4" />
                     <span class="text-[9px] font-bold mt-0.5 uppercase tracking-wider">RSVP</span>
                 </button>
             </div>
         </div>
 
-
-        <!-- ============================================================== -->
-        <!-- MAIN CONTENT (HERO) -->
-        <!-- ============================================================== -->
+        <!-- MAIN HERO CONTENT -->
         <section id="hero" class="min-h-screen relative flex flex-col justify-center items-center text-center p-6 bg-gradient-to-b from-[#061811]/90 via-[#092219]/80 to-[#0d2f23]/95 overflow-hidden">
-            <!-- Prewedding Background Image -->
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center bg-fixed opacity-30 mix-blend-overlay pointer-events-none"></div>
-            <!-- Subtle Overlay Background Pattern -->
+            <div v-if="!customConfig || customConfig.background?.useImage !== false" class="absolute inset-0 bg-cover bg-center bg-fixed opacity-30 mix-blend-overlay pointer-events-none" :style="{ backgroundImage: `url(${customConfig?.background?.imageUrl || 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80'})` }"></div>
             <div class="absolute inset-0 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"></div>
 
             <div class="hero-content max-w-2xl relative z-10 space-y-6 pt-12">
@@ -346,9 +337,9 @@ onUnmounted(() => {
                 </div>
                 
                 <h1 class="font-script text-6xl md:text-8xl font-normal tracking-wide text-white leading-tight">
-                    Raden Arya <br />
+                    {{ customConfig?.groom?.nickname || 'Raden Arya' }} <br />
                     <span class="font-serif italic text-4xl md:text-6xl text-[#d4af37] font-normal">&amp;</span> <br />
-                    Putri Sekar
+                    {{ customConfig?.bride?.nickname || 'Putri Sekar' }}
                 </h1>
 
                 <p class="text-sm md:text-base text-gray-300 font-light max-w-md mx-auto leading-relaxed">
@@ -359,11 +350,12 @@ onUnmounted(() => {
                 <div class="pt-4">
                     <div class="inline-flex items-center space-x-3 bg-[#051711] border border-[#d4af37]/30 px-6 py-3 rounded-2xl shadow-xl">
                         <Calendar class="w-5 h-5 text-[#d4af37]" />
-                        <span class="text-sm font-bold tracking-widest uppercase text-[#f4efe6]">Sabtu, 24 Agustus 2026</span>
+                        <span class="text-sm font-bold tracking-widest uppercase text-[#f4efe6]">
+                            {{ customConfig?.event?.date || 'Sabtu, 24 Agustus 2026' }}
+                        </span>
                     </div>
                 </div>
 
-                <!-- Scroll Arrow Indicator -->
                 <div class="pt-12 flex justify-center">
                     <button @click="scrollToSection('ayat')" class="text-[#d4af37] animate-bounce hover:scale-125 transition">
                         <ChevronDown class="w-8 h-8" />
@@ -372,30 +364,22 @@ onUnmounted(() => {
             </div>
         </section>
 
-
-        <!-- ============================================================== -->
-        <!-- AYAT SUCI / QUOTE SECTION -->
-        <!-- ============================================================== -->
-        <section id="ayat" class="py-24 px-6 bg-[#092219] text-center relative border-t border-b border-[#d4af37]/10">
+        <!-- COMPONENT: QUOTE / AYAT SUCI -->
+        <section v-if="!customConfig || customConfig.components?.quote !== false" id="ayat" class="py-24 px-6 bg-[#092219] text-center relative border-t border-b border-[#d4af37]/10">
             <div class="max-w-3xl mx-auto gsap-fade-up">
                 <div class="w-12 h-12 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 flex items-center justify-center mx-auto mb-6 text-[#d4af37]">
                     <Heart class="w-6 h-6 fill-[#d4af37]" />
                 </div>
                 
                 <p class="font-serif italic text-lg md:text-xl text-[#f4efe6] leading-relaxed mb-6">
-                    "Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+                    "{{ customConfig?.quote?.customText || 'Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya...' }}"
                 </p>
-                <p class="text-xs font-bold tracking-widest text-[#d4af37] uppercase">QS. AR-RUM: 21</p>
+                <p class="text-xs font-bold tracking-widest text-[#d4af37] uppercase">KUTIPAN SUCI</p>
             </div>
         </section>
 
-
-        <!-- ============================================================== -->
-        <!-- MEMPELAI / COUPLE SECTION -->
-        <!-- ============================================================== -->
-        <section id="mempelai" class="py-28 px-6 bg-gradient-to-b from-[#092219]/90 via-[#0b2b20]/80 to-[#092219]/95 relative overflow-hidden">
-            <!-- Prewedding Background Image -->
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center bg-fixed opacity-20 mix-blend-overlay pointer-events-none"></div>
+        <!-- COMPONENT: MEMPELAI / COUPLE SECTION -->
+        <section v-if="!customConfig || customConfig.components?.mempelai !== false" id="mempelai" class="py-28 px-6 bg-gradient-to-b from-[#092219]/90 via-[#0b2b20]/80 to-[#092219]/95 relative overflow-hidden">
             <div class="max-w-5xl mx-auto text-center">
                 <div class="mb-16 gsap-fade-up">
                     <span class="text-xs font-bold text-[#d4af37] tracking-[0.3em] uppercase">PASANGAN MEMPELAI</span>
@@ -403,40 +387,39 @@ onUnmounted(() => {
                     <div class="w-16 h-0.5 bg-[#d4af37] mx-auto mt-4"></div>
                 </div>
 
-                <!-- Grid 2 Mempelai -->
                 <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
                     
                     <!-- Mempelai Pria -->
                     <div class="gsap-scale-up bg-[#051711] border border-[#d4af37]/20 rounded-3xl p-8 shadow-xl text-center relative overflow-hidden group">
                         <div class="w-48 h-48 mx-auto rounded-full p-1 bg-gradient-to-tr from-[#d4af37] via-transparent to-[#d4af37] mb-6 shadow-2xl relative">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" alt="Raden Arya Kusuma" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500" />
+                            <img :src="customConfig?.groom?.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500" />
                         </div>
-                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Raden Arya Kusuma, S.T.</h3>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-2">{{ customConfig?.groom?.name || 'Raden Arya Kusuma, S.T.' }}</h3>
                         <p class="text-xs text-[#d4af37] font-semibold mb-4 tracking-wider uppercase">Mempelai Pria</p>
                         <p class="text-xs text-gray-300 leading-relaxed max-w-xs mx-auto mb-6">
-                            Putra pertama dari <br />
-                            <strong class="text-white">Bpk. Ir. H. Bambang Kusuma</strong> <br />
-                            &amp; <strong class="text-white">Ibu Hj. Endang Setyowati</strong>
+                            {{ customConfig?.groom?.orderText || 'Putra pertama dari' }} <br />
+                            <strong class="text-white">{{ customConfig?.groom?.father || 'Bpk. Hj. Suryo Wijaya' }}</strong> <br />
+                            &amp; <strong class="text-white">{{ customConfig?.groom?.mother || 'Ibu Hj. Endang Rahayu' }}</strong>
                         </p>
-                        <a href="https://instagram.com" target="_blank" class="inline-flex items-center space-x-2 text-xs font-bold text-[#d4af37] bg-[#d4af37]/10 px-4 py-2 rounded-full border border-[#d4af37]/30 hover:bg-[#d4af37] hover:text-black transition">
-                            <span>@arya.kusuma</span>
+                        <a href="#" class="inline-flex items-center space-x-2 text-xs font-bold text-[#d4af37] bg-[#d4af37]/10 px-4 py-2 rounded-full border border-[#d4af37]/30 hover:bg-[#d4af37] hover:text-black transition">
+                            <span>{{ customConfig?.groom?.instagram || '@aryawijaya' }}</span>
                         </a>
                     </div>
 
                     <!-- Mempelai Wanita -->
                     <div class="gsap-scale-up bg-[#051711] border border-[#d4af37]/20 rounded-3xl p-8 shadow-xl text-center relative overflow-hidden group">
                         <div class="w-48 h-48 mx-auto rounded-full p-1 bg-gradient-to-tr from-[#d4af37] via-transparent to-[#d4af37] mb-6 shadow-2xl relative">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Putri Sekar Ningrum" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500" />
+                            <img :src="customConfig?.bride?.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500" />
                         </div>
-                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Putri Sekar Ningrum, M.Ds.</h3>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-2">{{ customConfig?.bride?.name || 'Putri Sekar Arum, S.Ked' }}</h3>
                         <p class="text-xs text-[#d4af37] font-semibold mb-4 tracking-wider uppercase">Mempelai Wanita</p>
                         <p class="text-xs text-gray-300 leading-relaxed max-w-xs mx-auto mb-6">
-                            Putri kedua dari <br />
-                            <strong class="text-white">Bpk. Dr. H. Suryo Subroto</strong> <br />
-                            &amp; <strong class="text-white">Ibu Hj. Nining Rahayu</strong>
+                            {{ customConfig?.bride?.orderText || 'Putri kedua dari' }} <br />
+                            <strong class="text-white">{{ customConfig?.bride?.father || 'Bpk. Dr. H. Bambang Subroto' }}</strong> <br />
+                            &amp; <strong class="text-white">{{ customConfig?.bride?.mother || 'Ibu Hj. Dewi Lestari' }}</strong>
                         </p>
-                        <a href="https://instagram.com" target="_blank" class="inline-flex items-center space-x-2 text-xs font-bold text-[#d4af37] bg-[#d4af37]/10 px-4 py-2 rounded-full border border-[#d4af37]/30 hover:bg-[#d4af37] hover:text-black transition">
-                            <span>@sekar.ningrum</span>
+                        <a href="#" class="inline-flex items-center space-x-2 text-xs font-bold text-[#d4af37] bg-[#d4af37]/10 px-4 py-2 rounded-full border border-[#d4af37]/30 hover:bg-[#d4af37] hover:text-black transition">
+                            <span>{{ customConfig?.bride?.instagram || '@sekararum' }}</span>
                         </a>
                     </div>
 
@@ -444,15 +427,10 @@ onUnmounted(() => {
             </div>
         </section>
 
-
-        <!-- ============================================================== -->
-        <!-- COUNTDOWN TIMER SECTION -->
-        <!-- ============================================================== -->
-        <section class="py-20 px-6 bg-[#061811]/90 text-center border-t border-b border-[#d4af37]/20 relative overflow-hidden">
-            <!-- Prewedding Background Image -->
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-20 mix-blend-overlay pointer-events-none"></div>
+        <!-- COMPONENT: COUNTDOWN TIMER -->
+        <section v-if="!customConfig || customConfig.components?.countdown !== false" class="py-20 px-6 bg-[#061811]/90 text-center border-t border-b border-[#d4af37]/20 relative overflow-hidden">
             <div class="max-w-4xl mx-auto gsap-fade-up">
-                <span class="text-xs font-bold text-[#d4af37] tracking-[0.3em] uppercase">MENUGGU HARI BAHAGIA</span>
+                <span class="text-xs font-bold text-[#d4af37] tracking-[0.3em] uppercase">MENUNGGU HARI BAHAGIA</span>
                 <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mt-2 mb-10">Hitung Mundur Acara</h2>
 
                 <div class="grid grid-cols-4 gap-3 md:gap-6 max-w-xl mx-auto mb-10">
@@ -481,13 +459,8 @@ onUnmounted(() => {
             </div>
         </section>
 
-
-        <!-- ============================================================== -->
-        <!-- RANGKAIAN ACARA (EVENT DETAILS) -->
-        <!-- ============================================================== -->
-        <section id="acara" class="py-28 px-6 bg-[#092219]/95 relative overflow-hidden">
-            <!-- Prewedding Background Image -->
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center bg-fixed opacity-15 mix-blend-overlay pointer-events-none"></div>
+        <!-- COMPONENT: RANGKAIAN ACARA -->
+        <section v-if="!customConfig || customConfig.components?.acara !== false" id="acara" class="py-28 px-6 bg-[#092219]/95 relative overflow-hidden">
             <div class="max-w-5xl mx-auto text-center">
                 <div class="mb-16 gsap-fade-up">
                     <span class="text-xs font-bold text-[#d4af37] tracking-[0.3em] uppercase">JADWAL PERNIKAHAN</span>
@@ -496,72 +469,71 @@ onUnmounted(() => {
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
-                    
-                    <!-- Card Akad Nikah -->
+                    <!-- Akad Nikah -->
                     <div class="gsap-scale-up bg-[#051711] border border-[#d4af37]/30 rounded-3xl p-8 shadow-xl flex flex-col justify-between text-center relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#d4af37]/5 rounded-bl-full pointer-events-none"></div>
                         <div>
                             <div class="w-12 h-12 bg-[#d4af37]/10 text-[#d4af37] rounded-2xl border border-[#d4af37]/30 flex items-center justify-center mx-auto mb-6">
                                 <Sparkles class="w-6 h-6" />
                             </div>
                             <h3 class="font-serif text-2xl font-bold text-white mb-2">Akad Nikah</h3>
-                            <p class="text-xs text-[#d4af37] font-semibold tracking-wider uppercase mb-6">Sabtu, 24 Agustus 2026</p>
+                            <p class="text-xs text-[#d4af37] font-semibold tracking-wider uppercase mb-6">{{ customConfig?.event?.date || 'Sabtu, 24 Agustus 2026' }}</p>
 
                             <div class="space-y-3 text-xs text-gray-300 mb-8">
                                 <p class="flex items-center justify-center space-x-2">
                                     <Clock class="w-4 h-4 text-[#d4af37]" />
-                                    <span>Pukul 08.00 WIB - Selesai</span>
+                                    <span>{{ customConfig?.event?.akadTime || 'Pukul 08.00 WIB - 10.00 WIB' }}</span>
                                 </p>
-                                <p class="flex items-center justify-center space-x-2">
-                                    <MapPin class="w-4 h-4 text-[#d4af37]" />
-                                    <span>Masjid Agung Trans Studio, Bandung</span>
+                                <p class="flex items-start justify-center space-x-2">
+                                    <MapPin class="w-4 h-4 text-[#d4af37] shrink-0 mt-0.5" />
+                                    <span class="text-left">
+                                        <strong class="text-white block">{{ customConfig?.event?.akadVenue || 'Masjid Agung Trans Studio' }}</strong>
+                                        <span class="text-[11px] text-slate-300 block mt-0.5">{{ customConfig?.event?.address || 'Jl. Jend. Gatot Subroto No.1, Jakarta Pusat' }}</span>
+                                    </span>
                                 </p>
                             </div>
                         </div>
 
-                        <a href="https://maps.google.com" target="_blank" class="w-full bg-[#0d2f23] border border-[#d4af37]/40 text-[#d4af37] font-bold text-xs py-3 rounded-xl hover:bg-[#d4af37] hover:text-black transition flex items-center justify-center space-x-2">
+                        <a :href="customConfig?.event?.mapsUrl || 'https://maps.google.com'" target="_blank" class="w-full bg-[#0d2f23] border border-[#d4af37]/40 text-[#d4af37] font-bold text-xs py-3 rounded-xl hover:bg-[#d4af37] hover:text-black transition flex items-center justify-center space-x-2">
                             <Compass class="w-4 h-4" />
                             <span>Petunjuk Lokasi Google Maps</span>
                         </a>
                     </div>
 
-                    <!-- Card Resepsi -->
+                    <!-- Resepsi -->
                     <div class="gsap-scale-up bg-[#051711] border border-[#d4af37]/30 rounded-3xl p-8 shadow-xl flex flex-col justify-between text-center relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-[#d4af37]/5 rounded-bl-full pointer-events-none"></div>
                         <div>
                             <div class="w-12 h-12 bg-[#d4af37]/10 text-[#d4af37] rounded-2xl border border-[#d4af37]/30 flex items-center justify-center mx-auto mb-6">
                                 <Heart class="w-6 h-6" />
                             </div>
                             <h3 class="font-serif text-2xl font-bold text-white mb-2">Resepsi Pernikahan</h3>
-                            <p class="text-xs text-[#d4af37] font-semibold tracking-wider uppercase mb-6">Sabtu, 24 Agustus 2026</p>
+                            <p class="text-xs text-[#d4af37] font-semibold tracking-wider uppercase mb-6">{{ customConfig?.event?.date || 'Sabtu, 24 Agustus 2026' }}</p>
 
                             <div class="space-y-3 text-xs text-gray-300 mb-8">
                                 <p class="flex items-center justify-center space-x-2">
                                     <Clock class="w-4 h-4 text-[#d4af37]" />
-                                    <span>Pukul 11.00 - 14.00 WIB</span>
+                                    <span>{{ customConfig?.event?.resepsiTime || 'Pukul 11.00 - 14.00 WIB' }}</span>
                                 </p>
-                                <p class="flex items-center justify-center space-x-2">
-                                    <MapPin class="w-4 h-4 text-[#d4af37]" />
-                                    <span>Grand Ballroom Hotel Savoy Homann, Bandung</span>
+                                <p class="flex items-start justify-center space-x-2">
+                                    <MapPin class="w-4 h-4 text-[#d4af37] shrink-0 mt-0.5" />
+                                    <span class="text-left">
+                                        <strong class="text-white block">{{ customConfig?.event?.venueName || 'Gedung Serbaguna Senayan' }}</strong>
+                                        <span class="text-[11px] text-slate-300 block mt-0.5">{{ customConfig?.event?.address || 'Jl. Jend. Gatot Subroto No.1, Jakarta Pusat' }}</span>
+                                    </span>
                                 </p>
                             </div>
                         </div>
 
-                        <a href="https://maps.google.com" target="_blank" class="w-full bg-[#0d2f23] border border-[#d4af37]/40 text-[#d4af37] font-bold text-xs py-3 rounded-xl hover:bg-[#d4af37] hover:text-black transition flex items-center justify-center space-x-2">
+                        <a :href="customConfig?.event?.mapsUrl || 'https://maps.google.com'" target="_blank" class="w-full bg-[#0d2f23] border border-[#d4af37]/40 text-[#d4af37] font-bold text-xs py-3 rounded-xl hover:bg-[#d4af37] hover:text-black transition flex items-center justify-center space-x-2">
                             <Compass class="w-4 h-4" />
                             <span>Petunjuk Lokasi Google Maps</span>
                         </a>
                     </div>
-
                 </div>
             </div>
         </section>
 
-
-        <!-- ============================================================== -->
-        <!-- LOVE STORY TIMELINE -->
-        <!-- ============================================================== -->
-        <section class="py-24 px-6 bg-[#061811] relative">
+        <!-- COMPONENT: LOVE STORY -->
+        <section v-if="!customConfig || customConfig.components?.story !== false" class="py-24 px-6 bg-[#061811] relative">
             <div class="max-w-3xl mx-auto">
                 <div class="text-center mb-16 gsap-fade-up">
                     <span class="text-xs font-bold text-[#d4af37] tracking-[0.3em] uppercase">PERJALANAN CINTA</span>
@@ -569,48 +541,23 @@ onUnmounted(() => {
                     <div class="w-16 h-0.5 bg-[#d4af37] mx-auto mt-4"></div>
                 </div>
 
-                <!-- Timeline Container -->
                 <div class="relative border-l-2 border-[#d4af37]/30 ml-4 md:ml-32 space-y-12 pl-6 md:pl-10">
-                    
-                    <!-- Milestone 1 -->
-                    <div class="gsap-fade-up relative group">
+                    <div v-for="(story, idx) in (customConfig?.loveStories || [
+                        { year: '2021', title: 'Awal Pertemuan', description: 'Kami pertama kali bertemu dalam sebuah kegiatan kampus.' },
+                        { year: '2023', title: 'Lamaran Resmi', description: 'Arya melamar Sekar di hadapan keluarga besar.' },
+                        { year: '2026', title: 'Hari Pernikahan', description: 'Hari bersejarah awal kehidupan pernikahan kami.' }
+                    ])" :key="idx" class="gsap-fade-up relative group">
                         <div class="absolute -left-[31px] md:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#d4af37] border-4 border-[#061811]"></div>
-                        <span class="text-xs font-bold text-[#d4af37] uppercase tracking-widest">JUNI 2021</span>
-                        <h4 class="font-serif text-xl font-bold text-white mt-1">Awal Pertemuan</h4>
-                        <p class="text-xs text-gray-300 mt-2 leading-relaxed">
-                            Kami pertama kali bertemu dalam sebuah proyek desain kreatif. Sapaan singkat yang sederhana tumbuh menjadi perbincangan hangat yang tak pernah selesai.
-                        </p>
+                        <span class="text-xs font-bold text-[#d4af37] uppercase tracking-widest">{{ story.year }}</span>
+                        <h4 class="font-serif text-xl font-bold text-white mt-1">{{ story.title }}</h4>
+                        <p class="text-xs text-gray-300 mt-2 leading-relaxed">{{ story.description }}</p>
                     </div>
-
-                    <!-- Milestone 2 -->
-                    <div class="gsap-fade-up relative group">
-                        <div class="absolute -left-[31px] md:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#d4af37] border-4 border-[#061811]"></div>
-                        <span class="text-xs font-bold text-[#d4af37] uppercase tracking-widest">JANUARI 2024</span>
-                        <h4 class="font-serif text-xl font-bold text-white mt-1">Mengikat Komitmen</h4>
-                        <p class="text-xs text-gray-300 mt-2 leading-relaxed">
-                            Setelah bertahun-tahun saling mendukung dan melengkapi dalam suka maupun duka, kami sepakat mengikat janji untuk melangkah bersama ke jenjang yang lebih serius.
-                        </p>
-                    </div>
-
-                    <!-- Milestone 3 -->
-                    <div class="gsap-fade-up relative group">
-                        <div class="absolute -left-[31px] md:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-[#d4af37] border-4 border-[#061811]"></div>
-                        <span class="text-xs font-bold text-[#d4af37] uppercase tracking-widest">FEBRUARI 2026</span>
-                        <h4 class="font-serif text-xl font-bold text-white mt-1">Lamaran Resmi</h4>
-                        <p class="text-xs text-gray-300 mt-2 leading-relaxed">
-                            Di hadapan keluarga besar kedua belah pihak, kami mengikrarkan pertunangan resmi sebagai persiapan menuju hari pernikahan yang suci.
-                        </p>
-                    </div>
-
                 </div>
             </div>
         </section>
 
-
-        <!-- ============================================================== -->
-        <!-- GALERI FOTO PRE-WEDDING -->
-        <!-- ============================================================== -->
-        <section id="galeri" class="py-28 px-6 bg-[#092219]">
+        <!-- COMPONENT: GALERI FOTO -->
+        <section v-if="!customConfig || customConfig.components?.gallery !== false" id="galeri" class="py-28 px-6 bg-[#092219]">
             <div class="max-w-5xl mx-auto text-center">
                 <div class="mb-16 gsap-fade-up">
                     <span class="text-xs font-bold text-[#d4af37] tracking-[0.3em] uppercase">MOMEN INDAH</span>
@@ -618,45 +565,14 @@ onUnmounted(() => {
                     <div class="w-16 h-0.5 bg-[#d4af37] mx-auto mt-4"></div>
                 </div>
 
-                <!-- Grid 6 Photos -->
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                    <div @click="activeLightbox = 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80'" class="gsap-scale-up aspect-square rounded-2xl overflow-hidden cursor-pointer group relative border border-[#d4af37]/20">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Gallery 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute inset-0 bg-[#061811]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[#d4af37]">
-                            <Eye class="w-8 h-8" />
-                        </div>
-                    </div>
-                    
-                    <div @click="activeLightbox = 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'" class="gsap-scale-up aspect-square rounded-2xl overflow-hidden cursor-pointer group relative border border-[#d4af37]/20">
-                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Gallery 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute inset-0 bg-[#061811]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[#d4af37]">
-                            <Eye class="w-8 h-8" />
-                        </div>
-                    </div>
-
-                    <div @click="activeLightbox = 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'" class="gsap-scale-up aspect-square rounded-2xl overflow-hidden cursor-pointer group relative border border-[#d4af37]/20">
-                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80" alt="Gallery 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute inset-0 bg-[#061811]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[#d4af37]">
-                            <Eye class="w-8 h-8" />
-                        </div>
-                    </div>
-
-                    <div @click="activeLightbox = 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80'" class="gsap-scale-up aspect-square rounded-2xl overflow-hidden cursor-pointer group relative border border-[#d4af37]/20">
-                        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80" alt="Gallery 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute inset-0 bg-[#061811]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[#d4af37]">
-                            <Eye class="w-8 h-8" />
-                        </div>
-                    </div>
-
-                    <div @click="activeLightbox = 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80'" class="gsap-scale-up aspect-square rounded-2xl overflow-hidden cursor-pointer group relative border border-[#d4af37]/20">
-                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80" alt="Gallery 5" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute inset-0 bg-[#061811]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[#d4af37]">
-                            <Eye class="w-8 h-8" />
-                        </div>
-                    </div>
-
-                    <div @click="activeLightbox = 'https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=800&q=80'" class="gsap-scale-up aspect-square rounded-2xl overflow-hidden cursor-pointer group relative border border-[#d4af37]/20">
-                        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=80" alt="Gallery 6" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <div v-for="(img, idx) in (customConfig?.gallery?.photos || [
+                        'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80'
+                    ])" :key="idx" @click="activeLightbox = img" class="gsap-scale-up aspect-square rounded-2xl overflow-hidden cursor-pointer group relative border border-[#d4af37]/20">
+                        <img :src="img" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                         <div class="absolute inset-0 bg-[#061811]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[#d4af37]">
                             <Eye class="w-8 h-8" />
                         </div>
@@ -670,11 +586,8 @@ onUnmounted(() => {
             <img :src="activeLightbox" class="max-w-full max-h-[85vh] rounded-2xl shadow-2xl border border-[#d4af37]/40" />
         </div>
 
-
-        <!-- ============================================================== -->
-        <!-- HADIAH / AMPLOP DIGITAL SECTION -->
-        <!-- ============================================================== -->
-        <section class="py-24 px-6 bg-[#061811] text-center border-t border-b border-[#d4af37]/20">
+        <!-- COMPONENT: AMPLOP DIGITAL -->
+        <section v-if="!customConfig || customConfig.components?.gift !== false" class="py-24 px-6 bg-[#061811] text-center border-t border-b border-[#d4af37]/20">
             <div class="max-w-3xl mx-auto gsap-fade-up">
                 <div class="w-12 h-12 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 flex items-center justify-center mx-auto mb-6 text-[#d4af37]">
                     <Gift class="w-6 h-6" />
@@ -686,48 +599,36 @@ onUnmounted(() => {
                 </p>
 
                 <div class="grid md:grid-cols-2 gap-6 max-w-xl mx-auto">
-                    
-                    <!-- Bank BCA -->
+                    <!-- Bank 1 -->
                     <div class="bg-[#051711] border border-[#d4af37]/30 rounded-2xl p-6 shadow-xl text-left relative overflow-hidden">
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-lg font-bold text-[#d4af37]">BCA</span>
-                            <span class="text-[10px] text-gray-400 font-mono">Bank Central Asia</span>
+                            <span class="text-lg font-bold text-[#d4af37]">{{ customConfig?.gift?.bankName1 || 'Bank BCA' }}</span>
+                            <span class="text-[10px] text-gray-400 font-mono">Transfer Bank</span>
                         </div>
-                        <p class="font-mono text-base font-bold text-white tracking-widest mb-1">1234 5678 9012</p>
-                        <p class="text-xs text-gray-300 mb-4">a.n. Raden Arya Kusuma</p>
+                        <p class="font-mono text-base font-bold text-white tracking-widest mb-1">{{ customConfig?.gift?.accountNo1 || '8830192834' }}</p>
+                        <p class="text-xs text-gray-300 mb-4">a.n. {{ customConfig?.gift?.accountName1 || 'Raden Arya Wijaya' }}</p>
                         
-                        <button @click="copyToClipboard('123456789012', 'bca')" class="w-full bg-[#0d2f23] border border-[#d4af37]/30 text-[#d4af37] text-xs font-bold py-2.5 rounded-xl hover:bg-[#d4af37] hover:text-black transition flex items-center justify-center space-x-2">
-                            <Check v-if="copiedBank === 'bca'" class="w-4 h-4 text-green-500" />
+                        <button @click="copyToClipboard(customConfig?.gift?.accountNo1 || '8830192834', 'bank1')" class="w-full bg-[#0d2f23] border border-[#d4af37]/30 text-[#d4af37] text-xs font-bold py-2.5 rounded-xl hover:bg-[#d4af37] hover:text-black transition flex items-center justify-center space-x-2">
+                            <Check v-if="copiedBank === 'bank1'" class="w-4 h-4 text-green-500" />
                             <Copy v-else class="w-4 h-4" />
-                            <span>{{ copiedBank === 'bca' ? 'Nomor Rekening Disalin!' : 'Salin Nomor Rekening' }}</span>
+                            <span>{{ copiedBank === 'bank1' ? 'Nomor Rekening Disalin!' : 'Salin Nomor Rekening' }}</span>
                         </button>
                     </div>
 
-                    <!-- Bank Mandiri -->
+                    <!-- Physical Address -->
                     <div class="bg-[#051711] border border-[#d4af37]/30 rounded-2xl p-6 shadow-xl text-left relative overflow-hidden">
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-lg font-bold text-[#d4af37]">MANDIRI</span>
-                            <span class="text-[10px] text-gray-400 font-mono">Bank Mandiri</span>
+                            <span class="text-lg font-bold text-[#d4af37]">Kirim Kado Fisik</span>
+                            <Gift class="w-4 h-4 text-[#d4af37]" />
                         </div>
-                        <p class="font-mono text-base font-bold text-white tracking-widest mb-1">9876 5432 1098</p>
-                        <p class="text-xs text-gray-300 mb-4">a.n. Putri Sekar Ningrum</p>
-                        
-                        <button @click="copyToClipboard('987654321098', 'mandiri')" class="w-full bg-[#0d2f23] border border-[#d4af37]/30 text-[#d4af37] text-xs font-bold py-2.5 rounded-xl hover:bg-[#d4af37] hover:text-black transition flex items-center justify-center space-x-2">
-                            <Check v-if="copiedBank === 'mandiri'" class="w-4 h-4 text-green-500" />
-                            <Copy v-else class="w-4 h-4" />
-                            <span>{{ copiedBank === 'mandiri' ? 'Nomor Rekening Disalin!' : 'Salin Nomor Rekening' }}</span>
-                        </button>
+                        <p class="text-xs text-slate-300 mb-4 leading-relaxed">{{ customConfig?.gift?.shippingAddress || 'Jl. Wijaya Kusuma No. 45, Kebayoran Baru, Jakarta Selatan' }}</p>
                     </div>
-
                 </div>
             </div>
         </section>
 
-
-        <!-- ============================================================== -->
-        <!-- BUKU TAMU & RSVP FORM SECTION -->
-        <!-- ============================================================== -->
-        <section id="rsvp" class="py-28 px-6 bg-[#092219] pb-32">
+        <!-- COMPONENT: RSVP & BUKU TAMU -->
+        <section v-if="!customConfig || customConfig.components?.rsvp !== false" id="rsvp" class="py-28 px-6 bg-[#092219] pb-32">
             <div class="max-w-4xl mx-auto">
                 <div class="text-center mb-16 gsap-fade-up">
                     <span class="text-xs font-bold text-[#d4af37] tracking-[0.3em] uppercase">KONFIRMASI KEHADIRAN</span>
@@ -736,8 +637,6 @@ onUnmounted(() => {
                 </div>
 
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
-                    
-                    <!-- RSVP Form -->
                     <div class="gsap-scale-up bg-[#051711] border border-[#d4af37]/30 rounded-3xl p-8 shadow-xl">
                         <h3 class="font-serif text-xl font-bold text-white mb-6 flex items-center">
                             <UserCheck class="w-5 h-5 text-[#d4af37] mr-2" />
@@ -775,7 +674,6 @@ onUnmounted(() => {
                         </form>
                     </div>
 
-                    <!-- Wishes Live List -->
                     <div class="gsap-fade-up space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                         <h3 class="font-serif text-xl font-bold text-white mb-6 flex items-center">
                             <MessageSquare class="w-5 h-5 text-[#d4af37] mr-2" />
@@ -791,17 +689,13 @@ onUnmounted(() => {
                             <span class="block text-[10px] text-gray-500 mt-3 text-right">{{ wish.date }}</span>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-
-        <!-- ============================================================== -->
         <!-- FOOTER -->
-        <!-- ============================================================== -->
         <footer class="py-12 px-6 bg-[#04120d] text-center border-t border-[#d4af37]/20 text-xs text-gray-400">
-            <p class="font-serif text-lg text-white mb-2 font-bold">Raden Arya &amp; Putri Sekar</p>
+            <p class="font-serif text-lg text-white mb-2 font-bold">{{ customConfig?.groom?.nickname || 'Raden Arya' }} &amp; {{ customConfig?.bride?.nickname || 'Putri Sekar' }}</p>
             <p class="text-gray-500 mb-6">Terima kasih atas doa &amp; kehadiran Bapak/Ibu/Saudara/i sekalian.</p>
             <div class="text-[11px] text-[#d4af37] font-semibold">
                 Powered by Luxe Invitation SaaS
@@ -826,7 +720,6 @@ onUnmounted(() => {
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* Custom scrollbar for wishes */
 .custom-scrollbar::-webkit-scrollbar {
     width: 4px;
 }
