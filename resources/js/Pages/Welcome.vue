@@ -149,7 +149,7 @@ const filteredTemplates = computed(() => {
                             ✨ #1 Dipercaya Calon Pengantin
                         </div>
                         <h1 class="text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.1] mb-6 tracking-tight">
-                            Buat Undangan Digital <br/><span class="text-red-700 italic font-serif font-medium">Elegan</span> Dalam Menit.
+                            Buat Undangan Digital <br/><span class="text-red-700 italic font-serif font-medium">Elegan</span> 1 Dalam Menit.
                         </h1>
                         <p class="text-lg text-slate-600 mb-8 max-w-lg leading-relaxed">
                             Pilih template favoritmu, bayar mudah via QRIS/Transfer, dan sebar ke ribuan tamu dengan link custom milikmu sendiri tanpa batas.
