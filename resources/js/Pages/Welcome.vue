@@ -196,7 +196,7 @@ const filteredTemplates = computed(() => {
 
                                 <!-- Center Names & Photo Card -->
                                 <div class="relative z-10 px-4 text-center space-y-2 py-4">
-                                    <h3 class="font-serif text-2xl font-bold text-white tracking-wide">Arya &amp; Sekar</h3>
+                                    <h3 class="font-serif text-2xl font-bold text-white tracking-wide">Arya &amp; Ayu</h3>
                                     <p class="text-[10px] text-slate-300 font-mono">Sabtu, 24 Agustus 2026</p>
                                     <div class="inline-block bg-amber-400 text-slate-950 text-[10px] font-extrabold px-4 py-1.5 rounded-full shadow-lg">
                                         Buka Undangan 💌
