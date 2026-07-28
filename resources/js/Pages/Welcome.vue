@@ -1,9 +1,9 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { 
     CheckCircle2, Users, MessageSquareHeart, 
-    Gift, QrCode, Music, Menu, X, Eye, Sparkles, ChevronRight
+    Gift, QrCode, Music, Menu, X, Eye, ChevronRight
 } from 'lucide-vue-next';
 
 defineProps({
@@ -12,6 +12,81 @@ defineProps({
 });
 
 const isMobileMenuOpen = ref(false);
+
+const activeCategory = ref('All');
+const categories = ['All', 'Minimalis', 'Rustik', 'Modern', 'Islamic'];
+
+const templates = [
+    {
+        id: 1,
+        slug: 'midnight-gold',
+        name: 'Midnight Serenade Gold',
+        tag: 'Royal Gold Luxury',
+        category: 'Modern',
+        price: 'Rp 149.000',
+        originalPrice: 'Rp 249.000',
+        discount: 'HEMAT 40%',
+        image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80',
+        borderColor: 'hover:border-amber-400/80',
+        tagClass: 'text-amber-700 bg-amber-50 border-amber-200/60',
+        priceColor: 'text-amber-600',
+        btnClass: 'bg-amber-500 hover:bg-amber-600 text-slate-950',
+        delay: 100,
+    },
+    {
+        id: 2,
+        slug: 'rose-romance',
+        name: 'Floral Garden Romance',
+        tag: 'Blush Rose & Pastel',
+        category: 'Minimalis',
+        price: 'Rp 99.000',
+        originalPrice: 'Rp 189.000',
+        discount: 'HEMAT 47%',
+        image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80',
+        borderColor: 'hover:border-pink-400/80',
+        tagClass: 'text-pink-700 bg-pink-50 border-pink-200/60',
+        priceColor: 'text-pink-600',
+        btnClass: 'bg-pink-500 hover:bg-pink-600 text-white',
+        delay: 200,
+    },
+    {
+        id: 3,
+        slug: 'emerald-botanical',
+        name: 'Emerald Botanical',
+        tag: 'Nature & Mint Glass',
+        category: 'Rustik',
+        price: 'Rp 119.000',
+        originalPrice: 'Rp 209.000',
+        discount: 'HEMAT 43%',
+        image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80',
+        borderColor: 'hover:border-emerald-400/80',
+        tagClass: 'text-emerald-700 bg-emerald-50 border-emerald-200/60',
+        priceColor: 'text-emerald-600',
+        btnClass: 'bg-emerald-500 hover:bg-emerald-600 text-white',
+        delay: 300,
+    },
+    {
+        id: 4,
+        slug: 'royal-velvet',
+        name: 'Royal Velvet Sapphire',
+        tag: 'Regal Platinum Sapphire',
+        category: 'Islamic',
+        price: 'Rp 139.000',
+        originalPrice: 'Rp 239.000',
+        discount: 'HEMAT 42%',
+        image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80',
+        borderColor: 'hover:border-sky-400/80',
+        tagClass: 'text-sky-700 bg-sky-50 border-sky-200/60',
+        priceColor: 'text-sky-600',
+        btnClass: 'bg-sky-500 hover:bg-sky-600 text-white',
+        delay: 400,
+    }
+];
+
+const filteredTemplates = computed(() => {
+    if (activeCategory.value === 'All') return templates;
+    return templates.filter(t => t.category === activeCategory.value);
+});
 </script>
 
 <template>
@@ -248,200 +323,74 @@ const isMobileMenuOpen = ref(false);
                         <p class="text-slate-600 text-lg">Berbagai pilihan tema mulai dari klasik hingga modern, disesuaikan dengan kepribadianmu dan pasangan.</p>
                     </div>
                     <div class="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 hide-scrollbar">
-                        <button class="whitespace-nowrap px-5 py-2.5 bg-red-700 text-white rounded-full text-sm font-semibold shadow-md shadow-red-700/20">All</button>
-                        <button class="whitespace-nowrap px-5 py-2.5 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 rounded-full text-sm font-medium transition">Minimalis</button>
-                        <button class="whitespace-nowrap px-5 py-2.5 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 rounded-full text-sm font-medium transition">Rustik</button>
-                        <button class="whitespace-nowrap px-5 py-2.5 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 rounded-full text-sm font-medium transition">Modern</button>
-                        <button class="whitespace-nowrap px-5 py-2.5 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 rounded-full text-sm font-medium transition">Islamic</button>
+                        <button 
+                            v-for="cat in categories" 
+                            :key="cat"
+                            @click="activeCategory = cat"
+                            :class="[
+                                activeCategory === cat 
+                                    ? 'bg-red-700 text-white shadow-md shadow-red-700/20 font-semibold' 
+                                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 font-medium'
+                            ]"
+                            class="whitespace-nowrap px-5 py-2.5 rounded-full text-sm transition"
+                        >
+                            {{ cat }}
+                        </button>
                     </div>
                 </div>
                 
-                               <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
-                    
-                    <!-- Template Card 1: Midnight Gold -->
-                    <div class="group bg-white rounded-3xl border border-slate-200/80 hover:border-amber-400/60 shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden flex flex-col justify-between" v-motion-slide-visible-bottom :delay="100">
-                        <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
-                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Midnight Serenade Gold" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
-                            
-                            <!-- Dark Vignette Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-
-                            <!-- Top Overlay Badges -->
-                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none z-10">
-                                <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
-                                    HEMAT 40%
-                                </span>
-                            </div>
-
-                            <!-- Glassmorphism Floating Price Tag -->
-                            <div class="absolute bottom-3.5 right-3.5 z-10 bg-slate-950/85 backdrop-blur-md border border-amber-400/40 text-amber-400 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
-                                Rp 149.000
-                            </div>
-
-                            <!-- Hover Action Overlay -->
-                            <div class="absolute inset-0 z-20 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
-                                <a href="/demo/invitation/1" target="_blank" class="w-full max-w-[170px] bg-amber-400 hover:bg-amber-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
-                                    <Eye class="w-3.5 h-3.5" />
-                                    <span>Lihat Preview</span>
-                                </a>
-                                <a href="/customer/invitations/edit?template=midnight-gold&id=1" class="w-full max-w-[170px] bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2 rounded-full font-bold text-xs backdrop-blur-md transition flex items-center justify-center space-x-1.5">
-                                    <Sparkles class="w-3.5 h-3.5 text-amber-300" />
-                                    <span>Pilih Template</span>
-                                </a>
-                            </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-14">
+                    <div 
+                        v-for="item in filteredTemplates" 
+                        :key="item.id"
+                        :class="[item.borderColor]"
+                        class="group bg-white rounded-3xl border border-slate-200/80 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col justify-between" 
+                        v-motion-slide-visible-bottom 
+                        :delay="item.delay"
+                    >
+                        <!-- Gambar Bersih Tanpa Teks Overlay -->
+                        <div class="relative overflow-hidden aspect-[4/5] bg-slate-100">
+                            <img 
+                                :src="item.image" 
+                                :alt="item.name" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                            />
                         </div>
 
-                        <!-- Card Text Details -->
-                        <div class="p-5 flex justify-between items-end bg-white border-t border-slate-100">
+                        <!-- Detil Teks & Akses Tombol di Bawah Gambar -->
+                        <div class="p-5 sm:p-6 flex flex-col justify-between flex-1 bg-white space-y-4">
                             <div>
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-600">Royal Gold Luxury</span>
-                                <h4 class="text-base font-bold text-slate-900 leading-snug">Midnight Serenade Gold</h4>
+                                <div class="flex items-center justify-between mb-2 gap-2">
+                                    <span :class="item.tagClass" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border">
+                                        {{ item.tag }}
+                                    </span>
+                                    <span class="bg-rose-600 text-white text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm whitespace-nowrap">
+                                        {{ item.discount }}
+                                    </span>
+                                </div>
+                                <h4 class="text-lg font-bold text-slate-900 leading-snug">
+                                    {{ item.name }}
+                                </h4>
                             </div>
-                            <div class="text-right">
-                                <span class="text-[11px] text-slate-400 line-through block font-mono">Rp 249.000</span>
-                                <span class="text-base font-black text-amber-600 font-mono">Rp 149.000</span>
+
+                            <div class="pt-3 border-t border-slate-100 space-y-3">
+                                <div class="flex items-baseline justify-between">
+                                    <span class="text-xs text-slate-400 line-through font-mono">{{ item.originalPrice }}</span>
+                                    <span :class="item.priceColor" class="text-lg font-black font-mono">{{ item.price }}</span>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2 pt-1">
+                                    <a :href="`/demo/invitation/${item.id}`" target="_blank" class="w-full py-2.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold text-xs transition flex items-center justify-center gap-1.5 text-center">
+                                        <Eye class="w-3.5 h-3.5" />
+                                        <span>Preview</span>
+                                    </a>
+                                    <a :href="`/customer/invitations/edit?template=${item.slug}&id=${item.id}`" :class="item.btnClass" class="w-full py-2.5 px-2 rounded-xl font-bold text-xs shadow-sm transition flex items-center justify-center gap-1.5 text-center">
+                                        <span>Pilih</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Template Card 2: Floral Rose -->
-                    <div class="group bg-white rounded-3xl border border-slate-200/80 hover:border-pink-400/60 shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden flex flex-col justify-between" v-motion-slide-visible-bottom :delay="200">
-                        <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
-                            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="Floral Garden Romance" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
-                            
-                            <!-- Dark Vignette Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-
-                            <!-- Top Overlay Badges -->
-                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none z-10">
-                                <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
-                                    HEMAT 47%
-                                </span>
-                            </div>
-
-                            <!-- Glassmorphism Floating Price Tag -->
-                            <div class="absolute bottom-3.5 right-3.5 z-10 bg-slate-950/85 backdrop-blur-md border border-pink-400/40 text-pink-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
-                                Rp 99.000
-                            </div>
-
-                            <!-- Hover Action Overlay -->
-                            <div class="absolute inset-0 z-20 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
-                                <a href="/demo/invitation/2" target="_blank" class="w-full max-w-[170px] bg-pink-500 hover:bg-pink-400 text-white py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
-                                    <Eye class="w-3.5 h-3.5" />
-                                    <span>Lihat Preview</span>
-                                </a>
-                                <a href="/customer/invitations/edit?template=rose-romance&id=2" class="w-full max-w-[170px] bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2 rounded-full font-bold text-xs backdrop-blur-md transition flex items-center justify-center space-x-1.5">
-                                    <Sparkles class="w-3.5 h-3.5 text-pink-300" />
-                                    <span>Pilih Template</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Card Text Details -->
-                        <div class="p-5 flex justify-between items-end bg-white border-t border-slate-100">
-                            <div>
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-pink-600">Blush Rose & Pastel</span>
-                                <h4 class="text-base font-bold text-slate-900 leading-snug">Floral Garden Romance</h4>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-[11px] text-slate-400 line-through block font-mono">Rp 189.000</span>
-                                <span class="text-base font-black text-pink-600 font-mono">Rp 99.000</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Template Card 3: Emerald Botanical -->
-                    <div class="group bg-white rounded-3xl border border-slate-200/80 hover:border-emerald-400/60 shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden flex flex-col justify-between" v-motion-slide-visible-bottom :delay="300">
-                        <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
-                            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Emerald Botanical Haven" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
-                            
-                            <!-- Dark Vignette Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-
-                            <!-- Top Overlay Badges -->
-                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none z-10">
-                                <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
-                                    HEMAT 43%
-                                </span>
-                            </div>
-
-                            <!-- Glassmorphism Floating Price Tag -->
-                            <div class="absolute bottom-3.5 right-3.5 z-10 bg-slate-950/85 backdrop-blur-md border border-emerald-400/40 text-emerald-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
-                                Rp 119.000
-                            </div>
-
-                            <!-- Hover Action Overlay -->
-                            <div class="absolute inset-0 z-20 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
-                                <a href="/demo/invitation/3" target="_blank" class="w-full max-w-[170px] bg-emerald-400 hover:bg-emerald-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
-                                    <Eye class="w-3.5 h-3.5" />
-                                    <span>Lihat Preview</span>
-                                </a>
-                                <a href="/customer/invitations/edit?template=emerald-botanical&id=3" class="w-full max-w-[170px] bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2 rounded-full font-bold text-xs backdrop-blur-md transition flex items-center justify-center space-x-1.5">
-                                    <Sparkles class="w-3.5 h-3.5 text-emerald-300" />
-                                    <span>Pilih Template</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Card Text Details -->
-                        <div class="p-5 flex justify-between items-end bg-white border-t border-slate-100">
-                            <div>
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600">Nature & Mint Glass</span>
-                                <h4 class="text-base font-bold text-slate-900 leading-snug">Emerald Botanical</h4>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-[11px] text-slate-400 line-through block font-mono">Rp 209.000</span>
-                                <span class="text-base font-black text-emerald-600 font-mono">Rp 119.000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Template Card 4: Royal Velvet Sapphire -->
-                    <div class="group bg-white rounded-3xl border border-slate-200/80 hover:border-sky-400/60 shadow-lg hover:shadow-2xl transition duration-500 overflow-hidden flex flex-col justify-between" v-motion-slide-visible-bottom :delay="400">
-                        <div class="relative overflow-hidden aspect-[3/3.8] bg-slate-950">
-                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80" alt="Royal Velvet Sapphire" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
-                            
-                            <!-- Dark Vignette Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-
-                            <!-- Top Overlay Badges -->
-                            <div class="absolute top-3.5 inset-x-3.5 flex justify-between items-center pointer-events-none z-10">
-                                <span class="bg-rose-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md">
-                                    HEMAT 42%
-                                </span>
-                            </div>
-
-                            <!-- Glassmorphism Floating Price Tag -->
-                            <div class="absolute bottom-3.5 right-3.5 z-10 bg-slate-950/85 backdrop-blur-md border border-sky-400/40 text-sky-300 font-mono text-xs font-extrabold px-3 py-1 rounded-full shadow-xl">
-                                Rp 139.000
-                            </div>
-
-                            <!-- Hover Action Overlay -->
-                            <div class="absolute inset-0 z-20 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center backdrop-blur-[3px] p-4 text-center space-y-2">
-                                <a href="/demo/invitation/4" target="_blank" class="w-full max-w-[170px] bg-sky-400 hover:bg-sky-300 text-slate-950 py-2.5 rounded-full font-extrabold text-xs shadow-xl transition flex items-center justify-center space-x-1.5">
-                                    <Eye class="w-3.5 h-3.5" />
-                                    <span>Lihat Preview</span>
-                                </a>
-                                <a href="/customer/invitations/edit?template=royal-velvet&id=4" class="w-full max-w-[170px] bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2 rounded-full font-bold text-xs backdrop-blur-md transition flex items-center justify-center space-x-1.5">
-                                    <Sparkles class="w-3.5 h-3.5 text-sky-300" />
-                                    <span>Pilih Template</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Card Text Details -->
-                        <div class="p-5 flex justify-between items-end bg-white border-t border-slate-100">
-                            <div>
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider text-sky-600">Regal Platinum Sapphire</span>
-                                <h4 class="text-base font-bold text-slate-900 leading-snug">Royal Velvet Sapphire</h4>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-[11px] text-slate-400 line-through block font-mono">Rp 239.000</span>
-                                <span class="text-base font-black text-sky-600 font-mono">Rp 139.000</span>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
                 
                 <div class="text-center">
@@ -451,7 +400,7 @@ const isMobileMenuOpen = ref(false);
                     </Link>
                 </div>
             </div>
-        </section>
+        </section> 
 
         <section class="py-24 bg-slate-900 text-white overflow-hidden relative">
             <div class="absolute inset-0 bg-[url('https://laravel.com/assets/img/welcome/background.svg')] bg-cover bg-center opacity-10"></div>
