@@ -543,45 +543,37 @@ onUnmounted(() => {
 <template>
     <Head :title="`Undangan Pernikahan (${templateStyle.name}) - ${customConfig?.groom?.nickname || 'Arya'} & ${customConfig?.bride?.nickname || 'Sekar'}`" />
 
-    <!-- Audio BGM -->
     <audio ref="audioRef" loop preload="auto">
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-piano-113064.mp3" type="audio/mpeg" />
     </audio>
 
     <div :class="[templateStyle.bgClass, {'h-screen overflow-hidden': !isOpen}]" class="font-sans min-h-screen relative overflow-x-hidden transition-colors duration-700">
         
-        <!-- PARALLAX COUPLE PHOTO BACKGROUND FOR TEMPLATE 1 (midnight-gold) -->
         <div v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.background?.useImage !== false)" class="parallax-bg fixed -inset-x-0 -top-[15vh] h-[135vh] w-full bg-cover bg-center opacity-40 mix-blend-overlay pointer-events-none z-0 filter brightness-90 saturate-125 transition duration-700" :style="{ backgroundImage: `url(${customConfig?.background?.imageUrl || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80'})` }"></div>
         <div v-if="activeTemplateId === 'midnight-gold'" class="fixed inset-0 bg-gradient-to-b from-[#061811]/90 via-[#061811]/75 to-[#092219]/95 z-0 pointer-events-none"></div>
 
-        <!-- COVER ENVELOPE OVERLAY WITH 4 DISTINCT TEMPLATE VISUALS -->
         <div id="envelope-cover" :class="templateStyle.coverBg" class="fixed inset-0 z-50 flex flex-col justify-between items-center p-6 text-center shadow-2xl overflow-hidden">
             <div v-if="!customConfig || customConfig.background?.useImage !== false" class="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity pointer-events-none" :style="{ backgroundImage: `url(${customConfig?.background?.imageUrl || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80'})` }"></div>
             
-            <!-- Top Header Badge Variant -->
             <div class="pt-8 flex flex-col items-center z-10">
-                <!-- Midnight Gold Badge -->
                 <div v-if="activeTemplateId === 'midnight-gold'" class="flex flex-col items-center">
                     <Crown class="w-7 h-7 text-[#d4af37] mb-1 animate-pulse" />
                     <span class="text-[#d4af37] text-xs font-bold tracking-[0.3em] uppercase">WALIMATUL 'URSY</span>
                     <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mt-2"></div>
                 </div>
 
-                <!-- Rose Romance Badge -->
                 <div v-else-if="activeTemplateId === 'rose-romance'" class="flex flex-col items-center">
                     <Flower2 class="w-7 h-7 text-[#f472b6] mb-1 animate-spin" style="animation-duration: 12s;" />
                     <span class="text-[#f472b6] text-xs font-bold tracking-[0.3em] uppercase">THE WEDDING DAY</span>
                     <div class="w-16 h-0.5 bg-[#f472b6]/50 mt-2 rounded-full"></div>
                 </div>
 
-                <!-- Emerald Botanical Badge -->
                 <div v-else-if="activeTemplateId === 'emerald-botanical'" class="flex flex-col items-center">
                     <Leaf class="w-7 h-7 text-[#34d399] mb-1 animate-bounce" />
                     <span class="text-[#34d399] text-xs font-bold tracking-[0.3em] uppercase">BOTANICAL WEDDING</span>
                     <div class="w-16 h-0.5 bg-[#34d399] mt-2"></div>
                 </div>
 
-                <!-- Royal Velvet Sapphire Badge -->
                 <div v-else class="flex flex-col items-center">
                     <Diamond class="w-7 h-7 text-[#38bdf8] mb-1 animate-pulse" />
                     <span class="text-[#38bdf8] text-xs font-bold tracking-[0.3em] uppercase">ROYAL SAPPHIRE GALA</span>
@@ -589,14 +581,13 @@ onUnmounted(() => {
                 </div>
             </div>
 
-            <!-- Envelope Center Container -->
             <div :class="templateStyle.cardBg" class="max-w-md w-full p-8 flex flex-col items-center relative overflow-hidden group z-10 transition duration-500">
                 <p :class="templateStyle.accentText" class="font-serif italic text-xl mb-1">The Wedding of</p>
                 
                 <h1 :class="templateStyle.heroTitleClass" class="mb-6 leading-tight">
                     {{ customConfig?.groom?.nickname || 'Raden Arya' }} <br />
                     <span :class="templateStyle.accentText" class="font-serif italic text-3xl">&amp;</span> <br />
-                    {{ customConfig?.bride?.nickname || 'Putri Sekar' }}
+                    {{ customConfig?.bride?.nickname || 'Putri Ayu' }}
                 </h1>
 
                 <!-- Recipient Box -->
