@@ -151,10 +151,6 @@ defineProps({
         <footer class="w-full border-t border-gray-300/70 py-3 px-6 relative z-10 text-center text-xs text-gray-500">
             <div class="max-w-7xl mx-auto flex items-center justify-between">
                 <span>&copy; {{ new Date().getFullYear() }} All Rights Reserved.</span>
-                <div class="flex items-center gap-4">
-                    <a href="#" class="hover:text-gray-900 transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-900 transition">Terms of Service</a>
-                </div>
             </div>
         </footer>
     </div>
