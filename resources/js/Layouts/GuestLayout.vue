@@ -126,19 +126,13 @@ defineProps({
                             <circle cx="130" cy="155" r="1.5" fill="#FFFFFF"/>
                             <circle cx="142" cy="165" r="1.5" fill="#FFFFFF"/>
 
-                            <!-- Yellow Laptop on Lap -->
                             <path d="M 115 150 L 150 155 L 140 182 L 110 178 Z" fill="#FCE282" stroke="#111827" stroke-width="2"/>
-                            <!-- Screen -->
                             <path d="M 115 150 L 108 120 L 138 125 L 145 155 Z" fill="#FDE68A" stroke="#111827" stroke-width="2"/>
 
-                            <!-- Arms & Hands on Laptop -->
                             <path d="M 132 125 L 118 150 L 126 155" stroke="#111827" stroke-width="3" stroke-linecap="round" fill="none"/>
 
-                            <!-- Head, Face & Hair bun -->
-                            <!-- Head -->
                             <circle cx="146" cy="98" r="12" fill="#111827"/>
                             <path d="M 142 92 C 146 82 165 85 162 105 C 160 115 150 120 142 112 C 138 108 138 98 142 92 Z" fill="#111827"/>
-                            <!-- Top Hair Bun -->
                             <circle cx="152" cy="84" r="8" fill="#111827"/>
                             <path d="M 158 80 C 162 76 166 84 160 88 Z" fill="#111827"/>
                         </svg>
@@ -147,9 +141,8 @@ defineProps({
             </div>
         </main>
 
-        <!-- Bottom Baseline Separator -->
         <footer class="w-full border-t border-gray-300/70 py-3 px-6 relative z-10 text-center text-xs text-gray-500">
-            <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="max-w-7xl mx-auto flex items-center justify-center">
                 <span>&copy; {{ new Date().getFullYear() }} All Rights Reserved.</span>
             </div>
         </footer>
