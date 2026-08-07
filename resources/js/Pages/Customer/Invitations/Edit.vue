@@ -52,6 +52,26 @@ const templates = [
         accentColor: '#818cf8',
         paletteId: 'sapphire',
         previewImg: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+        id: 'boho-terracotta',
+        name: 'Terracotta Rustic Warmth',
+        category: 'Warm Boho & Earthy Amber',
+        badge: 'Boho Vintage',
+        primaryColor: '#d97706',
+        accentColor: '#f59e0b',
+        paletteId: 'terracotta',
+        previewImg: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+        id: 'minimalist-monochrome',
+        name: 'Nordic Monochrome Minimalist',
+        category: 'Modern Architectural Black & White',
+        badge: 'Minimalis Modern',
+        primaryColor: '#e4e4e7',
+        accentColor: '#a1a1aa',
+        paletteId: 'monochrome',
+        previewImg: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80'
     }
 ];
 
@@ -60,7 +80,9 @@ const colorPalettes = [
     { id: 'gold', name: 'Royal Gold', main: '#fbbf24', sub: '#22c55e', bg: '#090d16', text: '#f4efe6', cardBg: '#051711', border: '#d4af37' },
     { id: 'rose', name: 'Rose Romance', main: '#f472b6', sub: '#fb7185', bg: '#1f1318', text: '#fff1f2', cardBg: '#2a1720', border: '#f472b6' },
     { id: 'emerald', name: 'Emerald Gem', main: '#34d399', sub: '#6ee7b7', bg: '#062c1e', text: '#ecfdf5', cardBg: '#0a422e', border: '#34d399' },
-    { id: 'sapphire', name: 'Royal Sapphire', main: '#38bdf8', sub: '#818cf8', bg: '#09132b', text: '#f0f9ff', cardBg: '#0d1b3e', border: '#38bdf8' }
+    { id: 'sapphire', name: 'Royal Sapphire', main: '#38bdf8', sub: '#818cf8', bg: '#09132b', text: '#f0f9ff', cardBg: '#0d1b3e', border: '#38bdf8' },
+    { id: 'terracotta', name: 'Terracotta Warmth', main: '#d97706', sub: '#f59e0b', bg: '#1c0f0a', text: '#fbf4ee', cardBg: '#291710', border: '#d97706' },
+    { id: 'monochrome', name: 'Nordic Monochrome', main: '#fafafa', sub: '#a1a1aa', bg: '#0a0a0a', text: '#f4f4f5', cardBg: '#18181b', border: '#3f3f46' }
 ];
 
 const fontStyles = [

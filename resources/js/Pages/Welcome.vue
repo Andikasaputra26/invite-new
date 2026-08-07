@@ -14,7 +14,7 @@ defineProps({
 const isMobileMenuOpen = ref(false);
 
 const activeCategory = ref('All');
-const categories = ['All', 'Minimalis', 'Rustik', 'Modern', 'Islamic'];
+const categories = ['All', 'Minimalis', 'Rustik', 'Modern', 'Islamic', 'Boho Vintage'];
 
 const templates = [
     {
@@ -80,6 +80,38 @@ const templates = [
         priceColor: 'text-sky-600',
         btnClass: 'bg-sky-500 hover:bg-sky-600 text-white',
         delay: 400,
+    },
+    {
+        id: 5,
+        slug: 'boho-terracotta',
+        name: 'Terracotta Rustic Warmth',
+        tag: 'Warm Boho & Amber',
+        category: 'Boho Vintage',
+        price: 'Rp 159.000',
+        originalPrice: 'Rp 259.000',
+        discount: 'HEMAT 38%',
+        image: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80',
+        borderColor: 'hover:border-amber-600/80',
+        tagClass: 'text-amber-800 bg-amber-50 border-amber-300/60',
+        priceColor: 'text-amber-700',
+        btnClass: 'bg-amber-600 hover:bg-amber-700 text-white',
+        delay: 500,
+    },
+    {
+        id: 6,
+        slug: 'minimalist-monochrome',
+        name: 'Nordic Monochrome',
+        tag: 'Architectural B&W',
+        category: 'Minimalis',
+        price: 'Rp 179.000',
+        originalPrice: 'Rp 279.000',
+        discount: 'HEMAT 35%',
+        image: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80',
+        borderColor: 'hover:border-zinc-500/80',
+        tagClass: 'text-zinc-800 bg-zinc-100 border-zinc-300/60',
+        priceColor: 'text-zinc-900',
+        btnClass: 'bg-zinc-900 hover:bg-zinc-800 text-white',
+        delay: 600,
     }
 ];
 
@@ -339,7 +371,7 @@ const filteredTemplates = computed(() => {
                     </div>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-14">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-14">
                     <div 
                         v-for="item in filteredTemplates" 
                         :key="item.id"

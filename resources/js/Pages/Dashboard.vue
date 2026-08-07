@@ -108,6 +108,40 @@ const customerInvitations = ref([
         declinedCount: 20,
         wishesCount: 50,
         slug: 'andre-bella'
+    },
+    {
+        id: 5,
+        title: 'Terracotta Boho Wedding Fajar & Nisa',
+        templateId: 'boho-terracotta',
+        templateName: 'Terracotta Rustic Warmth',
+        status: 'active',
+        statusText: 'Aktif & Live',
+        date: '12 Desember 2026',
+        venue: 'Villa Sunset Terracotta, Bali',
+        thumbnail: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80',
+        guestsCount: 150,
+        attendingCount: 110,
+        maybeCount: 25,
+        declinedCount: 15,
+        wishesCount: 38,
+        slug: 'fajar-nisa'
+    },
+    {
+        id: 6,
+        title: 'Monochrome Nordic Celebration Kevin & Clara',
+        templateId: 'minimalist-monochrome',
+        templateName: 'Nordic Monochrome Minimalist',
+        status: 'draft',
+        statusText: 'Draft',
+        date: '18 Januari 2027',
+        venue: 'The Grand Pavilion, Jakarta',
+        thumbnail: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80',
+        guestsCount: 300,
+        attendingCount: 210,
+        maybeCount: 50,
+        declinedCount: 40,
+        wishesCount: 65,
+        slug: 'kevin-clara'
     }
 ]);
 
@@ -161,6 +195,8 @@ const recentOrders = [
     { id: '#ORD-9020', customer: 'Siska Larasati', template: 'Floral Garden Romance', status: 'Menunggu', date: '27 Jul 2026', amount: 'Rp 129.000' },
     { id: '#ORD-9019', customer: 'Rian Hidayat', template: 'Emerald Botanical Haven', status: 'Lunas', date: '26 Jul 2026', amount: 'Rp 139.000' },
     { id: '#ORD-9018', customer: 'Andre Kurniawan', template: 'Royal Velvet Sapphire', status: 'Lunas', date: '26 Jul 2026', amount: 'Rp 169.000' },
+    { id: '#ORD-9017', customer: 'Fajar & Nisa', template: 'Terracotta Rustic Warmth', status: 'Lunas', date: '25 Jul 2026', amount: 'Rp 159.000' },
+    { id: '#ORD-9016', customer: 'Kevin & Clara', template: 'Nordic Monochrome Minimalist', status: 'Lunas', date: '24 Jul 2026', amount: 'Rp 179.000' },
 ];
 
 // Guestbook Wishes Snippet
@@ -175,7 +211,9 @@ const templateCatalog = [
     { id: 'midnight-gold', name: 'Midnight Serenade Gold', category: 'Luxury & Royal', price: 'Rp 149.000', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80' },
     { id: 'rose-romance', name: 'Floral Garden Romance', category: 'Romantic & Pastel', price: 'Rp 129.000', img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80' },
     { id: 'emerald-botanical', name: 'Emerald Botanical Haven', category: 'Nature & Glass', price: 'Rp 139.000', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80' },
-    { id: 'royal-velvet', name: 'Royal Velvet Sapphire', category: 'Regal & Platinum', price: 'Rp 169.000', img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80' }
+    { id: 'royal-velvet', name: 'Royal Velvet Sapphire', category: 'Regal & Platinum', price: 'Rp 169.000', img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80' },
+    { id: 'boho-terracotta', name: 'Terracotta Rustic Warmth', category: 'Warm Boho & Amber', price: 'Rp 159.000', img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80' },
+    { id: 'minimalist-monochrome', name: 'Nordic Monochrome Minimalist', category: 'Modern B&W Architecture', price: 'Rp 179.000', img: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=400&q=80' }
 ];
 </script>
 

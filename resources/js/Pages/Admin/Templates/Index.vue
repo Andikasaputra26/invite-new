@@ -187,6 +187,76 @@ import { Head } from '@inertiajs/vue3';
                     </div>
                 </div>
 
+                <!-- Template 5: Terracotta Rustic Warmth -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition">
+                    <div class="h-48 bg-[#1c0f0a] relative overflow-hidden flex items-center justify-center p-4">
+                        <div class="w-full h-full bg-[#291710] shadow-sm flex flex-col items-center justify-center border border-amber-600/40 rounded-xl p-3 text-center">
+                            <h3 class="text-lg text-amber-400 font-serif font-bold italic">Terracotta Boho</h3>
+                            <span class="text-[10px] text-amber-200">Clay Amber & Pampas</span>
+                        </div>
+                        <span class="absolute top-3 right-3 bg-amber-600 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">VINTAGE</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="mb-3">
+                            <h3 class="text-base font-bold text-gray-900 leading-tight mb-1">Terracotta Rustic Warmth</h3>
+                            <p class="text-xs text-gray-500">Boho Earthy Clay & Amber Warmth</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-end mb-3">
+                                <div>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Price</p>
+                                    <p class="text-base font-bold text-gray-900">Rp 159.000</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Terjual</p>
+                                    <p class="text-base font-bold text-gray-900">630</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                                <span class="text-xs font-bold text-green-700 uppercase flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
+                                </span>
+                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 6: Nordic Monochrome Minimalist -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition">
+                    <div class="h-48 bg-[#0a0a0a] relative overflow-hidden flex items-center justify-center p-4">
+                        <div class="w-full h-full bg-[#18181b] shadow-sm flex flex-col items-center justify-center border border-zinc-500/40 rounded-xl p-3 text-center">
+                            <h3 class="text-lg text-zinc-100 font-sans font-light uppercase tracking-widest">Nordic Monochrome</h3>
+                            <span class="text-[10px] text-zinc-400">Architectural B&W</span>
+                        </div>
+                        <span class="absolute top-3 right-3 bg-zinc-100 text-zinc-950 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">MINIMALIST</span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="mb-3">
+                            <h3 class="text-base font-bold text-gray-900 leading-tight mb-1">Nordic Monochrome Minimalist</h3>
+                            <p class="text-xs text-gray-500">High-Fashion Black & Pure Off-White</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-end mb-3">
+                                <div>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Price</p>
+                                    <p class="text-base font-bold text-gray-900">Rp 179.000</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Terjual</p>
+                                    <p class="text-base font-bold text-gray-900">789</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                                <span class="text-xs font-bold text-green-700 uppercase flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
+                                </span>
+                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>

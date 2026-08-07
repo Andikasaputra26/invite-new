@@ -20,13 +20,15 @@ Route::get('/', function () {
     ]);
 });
 
-// Demo Catalog Live Preview (Supports Numeric IDs 1, 2, 3, 4 & Slugs)
+// Demo Catalog Live Preview (Supports Numeric IDs 1, 2, 3, 4, 5, 6 & Slugs)
 Route::get('/demo/invitation/{template?}', function ($template = '1') {
     $map = [
         '1' => 'midnight-gold',
         '2' => 'rose-romance',
         '3' => 'emerald-botanical',
         '4' => 'royal-velvet',
+        '5' => 'boho-terracotta',
+        '6' => 'minimalist-monochrome',
     ];
     $templateSlug = $map[$template] ?? $template;
 
