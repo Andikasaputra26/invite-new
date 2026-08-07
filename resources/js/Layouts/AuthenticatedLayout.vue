@@ -16,17 +16,17 @@ const page = usePage();
         <aside 
             :class="[
                 'hidden md:flex flex-col w-64 fixed inset-y-0 z-10 transition-all duration-300',
-                $page.props.auth.user.role === 'owner' ? 'bg-[#161B22] text-white' : 'bg-white border-r border-gray-200 text-gray-800 shadow-sm'
+                $page.props.auth?.user?.role === 'owner' ? 'bg-[#161B22] text-white' : 'bg-white border-r border-gray-200 text-gray-800 shadow-sm'
             ]">
             
             <!-- Logo Area -->
-            <div :class="['h-20 flex items-center px-6', $page.props.auth.user.role === 'owner' ? 'border-b border-gray-800' : '']">
+            <div :class="['h-20 flex items-center px-6', $page.props.auth?.user?.role === 'owner' ? 'border-b border-gray-800' : '']">
                 <Link :href="route('dashboard')" class="flex flex-col">
-                    <span :class="['text-xl font-bold tracking-tight', $page.props.auth.user.role === 'owner' ? 'text-white' : 'text-gray-900']">
-                        Luxe Stationery
+                    <span :class="['text-xl font-bold tracking-tight', $page.props.auth?.user?.role === 'owner' ? 'text-white' : 'text-gray-900']">
+                        UndanganKu
                     </span>
-                    <span :class="['text-xs font-medium', $page.props.auth.user.role === 'owner' ? 'text-gray-400' : 'text-gray-500']">
-                        {{ $page.props.auth.user.role === 'owner' ? 'Creator Dashboard' : 'Customer Dashboard' }}
+                    <span :class="['text-xs font-medium', $page.props.auth?.user?.role === 'owner' ? 'text-gray-400' : 'text-gray-500']">
+                        {{ $page.props.auth?.user?.role === 'owner' ? 'Creator Dashboard' : 'Customer Dashboard' }}
                     </span>
                 </Link>
             </div>
@@ -35,7 +35,7 @@ const page = usePage();
             <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
                 
                 <!-- Role: Admin (Owner) -->
-                <template v-if="$page.props.auth.user.role === 'owner'">
+                <template v-if="$page.props.auth?.user?.role === 'owner'">
                     <Link :href="route('dashboard')" :class="{'bg-gray-800 text-[#F5C518] border border-gray-700 shadow-sm': route().current('dashboard'), 'text-gray-400 hover:text-white': !route().current('dashboard')}" class="flex items-center px-4 py-3 text-sm font-semibold rounded-lg transition-colors group">
                         <svg class="mr-3 h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -104,14 +104,14 @@ const page = usePage();
                 </template>
             </nav>
 
-            <div :class="['p-4 space-y-2', $page.props.auth.user.role === 'owner' ? 'border-t border-gray-800' : 'border-t border-gray-200']">
-                <a href="#" :class="['flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors group', $page.props.auth.user.role === 'owner' ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50']">
+            <div :class="['p-4 space-y-2', $page.props.auth?.user?.role === 'owner' ? 'border-t border-gray-800' : 'border-t border-gray-200']">
+                <a href="#" :class="['flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors group', $page.props.auth?.user?.role === 'owner' ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50']">
                     <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Help Center
                 </a>
-                <Link :href="route('logout')" method="post" as="button" :class="['w-full flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors group', $page.props.auth.user.role === 'owner' ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-600 hover:bg-red-50']">
+                <Link :href="route('logout')" method="post" as="button" :class="['w-full flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors group', $page.props.auth?.user?.role === 'owner' ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-600 hover:bg-red-50']">
                     <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
@@ -160,10 +160,10 @@ const page = usePage();
                         <template #trigger>
                             <button type="button" class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none transition duration-150 ease-in-out">
                                 <div class="text-right mr-3 hidden sm:block">
-                                    <div class="text-sm font-bold text-gray-900 leading-tight">{{ $page.props.auth.user.name }}</div>
-                                    <div class="text-[10px] text-gray-500 font-semibold tracking-wider uppercase">{{ $page.props.auth.user.role === 'owner' ? 'Premium Account' : 'Premium Member' }}</div>
+                                    <div class="text-sm font-bold text-gray-900 leading-tight">{{ $page.props.auth?.user?.name || 'User' }}</div>
+                                    <div class="text-[10px] text-gray-500 font-semibold tracking-wider uppercase">{{ $page.props.auth?.user?.role === 'owner' ? 'Premium Account' : 'Premium Member' }}</div>
                                 </div>
-                                <img class="h-9 w-9 rounded-full object-cover border border-gray-200 shadow-sm" :src="'https://ui-avatars.com/api/?name='+ $page.props.auth.user.name +'&color=111827&background=F3F4F6'" alt="Avatar">
+                                <img class="h-9 w-9 rounded-full object-cover border border-gray-200 shadow-sm" :src="'https://ui-avatars.com/api/?name='+ encodeURIComponent($page.props.auth?.user?.name || 'User') +'&color=111827&background=F3F4F6'" alt="Avatar">
                             </button>
                         </template>
                         <template #content>

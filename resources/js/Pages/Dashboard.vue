@@ -39,50 +39,6 @@ const customerTransactions = ref([
     }
 ]);
 
-// Guest Name Link Generator State
-const guestInputName = ref('Budi Santoso');
-const selectedInvitation = ref(customerInvitations.value[0]);
-const selectedSlug = computed(() => selectedInvitation.value?.slug || 'romeo-juliet');
-const windowLocationOrigin = computed(() => typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000');
-
-const copyPersonalizedLink = () => {
-    const name = guestInputName.value.trim() || 'Tamu Undangan';
-    const slug = selectedSlug.value;
-    const link = `${windowLocationOrigin.value}/v/${slug}?to=${encodeURIComponent(name)}`;
-    navigator.clipboard.writeText(link);
-    triggerToast(`Link khusus "${name}" (${selectedInvitation.value?.templateName || 'Undangan'}) berhasil disalin!`);
-};
-
-const sendWhatsAppMessage = () => {
-    const name = guestInputName.value.trim() || 'Tamu Undangan';
-    const slug = selectedSlug.value;
-    const link = `${windowLocationOrigin.value}/v/${slug}?to=${encodeURIComponent(name)}`;
-    const text = `Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i *${name}* untuk menghadiri acara pernikahan kami melalui link undangan digital berikut:\n\n${link}\n\nTerima kasih atas doa & restu Anda.`;
-    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-    window.open(waUrl, '_blank');
-};
-
-// Toast Feedback State
-const toastMessage = ref('');
-const showToast = ref(false);
-
-const triggerToast = (msg) => {
-    toastMessage.value = msg;
-    showToast.value = true;
-    setTimeout(() => {
-        showToast.value = false;
-    }, 3000);
-};
-
-// Copy Share Link Helper
-const copyShareLink = (inv) => {
-    const templatePath = typeof inv === 'object' ? inv.templateId : 'midnight-gold';
-    const invId = typeof inv === 'object' ? inv.id : '1';
-    const shareUrl = `${window.location.origin}/demo/invitation/${templatePath}?id=${invId}&to=NamaTamu`;
-    navigator.clipboard.writeText(shareUrl);
-    triggerToast(`Link undangan unik (${typeof inv === 'object' ? inv.templateName : 'Undangan'}) berhasil disalin!`);
-};
-
 // Customer Invitations Data
 const customerInvitations = ref([
     {
@@ -154,6 +110,50 @@ const customerInvitations = ref([
         slug: 'andre-bella'
     }
 ]);
+
+// Guest Name Link Generator State
+const guestInputName = ref('Budi Santoso');
+const selectedInvitation = ref(customerInvitations.value[0]);
+const selectedSlug = computed(() => selectedInvitation.value?.slug || 'romeo-juliet');
+const windowLocationOrigin = computed(() => typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000');
+
+const copyPersonalizedLink = () => {
+    const name = guestInputName.value.trim() || 'Tamu Undangan';
+    const slug = selectedSlug.value;
+    const link = `${windowLocationOrigin.value}/v/${slug}?to=${encodeURIComponent(name)}`;
+    navigator.clipboard.writeText(link);
+    triggerToast(`Link khusus "${name}" (${selectedInvitation.value?.templateName || 'Undangan'}) berhasil disalin!`);
+};
+
+const sendWhatsAppMessage = () => {
+    const name = guestInputName.value.trim() || 'Tamu Undangan';
+    const slug = selectedSlug.value;
+    const link = `${windowLocationOrigin.value}/v/${slug}?to=${encodeURIComponent(name)}`;
+    const text = `Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i *${name}* untuk menghadiri acara pernikahan kami melalui link undangan digital berikut:\n\n${link}\n\nTerima kasih atas doa & restu Anda.`;
+    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(waUrl, '_blank');
+};
+
+// Toast Feedback State
+const toastMessage = ref('');
+const showToast = ref(false);
+
+const triggerToast = (msg) => {
+    toastMessage.value = msg;
+    showToast.value = true;
+    setTimeout(() => {
+        showToast.value = false;
+    }, 3000);
+};
+
+// Copy Share Link Helper
+const copyShareLink = (inv) => {
+    const templatePath = typeof inv === 'object' ? inv.templateId : 'midnight-gold';
+    const invId = typeof inv === 'object' ? inv.id : '1';
+    const shareUrl = `${window.location.origin}/demo/invitation/${templatePath}?id=${invId}&to=NamaTamu`;
+    navigator.clipboard.writeText(shareUrl);
+    triggerToast(`Link undangan unik (${typeof inv === 'object' ? inv.templateName : 'Undangan'}) berhasil disalin!`);
+};
 
 // Admin/Owner Recent Orders Data
 const recentOrders = [
