@@ -781,12 +781,10 @@ onUnmounted(() => {
                          class="w-full h-full object-cover filter brightness-[0.98] contrast-[1.02]" />
                 </div>
 
-                <!-- Couple Names -->
                 <h1 class="font-serif text-3xl md:text-5xl font-black text-[#2c3746] tracking-[0.08em] uppercase mb-4 drop-shadow-sm">
                     {{ customConfig?.groom?.nickname || 'AMANDA' }} &amp; {{ customConfig?.bride?.nickname || 'ADITYA' }}
                 </h1>
 
-                <!-- Quote / Bible Verse -->
                 <p class="text-xs md:text-sm text-[#4a5668] max-w-md mx-auto leading-relaxed font-sans px-4">
                     {{ customConfig?.quote?.customText || 'Dan mereka keduanya akan menjadi satu daging, jadi mereka tidak lagi menjadi dua orang, melainkan satu. Oleh karena itu apa yang telah dipersatukan Tuhan, janganlah manusia memisahkan.' }}
                 </p>
@@ -794,7 +792,6 @@ onUnmounted(() => {
 
         </section>
 
-        <!-- MAIN HERO SECTION FOR OTHER TEMPLATES -->
         <section v-else id="hero" class="min-h-screen relative flex flex-col justify-center items-center text-center p-6 overflow-hidden">
             <div v-if="!customConfig || customConfig.background?.useImage !== false" class="absolute inset-0 bg-cover bg-center bg-fixed opacity-30 mix-blend-overlay pointer-events-none" :style="{ backgroundImage: `url(${customConfig?.background?.imageUrl || 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80'})` }"></div>
 
@@ -813,7 +810,6 @@ onUnmounted(() => {
                     Kami mengundang Bapak/Ibu/Saudara/i untuk hadir memberikan doa restu pada hari kebahagiaan kami.
                 </p>
 
-                <!-- Interactive Hero Photo Slider for Template 2 (rose-romance) -->
                 <div v-if="activeTemplateId === 'rose-romance'" class="relative w-full max-w-xs md:max-w-sm mx-auto h-72 md:h-80 rounded-t-[140px] rounded-b-[40px] overflow-hidden border-4 border-[#f472b6]/50 shadow-[0_15px_40px_rgba(244,114,182,0.35)] my-6 group">
                     <div v-for="(photo, idx) in heroPhotos" :key="idx" 
                          :class="['absolute inset-0 transition-opacity duration-1000 ease-in-out', heroSlideIndex === idx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0']">
@@ -821,7 +817,6 @@ onUnmounted(() => {
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1f1318] via-transparent to-transparent opacity-60"></div>
                     </div>
                     
-                    <!-- Prev / Next Slider Arrows -->
                     <button @click="prevHeroSlide" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-[#f472b6] text-white p-2 rounded-full backdrop-blur-md transition shadow-lg">
                         <ChevronLeft class="w-4 h-4" />
                     </button>
@@ -829,14 +824,12 @@ onUnmounted(() => {
                         <ChevronRight class="w-4 h-4" />
                     </button>
                     
-                    <!-- Slide Indicator Dots -->
                     <div class="absolute bottom-3 inset-x-0 z-20 flex justify-center space-x-1.5">
                         <span v-for="(p, idx) in heroPhotos" :key="idx" @click="heroSlideIndex = idx"
                               :class="['h-2 rounded-full transition-all duration-300 cursor-pointer shadow', heroSlideIndex === idx ? 'w-6 bg-[#f472b6]' : 'w-2 bg-white/60']"></span>
                     </div>
                 </div>
 
-                <!-- Date Badge -->
                 <div class="pt-4">
                     <div :class="templateStyle.accentBorder" class="inline-flex items-center space-x-3 bg-black/60 border px-6 py-3 rounded-2xl shadow-xl backdrop-blur-md">
                         <Calendar :class="templateStyle.iconColor" class="w-5 h-5" />
@@ -854,7 +847,6 @@ onUnmounted(() => {
             </div>
         </section>
 
-        <!-- COMPONENT: QUOTE -->
         <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.quote !== false)" id="ayat" class="py-20 px-6 text-center relative bg-[#f7f5f0] border-t border-b border-[#2c3746]/15">
             <div class="max-w-3xl mx-auto gsap-fade-up">
                 <div class="w-12 h-12 rounded-full bg-[#2c3746]/10 border border-[#2c3746]/30 flex items-center justify-center mx-auto mb-5 text-[#2c3746]">
@@ -881,30 +873,24 @@ onUnmounted(() => {
             </div>
         </section>
 
-        <!-- COMPONENT: MEMPELAI / COUPLE SECTION FOR TEMPLATE 1 (midnight-gold) MATCHING USER SCREENSHOT DESIGN -->
         <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.mempelai !== false)" id="mempelai" class="py-24 px-6 relative overflow-hidden bg-[#f7f5f0]">
             <div class="max-w-3xl mx-auto text-center">
-                <!-- Section Title -->
                 <div class="mb-14 gsap-fade-up">
                     <h2 class="font-script text-4xl md:text-6xl text-[#2c3746] font-normal">Bride and Groom</h2>
                 </div>
 
                 <div class="space-y-20">
                     
-                    <!-- Mempelai Wanita (Bride) Card -->
                     <div class="gsap-scale-up text-center max-w-md mx-auto">
-                        <!-- Photo Box with Dark Navy Border -->
                         <div class="w-full max-w-xs md:max-w-sm mx-auto aspect-[3/4] border-4 border-[#2c3746] shadow-xl overflow-hidden mb-5 bg-slate-200">
                             <img :src="customConfig?.bride?.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'" 
                                  class="w-full h-full object-cover filter brightness-[0.98] contrast-[1.02]" />
                         </div>
 
-                        <!-- Name -->
                         <h3 class="font-serif text-2xl md:text-3xl font-bold text-[#2c3746] mb-2">
                             {{ customConfig?.bride?.name || 'Amanda Putri' }}
                         </h3>
                         
-                        <!-- Instagram Button -->
                         <div class="mb-3">
                             <a :href="`https://instagram.com/${(customConfig?.bride?.instagram || 'amandaput').replace('@','')}`" target="_blank" class="inline-flex items-center space-x-2 bg-[#2c3746] hover:bg-[#1b232e] text-white text-xs font-medium px-4 py-2 rounded-md shadow transition">
                                 <Eye class="w-3.5 h-3.5" />
@@ -912,33 +898,27 @@ onUnmounted(() => {
                             </a>
                         </div>
 
-                        <!-- Divider Order Text -->
                         <div class="flex items-center justify-center space-x-3 my-3 max-w-xs mx-auto text-[#2c3746]">
                             <div class="h-0.5 w-12 bg-[#2c3746]/60"></div>
                             <span class="text-xs font-bold uppercase tracking-wider">{{ customConfig?.bride?.orderText || 'Putri Pertama dari' }}</span>
                             <div class="h-0.5 w-12 bg-[#2c3746]/60"></div>
                         </div>
 
-                        <!-- Parents Names -->
                         <p class="text-sm md:text-base text-[#4a5668] leading-relaxed max-w-xs mx-auto font-normal">
                             {{ customConfig?.bride?.father || 'Bapak Iwan Susanto' }} dan {{ customConfig?.bride?.mother || 'Ibu Ani Wulandari' }}
                         </p>
                     </div>
 
-                    <!-- Mempelai Pria (Groom) Card -->
                     <div class="gsap-scale-up text-center max-w-md mx-auto">
-                        <!-- Photo Box with Dark Navy Border -->
                         <div class="w-full max-w-xs md:max-w-sm mx-auto aspect-[3/4] border-4 border-[#2c3746] shadow-xl overflow-hidden mb-5 bg-slate-200">
                             <img :src="customConfig?.groom?.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'" 
                                  class="w-full h-full object-cover filter brightness-[0.98] contrast-[1.02]" />
                         </div>
 
-                        <!-- Name -->
                         <h3 class="font-serif text-2xl md:text-3xl font-bold text-[#2c3746] mb-2">
                             {{ customConfig?.groom?.name || 'Aditya Kusuma' }}
                         </h3>
                         
-                        <!-- Instagram Button -->
                         <div class="mb-3">
                             <a :href="`https://instagram.com/${(customConfig?.groom?.instagram || 'adityakusuma').replace('@','')}`" target="_blank" class="inline-flex items-center space-x-2 bg-[#2c3746] hover:bg-[#1b232e] text-white text-xs font-medium px-4 py-2 rounded-md shadow transition">
                                 <Eye class="w-3.5 h-3.5" />
@@ -946,14 +926,12 @@ onUnmounted(() => {
                             </a>
                         </div>
 
-                        <!-- Divider Order Text -->
                         <div class="flex items-center justify-center space-x-3 my-3 max-w-xs mx-auto text-[#2c3746]">
                             <div class="h-0.5 w-12 bg-[#2c3746]/60"></div>
                             <span class="text-xs font-bold uppercase tracking-wider">{{ customConfig?.groom?.orderText || 'Putra Pertama dari' }}</span>
                             <div class="h-0.5 w-12 bg-[#2c3746]/60"></div>
                         </div>
 
-                        <!-- Parents Names -->
                         <p class="text-sm md:text-base text-[#4a5668] leading-relaxed max-w-xs mx-auto font-normal">
                             {{ customConfig?.groom?.father || 'Bapak Hendra Wijaya' }} dan {{ customConfig?.groom?.mother || 'Ibu Ratna Wijaya' }}
                         </p>
