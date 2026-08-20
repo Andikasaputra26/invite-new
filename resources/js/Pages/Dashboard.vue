@@ -75,81 +75,13 @@ const customerInvitations = ref([
         declinedCount: 7,
         wishesCount: 15,
         slug: 'kiara-dimas'
-    },
-    {
-        id: 3,
-        title: 'Botanical Marriage Rian & Maya',
-        templateId: 'emerald-botanical',
-        templateName: 'Emerald Botanical Haven',
-        status: 'active',
-        statusText: 'Aktif & Live',
-        date: '15 Oktober 2026',
-        venue: 'Botanica Hall, Bandung',
-        thumbnail: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80',
-        guestsCount: 95,
-        attendingCount: 65,
-        maybeCount: 15,
-        declinedCount: 15,
-        wishesCount: 28,
-        slug: 'rian-maya'
-    },
-    {
-        id: 4,
-        title: 'Royal Sapphire Reception Andre & Bella',
-        templateId: 'royal-velvet',
-        templateName: 'Royal Velvet Sapphire',
-        status: 'draft',
-        statusText: 'Draft',
-        date: '20 November 2026',
-        venue: 'Sapphire Ballroom, Surabaya',
-        thumbnail: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80',
-        guestsCount: 200,
-        attendingCount: 140,
-        maybeCount: 40,
-        declinedCount: 20,
-        wishesCount: 50,
-        slug: 'andre-bella'
-    },
-    {
-        id: 5,
-        title: 'Terracotta Boho Wedding Fajar & Nisa',
-        templateId: 'boho-terracotta',
-        templateName: 'Terracotta Rustic Warmth',
-        status: 'active',
-        statusText: 'Aktif & Live',
-        date: '12 Desember 2026',
-        venue: 'Villa Sunset Terracotta, Bali',
-        thumbnail: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80',
-        guestsCount: 150,
-        attendingCount: 110,
-        maybeCount: 25,
-        declinedCount: 15,
-        wishesCount: 38,
-        slug: 'fajar-nisa'
-    },
-    {
-        id: 6,
-        title: 'Monochrome Nordic Celebration Kevin & Clara',
-        templateId: 'minimalist-monochrome',
-        templateName: 'Nordic Monochrome Minimalist',
-        status: 'draft',
-        statusText: 'Draft',
-        date: '18 Januari 2027',
-        venue: 'The Grand Pavilion, Jakarta',
-        thumbnail: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80',
-        guestsCount: 300,
-        attendingCount: 210,
-        maybeCount: 50,
-        declinedCount: 40,
-        wishesCount: 65,
-        slug: 'kevin-clara'
     }
 ]);
 
 // Guest Name Link Generator State
 const guestInputName = ref('Budi Santoso');
 const selectedInvitation = ref(customerInvitations.value[0]);
-const selectedSlug = computed(() => selectedInvitation.value?.slug || 'romeo-juliet');
+const selectedSlug = computed(() => selectedInvitation.value?.slug || 'arya-sekar');
 const windowLocationOrigin = computed(() => typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8000');
 
 const copyPersonalizedLink = () => {
@@ -185,7 +117,7 @@ const triggerToast = (msg) => {
 const copyShareLink = (inv) => {
     const templatePath = typeof inv === 'object' ? inv.templateId : 'midnight-gold';
     const invId = typeof inv === 'object' ? inv.id : '1';
-    const shareUrl = `${window.location.origin}/demo/invitation/${templatePath}?id=${invId}&to=NamaTamu`;
+    const shareUrl = `${window.location.origin}/v/${inv.slug || 'arya-sekar'}`;
     navigator.clipboard.writeText(shareUrl);
     triggerToast(`Link undangan unik (${typeof inv === 'object' ? inv.templateName : 'Undangan'}) berhasil disalin!`);
 };
@@ -194,10 +126,7 @@ const copyShareLink = (inv) => {
 const recentOrders = [
     { id: '#ORD-9021', customer: 'Ahmad Wijaya', template: 'Midnight Serenade Gold', status: 'Lunas', date: '27 Jul 2026', amount: 'Rp 149.000' },
     { id: '#ORD-9020', customer: 'Siska Larasati', template: 'Floral Garden Romance', status: 'Menunggu', date: '27 Jul 2026', amount: 'Rp 129.000' },
-    { id: '#ORD-9019', customer: 'Rian Hidayat', template: 'Emerald Botanical Haven', status: 'Lunas', date: '26 Jul 2026', amount: 'Rp 139.000' },
-    { id: '#ORD-9018', customer: 'Andre Kurniawan', template: 'Royal Velvet Sapphire', status: 'Lunas', date: '26 Jul 2026', amount: 'Rp 169.000' },
-    { id: '#ORD-9017', customer: 'Fajar & Nisa', template: 'Terracotta Rustic Warmth', status: 'Lunas', date: '25 Jul 2026', amount: 'Rp 159.000' },
-    { id: '#ORD-9016', customer: 'Kevin & Clara', template: 'Nordic Monochrome Minimalist', status: 'Lunas', date: '24 Jul 2026', amount: 'Rp 179.000' },
+    { id: '#ORD-9019', customer: 'Rian Hidayat', template: 'Emerald Botanical Haven', status: 'Lunas', date: '26 Jul 2026', amount: 'Rp 139.000' }
 ];
 
 // Guestbook Wishes Snippet
@@ -207,14 +136,11 @@ const recentWishes = [
     { name: 'Dion Amanda', status: 'Ragu', time: '5 jam lalu', text: 'Selamat ya! Nanti diusahakan banget bisa hadir.' }
 ];
 
-// Master Template Catalog (Owner / Admin Editable)
+// Master Template Catalog
 const templateCatalog = ref([
     { id: 'midnight-gold', name: 'Midnight Serenade Gold', category: 'Luxury & Royal', price: 'Rp 149.000', salesCount: 1204, status: 'Published', badge: 'Terpopuler', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80' },
     { id: 'rose-romance', name: 'Floral Garden Romance', category: 'Romantic & Pastel', price: 'Rp 129.000', salesCount: 856, status: 'Published', badge: 'Terbaru', img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80' },
-    { id: 'emerald-botanical', name: 'Emerald Botanical Haven', category: 'Nature & Glass', price: 'Rp 139.000', salesCount: 512, status: 'Published', badge: 'Unik & Mint', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80' },
-    { id: 'royal-velvet', name: 'Royal Velvet Sapphire', category: 'Regal & Platinum', price: 'Rp 169.000', salesCount: 420, status: 'Published', badge: 'Eksklusif', img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80' },
-    { id: 'boho-terracotta', name: 'Terracotta Rustic Warmth', category: 'Warm Boho & Amber', price: 'Rp 159.000', salesCount: 630, status: 'Published', badge: 'Boho Vintage', img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80' },
-    { id: 'minimalist-monochrome', name: 'Nordic Monochrome Minimalist', category: 'Modern B&W Architecture', price: 'Rp 179.000', salesCount: 789, status: 'Published', badge: 'Minimalis', img: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=400&q=80' }
+    { id: 'emerald-botanical', name: 'Emerald Botanical Haven', category: 'Nature & Glass', price: 'Rp 139.000', salesCount: 512, status: 'Published', badge: 'Unik & Mint', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80' }
 ]);
 
 const editingTemplate = ref(null);
@@ -238,7 +164,6 @@ const saveTemplateChanges = () => {
 // Synchronize saved customizations from localStorage with Dashboard Cards
 const syncSavedCustomizations = () => {
     try {
-        // 1. Sync customer invitations list
         customerInvitations.value = customerInvitations.value.map(inv => {
             const savedDataStr = localStorage.getItem(`customer_invitation_${inv.id}`) 
                 || localStorage.getItem(`template_config_${inv.templateId}`);
@@ -263,27 +188,6 @@ const syncSavedCustomizations = () => {
                 };
             }
             return inv;
-        });
-
-        // 2. Sync template catalog items for Owner view
-        templateCatalog.value = templateCatalog.value.map(tpl => {
-            const savedTplStr = localStorage.getItem(`template_config_${tpl.id}`);
-            if (savedTplStr) {
-                const saved = JSON.parse(savedTplStr);
-                const brideNickname = saved.bride?.nickname || saved.bride?.name || '';
-                const groomNickname = saved.groom?.nickname || saved.groom?.name || '';
-                const name = (brideNickname && groomNickname) 
-                    ? `${tpl.name} (${groomNickname} & ${brideNickname})` 
-                    : tpl.name;
-                const img = saved.bride?.photo || saved.gallery?.photos?.[0] || tpl.img;
-                return {
-                    ...tpl,
-                    name,
-                    img,
-                    customData: saved
-                };
-            }
-            return tpl;
         });
     } catch (e) {
         console.error('Error syncing saved customizations:', e);
@@ -312,15 +216,14 @@ onMounted(() => {
             </div>
         </transition>
 
-        <div class="bg-slate-50 min-h-[calc(100vh-64px)] pb-16 font-sans">
+        <div class="bg-[#FAF9F5] min-h-[calc(100vh-64px)] pb-16 font-sans">
             
-            <!-- Professional Main Container -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
                 
-                <!-- TOP HEADER BAR & DEMO SWITCHER -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+                <!-- TOP HEADER BAR & ROLE SWITCHER -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200/80">
                     <div>
-                        <h1 class="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
+                        <h1 class="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
                             {{ currentRoleView === 'customer' ? `Selamat Datang, ${$page.props.auth?.user?.name || 'Pelanggan'}` : 'Dashboard Administrator' }}
                         </h1>
                         <p class="text-xs lg:text-sm text-slate-500 mt-1">
@@ -328,44 +231,42 @@ onMounted(() => {
                         </p>
                     </div>
 
-                    <!-- Clean Role Switcher (For Demo Testing) -->
-                    <div class="flex items-center space-x-3 bg-white p-1.5 rounded-xl border border-slate-200 shadow-sm text-xs">
+                    <!-- Role Switcher -->
+                    <div class="flex items-center space-x-2 bg-white p-1.5 rounded-xl border border-slate-200/80 shadow-xs text-xs">
                         <span class="text-slate-400 font-medium px-2">Mode View:</span>
                         <button 
                             @click="currentRoleView = 'customer'" 
-                            :class="[currentRoleView === 'customer' ? 'bg-slate-900 text-white font-semibold' : 'text-slate-600 hover:text-slate-900', 'px-3 py-1.5 rounded-lg transition']"
+                            :class="[currentRoleView === 'customer' ? 'bg-orange-500 text-white font-bold shadow-xs' : 'text-slate-600 hover:text-slate-900', 'px-3.5 py-1.5 rounded-lg transition']"
                         >
                             Pelanggan
                         </button>
                         <button 
                             @click="currentRoleView = 'owner'" 
-                            :class="[currentRoleView === 'owner' ? 'bg-slate-900 text-white font-semibold' : 'text-slate-600 hover:text-slate-900', 'px-3 py-1.5 rounded-lg transition']"
+                            :class="[currentRoleView === 'owner' ? 'bg-orange-500 text-white font-bold shadow-xs' : 'text-slate-600 hover:text-slate-900', 'px-3.5 py-1.5 rounded-lg transition']"
                         >
                             Admin / Owner
                         </button>
                     </div>
                 </div>
 
-                <!-- ==================================================== -->
-                <!-- 1. DASHBOARD MODE PELANGGAN (2 EXCLUSIVE MENUS)      -->
-                <!-- ==================================================== -->
+                <!-- 1. DASHBOARD MODE PELANGGAN -->
                 <div v-if="currentRoleView === 'customer'" class="space-y-6">
                     
-                    <!-- CUSTOMER MENU NAVIGATION TABS (2 EXCLUSIVE MENUS) -->
-                    <div class="flex border-b border-slate-200 space-x-6 text-sm font-bold pb-1">
+                    <!-- CUSTOMER MENU TABS -->
+                    <div class="flex border-b border-slate-200/80 space-x-6 text-sm font-bold pb-1">
                         <button 
                             @click="customerTab = 'template'" 
-                            :class="[customerTab === 'template' ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-400 hover:text-slate-700', 'pb-3 border-b-2 transition flex items-center space-x-2']"
+                            :class="[customerTab === 'template' ? 'border-orange-500 text-orange-600' : 'border-transparent text-slate-400 hover:text-slate-700', 'pb-3 border-b-2 transition flex items-center space-x-2']"
                         >
-                            <Sliders class="w-4 h-4 text-amber-500" />
+                            <Sliders class="w-4 h-4 text-orange-500" />
                             <span>Custom Template Terpilih</span>
                         </button>
 
                         <button 
                             @click="customerTab = 'transactions'" 
-                            :class="[customerTab === 'transactions' ? 'border-slate-900 text-slate-900' : 'border-transparent text-slate-400 hover:text-slate-700', 'pb-3 border-b-2 transition flex items-center space-x-2']"
+                            :class="[customerTab === 'transactions' ? 'border-orange-500 text-orange-600' : 'border-transparent text-slate-400 hover:text-slate-700', 'pb-3 border-b-2 transition flex items-center space-x-2']"
                         >
-                            <CreditCard class="w-4 h-4 text-emerald-500" />
+                            <CreditCard class="w-4 h-4 text-emerald-600" />
                             <span>Riwayat Transaksi</span>
                         </button>
                     </div>
@@ -373,47 +274,42 @@ onMounted(() => {
                     <!-- MENU 1: CUSTOM TEMPLATE TERPILIH VIEW -->
                     <div v-if="customerTab === 'template'" class="space-y-8">
                         
-                        <!-- Quick Metrics Summary (3 Compact Cards) -->
+                        <!-- Quick Metrics Summary -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                            
-                            <!-- Metric 1 -->
-                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
                                 <div class="space-y-1">
                                     <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Undangan Saya</span>
-                                    <div class="text-2xl font-bold text-slate-900">2 Proyek</div>
+                                    <div class="text-2xl font-extrabold text-slate-900">2 Proyek</div>
                                     <span class="text-[11px] text-emerald-600 font-semibold flex items-center">
-                                        <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> 1 Undangan Aktif
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> 1 Undangan Aktif & Live
                                     </span>
                                 </div>
-                                <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
+                                <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
                                     <Smartphone class="w-6 h-6" />
                                 </div>
                             </div>
 
-                            <!-- Metric 2 -->
-                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
                                 <div class="space-y-1">
                                     <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Konfirmasi Tamu (RSVP)</span>
-                                    <div class="text-2xl font-bold text-slate-900">84 Hadir</div>
+                                    <div class="text-2xl font-extrabold text-slate-900">84 Hadir</div>
                                     <span class="text-[11px] text-slate-500 font-medium">Dari total 128 Tamu diundang</span>
                                 </div>
-                                <div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
                                     <UserCheck class="w-6 h-6" />
                                 </div>
                             </div>
 
-                            <!-- Metric 3 -->
-                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
                                 <div class="space-y-1">
                                     <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pesan Buku Tamu</span>
-                                    <div class="text-2xl font-bold text-slate-900">42 Ucapan</div>
+                                    <div class="text-2xl font-extrabold text-slate-900">42 Ucapan</div>
                                     <span class="text-[11px] text-slate-500 font-medium">42 doa & harapan tersimpan</span>
                                 </div>
-                                <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                                     <MessageSquare class="w-6 h-6" />
                                 </div>
                             </div>
-
                         </div>
 
                         <!-- ACTIVE INVITATIONS SECTION -->
@@ -425,15 +321,15 @@ onMounted(() => {
                                 </div>
                                 <Link 
                                     :href="route('customer.invitations.edit')" 
-                                    class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs transition flex items-center shadow-sm"
+                                    class="px-4 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs transition flex items-center shadow-md shadow-orange-500/20"
                                 >
-                                    <Plus class="w-4 h-4 mr-1.5" /> Buat / Edit Undangan
+                                    <Plus class="w-4 h-4 mr-1.5" /> Edit Template Undangan
                                 </Link>
                             </div>
 
                             <!-- Cards Grid -->
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                <div v-for="inv in customerInvitations" :key="inv.id" class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-5 hover:shadow-md transition">
+                                <div v-for="inv in customerInvitations" :key="inv.id" class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6 space-y-5 hover:shadow-md transition">
                                     <div class="flex items-start space-x-4">
                                         <img :src="inv.thumbnail" class="w-20 h-20 rounded-xl object-cover border border-slate-100 flex-shrink-0">
                                         <div class="flex-1 min-w-0">
@@ -443,9 +339,9 @@ onMounted(() => {
                                                 </span>
                                                 <span class="text-[11px] text-slate-400">• {{ inv.templateName }}</span>
                                             </div>
-                                            <h3 class="text-base font-bold text-slate-900 truncate">{{ inv.title }}</h3>
+                                            <h3 class="text-base font-extrabold text-slate-900 truncate">{{ inv.title }}</h3>
                                             <div class="flex items-center space-x-4 text-xs text-slate-500 mt-2">
-                                                <span class="flex items-center"><Calendar class="w-3.5 h-3.5 mr-1 text-slate-400" /> {{ inv.date }}</span>
+                                                <span class="flex items-center"><Calendar class="w-3.5 h-3.5 mr-1 text-orange-500" /> {{ inv.date }}</span>
                                                 <span class="flex items-center"><Users class="w-3.5 h-3.5 mr-1 text-slate-400" /> {{ inv.attendingCount }} Tamu Hadir</span>
                                             </div>
                                         </div>
@@ -455,117 +351,39 @@ onMounted(() => {
                                     <div class="pt-4 border-t border-slate-100 flex flex-wrap gap-2">
                                         <Link 
                                             :href="`/customer/invitations/edit?template=${inv.templateId}&id=${inv.id}`" 
-                                            class="flex-1 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs transition text-center flex items-center justify-center shadow-sm"
+                                            class="flex-1 px-4 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs transition text-center flex items-center justify-center shadow-xs"
                                         >
-                                            <Sliders class="w-3.5 h-3.5 mr-1.5 text-amber-400" /> Edit Komponen
+                                            <Sliders class="w-3.5 h-3.5 mr-1.5" /> Edit Template
                                         </Link>
                                         
                                         <a 
-                                            :href="`/demo/invitation/${inv.templateId}?id=${inv.id}`" 
+                                            :href="`/v/${inv.slug}`" 
                                             target="_blank"
-                                            class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold rounded-xl text-xs transition flex items-center justify-center"
+                                            class="px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold rounded-xl text-xs transition flex items-center justify-center"
                                         >
                                             <Eye class="w-3.5 h-3.5 mr-1.5 text-slate-500" /> Pratinjau
                                         </a>
 
                                         <button 
                                             @click="copyShareLink(inv)"
-                                            class="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 font-semibold rounded-xl text-xs transition flex items-center justify-center"
+                                            class="px-4 py-2.5 bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200 font-bold rounded-xl text-xs transition flex items-center justify-center"
                                         >
-                                            <Share2 class="w-3.5 h-3.5 mr-1.5 text-amber-600" /> Bagikan Link
+                                            <Share2 class="w-3.5 h-3.5 mr-1.5 text-orange-500" /> Bagikan Link
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- RSVP & GUESTBOOK WISHES SECTION -->
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            
-                            <!-- Guestbook Recent Feed -->
-                            <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4 shadow-sm">
-                                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                                    <h3 class="text-sm font-bold text-slate-900 flex items-center">
-                                        <MessageSquare class="w-4 h-4 mr-2 text-slate-700" /> Ucapan & Doa Masuk
-                                    </h3>
-                                    <span class="text-xs text-slate-400 font-medium">Terbaru</span>
-                                </div>
-
-                                <div class="space-y-3">
-                                    <div v-for="(w, idx) in recentWishes" :key="idx" class="p-3.5 rounded-xl bg-slate-50 border border-slate-100 text-xs space-y-1">
-                                        <div class="flex justify-between items-center">
-                                            <div class="flex items-center space-x-2">
-                                                <span class="font-bold text-slate-900">{{ w.name }}</span>
-                                                <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-700">{{ w.status }}</span>
-                                            </div>
-                                            <span class="text-[10px] text-slate-400">{{ w.time }}</span>
-                                        </div>
-                                        <p class="text-slate-600 italic">"{{ w.text }}"</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Generator Link Undangan Personal Tamu -->
-                            <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-md flex flex-col justify-between space-y-4">
-                                <div class="space-y-2">
-                                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                                        <Share2 class="w-5 h-5" />
-                                    </div>
-                                    <h3 class="text-base font-bold text-white">Generator Link Nama Tamu</h3>
-                                    <p class="text-xs text-slate-300 leading-relaxed">
-                                        Ketik nama tamu yang ingin Anda undang untuk menghasilkan link personalisasi otomatis.
-                                    </p>
-                                </div>
-
-                                <!-- Input Nama Tamu -->
-                                <div class="space-y-3 pt-1">
-                                    <div>
-                                        <label class="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Nama Tamu Yang Diundang</label>
-                                        <input 
-                                            v-model="guestInputName" 
-                                            type="text" 
-                                            placeholder="Contoh: Budi Santoso / Keluarga Budi" 
-                                            class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 focus:outline-none"
-                                        />
-                                    </div>
-
-                                    <!-- Live Generated URL Preview -->
-                                    <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-3 text-[11px] space-y-1">
-                                        <span class="text-slate-400 font-semibold block">Link Personal Terbentuk:</span>
-                                        <span class="text-amber-400 font-mono truncate block text-[10px]">
-                                            {{ windowLocationOrigin }}/v/{{ selectedSlug }}?to={{ encodeURIComponent(guestInputName || 'Tamu Undangan') }}
-                                        </span>
-                                    </div>
-
-                                    <!-- Action Buttons: Copy Link & Send WhatsApp -->
-                                    <div class="grid grid-cols-2 gap-2 pt-1">
-                                        <button 
-                                            @click="copyPersonalizedLink" 
-                                            class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-bold rounded-xl text-xs transition flex items-center justify-center shadow"
-                                        >
-                                            <Copy class="w-3.5 h-3.5 mr-1.5 text-amber-400" /> Salin Link
-                                        </button>
-
-                                        <button 
-                                            @click="sendWhatsAppMessage" 
-                                            class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition flex items-center justify-center shadow-lg"
-                                        >
-                                            <Send class="w-3.5 h-3.5 mr-1.5" /> Kirim WA
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
 
                     <!-- MENU 2: RIWAYAT TRANSAKSI VIEW -->
                     <div v-else class="space-y-6">
-                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-4">
+                        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6 space-y-4">
                             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                                 <div>
-                                    <h3 class="text-base font-bold text-slate-900 flex items-center">
-                                        <FileText class="w-5 h-5 mr-2 text-slate-700" /> Riwayat Transaksi Pembelian Template
+                                    <h3 class="text-base font-extrabold text-slate-900 flex items-center">
+                                        <FileText class="w-5 h-5 mr-2 text-orange-500" /> Riwayat Transaksi Pembelian Template
                                     </h3>
                                     <p class="text-xs text-slate-500 mt-0.5">Daftar transaksi pembayaran template yang pernah Anda lakukan.</p>
                                 </div>
@@ -574,7 +392,6 @@ onMounted(() => {
                                 </span>
                             </div>
 
-                            <!-- Transactions Table -->
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left text-xs text-slate-600">
                                     <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[10px] tracking-wider border-b border-slate-200">
@@ -585,7 +402,6 @@ onMounted(() => {
                                             <th class="py-3 px-4">Metode Bayar</th>
                                             <th class="py-3 px-4">Total</th>
                                             <th class="py-3 px-4 text-center">Status</th>
-                                            <th class="py-3 px-4 text-right">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-100">
@@ -600,12 +416,6 @@ onMounted(() => {
                                                     ✓ {{ trx.status }}
                                                 </span>
                                             </td>
-                                            <td class="py-3.5 px-4 text-right">
-                                                <button @click="triggerToast(`Invoice ${trx.id} berhasil diunduh!`)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-lg transition inline-flex items-center space-x-1">
-                                                    <Download class="w-3.5 h-3.5" />
-                                                    <span>Invoice</span>
-                                                </button>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -614,219 +424,8 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <!-- ==================================================== -->
-                <!-- 2. DASHBOARD MODE OWNER / ADMIN (CLEAN & PROFESSIONAL) -->
-                <!-- ==================================================== -->
-                <div v-else class="space-y-8">
-                    
-                    <!-- Admin Metrics -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-2">
-                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Pendapatan</span>
-                            <div class="text-2xl font-bold text-slate-900">Rp 45.200.000</div>
-                            <span class="text-xs text-emerald-600 font-semibold">+12% dari bulan lalu</span>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-2">
-                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pesanan Hari Ini</span>
-                            <div class="text-2xl font-bold text-slate-900">124 Transaksi</div>
-                            <span class="text-xs text-emerald-600 font-semibold">+8% dibanding kemarin</span>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-2">
-                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Template Aktif</span>
-                            <div class="text-2xl font-bold text-slate-900">56 Preset</div>
-                            <span class="text-xs text-slate-500">Tersedia di katalog</span>
-                        </div>
-
-                        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-2">
-                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Pelanggan</span>
-                            <div class="text-2xl font-bold text-slate-900">1.840 Pengguna</div>
-                            <span class="text-xs text-emerald-600 font-semibold">+24% pertumbuhan</span>
-                        </div>
-                    </div>
-
-                    <!-- Master Template Editor Section for Owner -->
-                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-900 flex items-center">
-                                    <Sliders class="w-5 h-5 mr-2 text-amber-500" /> Kelola & Edit Master Template (Owner)
-                                </h3>
-                                <p class="text-xs text-slate-500 mt-0.5">Pilih template di bawah untuk langsung membuka Editor Desain Master atau mengedit data template.</p>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <Link :href="route('admin.templates.index')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition flex items-center">
-                                    <Layers class="w-4 h-4 mr-1.5 text-slate-600" /> Manajemen Katalog Full
-                                </Link>
-                            </div>
-                        </div>
-
-                        <!-- Template Master Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div v-for="tpl in templateCatalog" :key="tpl.id" class="bg-slate-50/70 rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
-                                <div class="relative h-44 overflow-hidden">
-                                    <img :src="tpl.img" class="w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-                                    <span class="absolute top-3 right-3 bg-amber-400 text-slate-950 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">
-                                        {{ tpl.badge }}
-                                    </span>
-                                    <div class="absolute bottom-3 left-3 right-3 text-white">
-                                        <span class="text-[10px] font-semibold text-amber-300 block uppercase tracking-wider">{{ tpl.category }}</span>
-                                        <h4 class="text-sm font-bold text-white truncate">{{ tpl.name }}</h4>
-                                    </div>
-                                </div>
-
-                                <div class="p-4 space-y-4 flex-1 flex flex-col justify-between">
-                                    <div class="flex justify-between items-center text-xs">
-                                        <div>
-                                            <span class="text-[10px] text-slate-400 block font-semibold">Harga Jual</span>
-                                            <span class="font-bold text-slate-900 text-sm">{{ tpl.price }}</span>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="text-[10px] text-slate-400 block font-semibold">Terjual</span>
-                                            <span class="font-bold text-slate-900">{{ tpl.salesCount }} pcs</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Actions for Owner -->
-                                    <div class="pt-2 border-t border-slate-200/80 flex items-center space-x-2">
-                                        <Link 
-                                            :href="`/customer/invitations/edit?template=${tpl.id}`" 
-                                            class="flex-1 py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition flex items-center justify-center space-x-1.5 shadow-sm"
-                                        >
-                                            <Sliders class="w-3.5 h-3.5 text-amber-400" />
-                                            <span>Edit Desain Template</span>
-                                        </Link>
-
-                                        <button 
-                                            @click="openEditTemplateModal(tpl)" 
-                                            title="Edit Data Template" 
-                                            class="p-2 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded-xl text-xs transition"
-                                        >
-                                            <Settings class="w-4 h-4 text-slate-700" />
-                                        </button>
-
-                                        <a 
-                                            :href="`/demo/invitation/${tpl.id}`" 
-                                            target="_blank" 
-                                            title="Pratinjau Live" 
-                                            class="p-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold rounded-xl text-xs transition"
-                                        >
-                                            <Eye class="w-4 h-4 text-slate-600" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Orders Table -->
-                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden space-y-4">
-                        <div class="p-6 border-b border-slate-100 flex justify-between items-center">
-                            <h3 class="text-base font-bold text-slate-900">Daftar Transaksi Pesanan Terbaru</h3>
-                            <button class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold hover:bg-slate-800 transition">
-                                Export Data CSV
-                            </button>
-                        </div>
-
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs text-slate-600">
-                                <thead class="bg-slate-50 border-b border-slate-100 font-bold uppercase text-[10px] text-slate-400">
-                                    <tr>
-                                        <th class="px-6 py-3">ID Pesanan</th>
-                                        <th class="px-6 py-3">Nama Pelanggan</th>
-                                        <th class="px-6 py-3">Template</th>
-                                        <th class="px-6 py-3">Tanggal</th>
-                                        <th class="px-6 py-3">Status</th>
-                                        <th class="px-6 py-3 text-right">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-100 font-medium">
-                                    <tr v-for="ord in recentOrders" :key="ord.id" class="hover:bg-slate-50/80 transition">
-                                        <td class="px-6 py-4 font-bold text-slate-900">{{ ord.id }}</td>
-                                        <td class="px-6 py-4 font-semibold text-slate-800">{{ ord.customer }}</td>
-                                        <td class="px-6 py-4 italic text-slate-500">{{ ord.template }}</td>
-                                        <td class="px-6 py-4 text-slate-400">{{ ord.date }}</td>
-                                        <td class="px-6 py-4">
-                                            <span :class="['px-2.5 py-1 rounded-full text-[10px] font-bold', ord.status === 'Lunas' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800']">
-                                                {{ ord.status }}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 text-right font-bold text-slate-900">{{ ord.amount }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-
             </div>
 
         </div>
-
-        <!-- Modal Quick Edit Master Template (Owner) -->
-        <div v-if="showEditTemplateModal && editingTemplate" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-            <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-6 animate-in fade-in zoom-in duration-200">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-                            <Settings class="w-5 h-5" />
-                        </div>
-                        <div>
-                            <h3 class="text-base font-bold text-slate-900">Edit Pengaturan Master Template</h3>
-                            <p class="text-xs text-slate-500">Ubah detail metadata katalog template</p>
-                        </div>
-                    </div>
-                    <button @click="showEditTemplateModal = false" class="text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100 transition">
-                        <X class="w-5 h-5" />
-                    </button>
-                </div>
-
-                <div class="space-y-4 text-xs">
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Nama Template</label>
-                        <input v-model="editingTemplate.name" type="text" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1">Kategori</label>
-                            <input v-model="editingTemplate.category" type="text" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
-                        </div>
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1">Harga Jual</label>
-                            <input v-model="editingTemplate.price" type="text" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1">Badge Promo/Tag</label>
-                            <input v-model="editingTemplate.badge" type="text" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
-                        </div>
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1">Status Publikasi</label>
-                            <select v-model="editingTemplate.status" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
-                                <option value="Published">Published (Aktif)</option>
-                                <option value="Draft">Draft (Tersembunyi)</option>
-                                <option value="Maintenance">Maintenance</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pt-3 border-t border-slate-100 flex items-center justify-end space-x-3">
-                    <button @click="showEditTemplateModal = false" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">
-                        Batal
-                    </button>
-                    <button @click="saveTemplateChanges" class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs shadow-md transition flex items-center">
-                        <Check class="w-4 h-4 mr-1.5 text-emerald-400" /> Simpan Perubahan
-                    </button>
-                </div>
-            </div>
-        </div>
-
     </AuthenticatedLayout>
 </template>
