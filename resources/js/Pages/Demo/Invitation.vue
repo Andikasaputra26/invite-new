@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, reactive, computed, nextTick } from 'vue';
+import { ref, onMounted, onUnmounted, reactive, computed, watch, nextTick } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -280,7 +280,7 @@ const isSubmittingRSVP = ref(false);
 const rsvpSubmitted = ref(false);
 
 const wishesList = ref(
-    props.wishes && props.wishes.length 
+    Array.isArray(props.wishes)
         ? props.wishes 
         : [
             {
@@ -303,6 +303,12 @@ const wishesList = ref(
             }
         ]
 );
+
+watch(() => props.wishes, (newWishes) => {
+    if (Array.isArray(newWishes)) {
+        wishesList.value = newWishes;
+    }
+}, { deep: true });
 
 // Countdown state
 const countdown = reactive({
@@ -626,12 +632,17 @@ onMounted(() => {
     }
 
     let stored = null;
-    // CRITICAL: Only load customized customer invitation if an explicit customer invitation ID is provided in query params or props!
     if (invitationId) {
-        stored = localStorage.getItem(`customer_invitation_${invitationId}`) || localStorage.getItem('customInvitationData');
+        stored = localStorage.getItem(`customer_invitation_${invitationId}`);
+    }
+    if (!stored && routeTemplate) {
+        stored = localStorage.getItem(`template_config_${routeTemplate}`);
+    }
+    if (!stored) {
+        stored = localStorage.getItem('customInvitationData');
     }
 
-    if (stored && invitationId) {
+    if (stored) {
         try {
             customConfig.value = JSON.parse(stored);
         } catch(e) {
@@ -1552,10 +1563,13 @@ onUnmounted(() => {
 
                     <!-- Scrollable Feed -->
                     <div class="max-h-[380px] overflow-y-auto space-y-4 pr-1 text-left custom-scrollbar">
+                        <div v-if="wishesList.length === 0" class="text-center text-xs text-slate-400 py-8 italic bg-[#202936] rounded-2xl border border-white/5 px-4">
+                            Belum ada ucapan &amp; doa. Berikan ucapan pertama Anda di atas!
+                        </div>
                         <div v-for="(wish, index) in wishesList" :key="index" class="bg-[#202936] border border-white/10 p-4 rounded-2xl shadow-inner">
                             <h4 class="font-bold text-sm text-white mb-1">{{ wish.name }}</h4>
                             <p class="text-xs text-slate-200 leading-relaxed">{{ wish.message || wish.text }}</p>
-                            <span class="text-[10px] text-slate-400 font-medium block mt-2">{{ wish.date || '5 menit yang lalu' }}</span>
+                            <span class="text-[10px] text-slate-400 font-medium block mt-2">{{ wish.date || wish.time || 'Baru saja' }}</span>
                         </div>
                     </div>
                 </div>
@@ -1616,13 +1630,16 @@ onUnmounted(() => {
                             <span>Ucapan dari Sahabat ({{ wishesList.length }})</span>
                         </h3>
 
+                        <div v-if="wishesList.length === 0" :class="templateStyle.cardBg" class="p-6 text-center text-xs text-gray-400 italic">
+                            Belum ada ucapan &amp; doa. Berikan ucapan pertama Anda!
+                        </div>
                         <div v-for="(wish, index) in wishesList" :key="index" :class="templateStyle.cardBg" class="p-5 shadow-md">
                             <div class="flex justify-between items-start mb-2">
                                 <h4 class="font-bold text-sm text-white">{{ wish.name }}</h4>
                                 <span :class="templateStyle.accentBg" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase">{{ wish.status }}</span>
                             </div>
                             <p class="text-xs text-gray-300 leading-relaxed italic">"{{ wish.message || wish.text }}"</p>
-                            <span class="block text-[10px] text-gray-500 mt-3 text-right">{{ wish.date || wish.time }}</span>
+                            <span class="block text-[10px] text-gray-500 mt-3 text-right">{{ wish.date || wish.time || 'Baru saja' }}</span>
                         </div>
                     </div>
                 </div>

@@ -31,7 +31,9 @@ class DynamicInvitationController extends Controller
                     'name' => $w->guest_name,
                     'status' => $w->attendance_status,
                     'text' => $w->message,
+                    'message' => $w->message,
                     'time' => $w->created_at->diffForHumans(),
+                    'date' => $w->created_at->diffForHumans(),
                 ];
             });
 

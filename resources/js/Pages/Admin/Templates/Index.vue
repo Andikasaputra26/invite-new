@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
+import { Sliders, Eye, Plus } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -76,7 +77,9 @@ import { Head } from '@inertiajs/vue3';
                                 <span class="text-xs font-bold text-green-700 uppercase flex items-center">
                                     <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
                                 </span>
-                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                                <Link href="/customer/invitations/edit?template=midnight-gold" class="text-xs font-bold text-slate-900 hover:text-amber-600 transition flex items-center">
+                                    <Sliders class="w-3.5 h-3.5 mr-1 text-amber-500" /> Edit Master &rarr;
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -111,7 +114,9 @@ import { Head } from '@inertiajs/vue3';
                                 <span class="text-xs font-bold text-green-700 uppercase flex items-center">
                                     <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
                                 </span>
-                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                                <Link href="/customer/invitations/edit?template=rose-romance" class="text-xs font-bold text-slate-900 hover:text-pink-600 transition flex items-center">
+                                    <Sliders class="w-3.5 h-3.5 mr-1 text-pink-500" /> Edit Master &rarr;
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -146,7 +151,9 @@ import { Head } from '@inertiajs/vue3';
                                 <span class="text-xs font-bold text-green-700 uppercase flex items-center">
                                     <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
                                 </span>
-                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                                <Link href="/customer/invitations/edit?template=emerald-botanical" class="text-xs font-bold text-slate-900 hover:text-emerald-600 transition flex items-center">
+                                    <Sliders class="w-3.5 h-3.5 mr-1 text-emerald-500" /> Edit Master &rarr;
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -181,7 +188,9 @@ import { Head } from '@inertiajs/vue3';
                                 <span class="text-xs font-bold text-green-700 uppercase flex items-center">
                                     <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
                                 </span>
-                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                                <Link href="/customer/invitations/edit?template=royal-velvet" class="text-xs font-bold text-slate-900 hover:text-sky-600 transition flex items-center">
+                                    <Sliders class="w-3.5 h-3.5 mr-1 text-sky-500" /> Edit Master &rarr;
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -216,7 +225,9 @@ import { Head } from '@inertiajs/vue3';
                                 <span class="text-xs font-bold text-green-700 uppercase flex items-center">
                                     <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
                                 </span>
-                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                                <Link href="/customer/invitations/edit?template=boho-terracotta" class="text-xs font-bold text-slate-900 hover:text-amber-700 transition flex items-center">
+                                    <Sliders class="w-3.5 h-3.5 mr-1 text-amber-600" /> Edit Master &rarr;
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -251,7 +262,9 @@ import { Head } from '@inertiajs/vue3';
                                 <span class="text-xs font-bold text-green-700 uppercase flex items-center">
                                     <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
                                 </span>
-                                <span class="text-xs font-semibold text-gray-900">Edit Master &rarr;</span>
+                                <Link href="/customer/invitations/edit?template=minimalist-monochrome" class="text-xs font-bold text-slate-900 hover:text-zinc-600 transition flex items-center">
+                                    <Sliders class="w-3.5 h-3.5 mr-1 text-zinc-700" /> Edit Master &rarr;
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -36,7 +36,9 @@ class GuestWishController extends Controller
                     'name' => $wish->guest_name,
                     'status' => $wish->attendance_status,
                     'text' => $wish->message,
+                    'message' => $wish->message,
                     'time' => $wish->created_at->diffForHumans(),
+                    'date' => $wish->created_at->diffForHumans(),
                 ]
             ]);
         }

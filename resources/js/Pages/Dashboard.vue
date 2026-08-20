@@ -1,12 +1,13 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { 
     Heart, Calendar, MapPin, Clock, Copy, Check, Gift, MessageSquare, Send, Sparkles, 
     UserCheck, Eye, Plus, ExternalLink, Share2, Users, CheckCircle2, ArrowRight, 
     Layers, Sliders, Smartphone, Shield, User, BarChart3, TrendingUp, Search,
-    ChevronRight, MoreVertical, Filter, ArrowUpRight, CreditCard, FileText, Download
+    ChevronRight, MoreVertical, Filter, ArrowUpRight, CreditCard, FileText, Download,
+    Settings, X, Palette, Layout
 } from 'lucide-vue-next';
 
 const page = usePage();
@@ -206,15 +207,96 @@ const recentWishes = [
     { name: 'Dion Amanda', status: 'Ragu', time: '5 jam lalu', text: 'Selamat ya! Nanti diusahakan banget bisa hadir.' }
 ];
 
-// Template Catalog Snippet
-const templateCatalog = [
-    { id: 'midnight-gold', name: 'Midnight Serenade Gold', category: 'Luxury & Royal', price: 'Rp 149.000', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80' },
-    { id: 'rose-romance', name: 'Floral Garden Romance', category: 'Romantic & Pastel', price: 'Rp 129.000', img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80' },
-    { id: 'emerald-botanical', name: 'Emerald Botanical Haven', category: 'Nature & Glass', price: 'Rp 139.000', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80' },
-    { id: 'royal-velvet', name: 'Royal Velvet Sapphire', category: 'Regal & Platinum', price: 'Rp 169.000', img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80' },
-    { id: 'boho-terracotta', name: 'Terracotta Rustic Warmth', category: 'Warm Boho & Amber', price: 'Rp 159.000', img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80' },
-    { id: 'minimalist-monochrome', name: 'Nordic Monochrome Minimalist', category: 'Modern B&W Architecture', price: 'Rp 179.000', img: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=400&q=80' }
-];
+// Master Template Catalog (Owner / Admin Editable)
+const templateCatalog = ref([
+    { id: 'midnight-gold', name: 'Midnight Serenade Gold', category: 'Luxury & Royal', price: 'Rp 149.000', salesCount: 1204, status: 'Published', badge: 'Terpopuler', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80' },
+    { id: 'rose-romance', name: 'Floral Garden Romance', category: 'Romantic & Pastel', price: 'Rp 129.000', salesCount: 856, status: 'Published', badge: 'Terbaru', img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80' },
+    { id: 'emerald-botanical', name: 'Emerald Botanical Haven', category: 'Nature & Glass', price: 'Rp 139.000', salesCount: 512, status: 'Published', badge: 'Unik & Mint', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80' },
+    { id: 'royal-velvet', name: 'Royal Velvet Sapphire', category: 'Regal & Platinum', price: 'Rp 169.000', salesCount: 420, status: 'Published', badge: 'Eksklusif', img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80' },
+    { id: 'boho-terracotta', name: 'Terracotta Rustic Warmth', category: 'Warm Boho & Amber', price: 'Rp 159.000', salesCount: 630, status: 'Published', badge: 'Boho Vintage', img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80' },
+    { id: 'minimalist-monochrome', name: 'Nordic Monochrome Minimalist', category: 'Modern B&W Architecture', price: 'Rp 179.000', salesCount: 789, status: 'Published', badge: 'Minimalis', img: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=400&q=80' }
+]);
+
+const editingTemplate = ref(null);
+const showEditTemplateModal = ref(false);
+
+const openEditTemplateModal = (template) => {
+    editingTemplate.value = { ...template };
+    showEditTemplateModal.value = true;
+};
+
+const saveTemplateChanges = () => {
+    if (!editingTemplate.value) return;
+    const index = templateCatalog.value.findIndex(t => t.id === editingTemplate.value.id);
+    if (index !== -1) {
+        templateCatalog.value[index] = { ...editingTemplate.value };
+    }
+    showEditTemplateModal.value = false;
+    triggerToast(`Pengaturan template "${editingTemplate.value.name}" berhasil diperbarui!`);
+};
+
+// Synchronize saved customizations from localStorage with Dashboard Cards
+const syncSavedCustomizations = () => {
+    try {
+        // 1. Sync customer invitations list
+        customerInvitations.value = customerInvitations.value.map(inv => {
+            const savedDataStr = localStorage.getItem(`customer_invitation_${inv.id}`) 
+                || localStorage.getItem(`template_config_${inv.templateId}`);
+            if (savedDataStr) {
+                const saved = JSON.parse(savedDataStr);
+                const brideNickname = saved.bride?.nickname || saved.bride?.name || '';
+                const groomNickname = saved.groom?.nickname || saved.groom?.name || '';
+                const title = (brideNickname && groomNickname) 
+                    ? `Walimatul Ursy ${groomNickname} & ${brideNickname}` 
+                    : inv.title;
+                const venue = saved.event?.venueName || saved.event?.venue || inv.venue;
+                const date = saved.event?.date || inv.date;
+                const thumbnail = saved.bride?.photo || saved.gallery?.photos?.[0] || inv.thumbnail;
+                return {
+                    ...inv,
+                    title,
+                    venue,
+                    date,
+                    thumbnail,
+                    templateId: saved.templateId || inv.templateId,
+                    customData: saved
+                };
+            }
+            return inv;
+        });
+
+        // 2. Sync template catalog items for Owner view
+        templateCatalog.value = templateCatalog.value.map(tpl => {
+            const savedTplStr = localStorage.getItem(`template_config_${tpl.id}`);
+            if (savedTplStr) {
+                const saved = JSON.parse(savedTplStr);
+                const brideNickname = saved.bride?.nickname || saved.bride?.name || '';
+                const groomNickname = saved.groom?.nickname || saved.groom?.name || '';
+                const name = (brideNickname && groomNickname) 
+                    ? `${tpl.name} (${groomNickname} & ${brideNickname})` 
+                    : tpl.name;
+                const img = saved.bride?.photo || saved.gallery?.photos?.[0] || tpl.img;
+                return {
+                    ...tpl,
+                    name,
+                    img,
+                    customData: saved
+                };
+            }
+            return tpl;
+        });
+    } catch (e) {
+        console.error('Error syncing saved customizations:', e);
+    }
+};
+
+onMounted(() => {
+    syncSavedCustomizations();
+    if (typeof window !== 'undefined') {
+        window.addEventListener('invitation-config-updated', syncSavedCustomizations);
+        window.addEventListener('storage', syncSavedCustomizations);
+    }
+});
 </script>
 
 <template>
@@ -564,6 +646,81 @@ const templateCatalog = [
                         </div>
                     </div>
 
+                    <!-- Master Template Editor Section for Owner -->
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                                    <Sliders class="w-5 h-5 mr-2 text-amber-500" /> Kelola & Edit Master Template (Owner)
+                                </h3>
+                                <p class="text-xs text-slate-500 mt-0.5">Pilih template di bawah untuk langsung membuka Editor Desain Master atau mengedit data template.</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <Link :href="route('admin.templates.index')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition flex items-center">
+                                    <Layers class="w-4 h-4 mr-1.5 text-slate-600" /> Manajemen Katalog Full
+                                </Link>
+                            </div>
+                        </div>
+
+                        <!-- Template Master Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div v-for="tpl in templateCatalog" :key="tpl.id" class="bg-slate-50/70 rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+                                <div class="relative h-44 overflow-hidden">
+                                    <img :src="tpl.img" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                                    <span class="absolute top-3 right-3 bg-amber-400 text-slate-950 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">
+                                        {{ tpl.badge }}
+                                    </span>
+                                    <div class="absolute bottom-3 left-3 right-3 text-white">
+                                        <span class="text-[10px] font-semibold text-amber-300 block uppercase tracking-wider">{{ tpl.category }}</span>
+                                        <h4 class="text-sm font-bold text-white truncate">{{ tpl.name }}</h4>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 space-y-4 flex-1 flex flex-col justify-between">
+                                    <div class="flex justify-between items-center text-xs">
+                                        <div>
+                                            <span class="text-[10px] text-slate-400 block font-semibold">Harga Jual</span>
+                                            <span class="font-bold text-slate-900 text-sm">{{ tpl.price }}</span>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-[10px] text-slate-400 block font-semibold">Terjual</span>
+                                            <span class="font-bold text-slate-900">{{ tpl.salesCount }} pcs</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Actions for Owner -->
+                                    <div class="pt-2 border-t border-slate-200/80 flex items-center space-x-2">
+                                        <Link 
+                                            :href="`/customer/invitations/edit?template=${tpl.id}`" 
+                                            class="flex-1 py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition flex items-center justify-center space-x-1.5 shadow-sm"
+                                        >
+                                            <Sliders class="w-3.5 h-3.5 text-amber-400" />
+                                            <span>Edit Desain Template</span>
+                                        </Link>
+
+                                        <button 
+                                            @click="openEditTemplateModal(tpl)" 
+                                            title="Edit Data Template" 
+                                            class="p-2 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded-xl text-xs transition"
+                                        >
+                                            <Settings class="w-4 h-4 text-slate-700" />
+                                        </button>
+
+                                        <a 
+                                            :href="`/demo/invitation/${tpl.id}`" 
+                                            target="_blank" 
+                                            title="Pratinjau Live" 
+                                            class="p-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold rounded-xl text-xs transition"
+                                        >
+                                            <Eye class="w-4 h-4 text-slate-600" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Recent Orders Table -->
                     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden space-y-4">
                         <div class="p-6 border-b border-slate-100 flex justify-between items-center">
@@ -607,6 +764,68 @@ const templateCatalog = [
 
             </div>
 
+        </div>
+
+        <!-- Modal Quick Edit Master Template (Owner) -->
+        <div v-if="showEditTemplateModal && editingTemplate" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-6 animate-in fade-in zoom-in duration-200">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <Settings class="w-5 h-5" />
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900">Edit Pengaturan Master Template</h3>
+                            <p class="text-xs text-slate-500">Ubah detail metadata katalog template</p>
+                        </div>
+                    </div>
+                    <button @click="showEditTemplateModal = false" class="text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100 transition">
+                        <X class="w-5 h-5" />
+                    </button>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Nama Template</label>
+                        <input v-model="editingTemplate.name" type="text" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Kategori</label>
+                            <input v-model="editingTemplate.category" type="text" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Harga Jual</label>
+                            <input v-model="editingTemplate.price" type="text" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Badge Promo/Tag</label>
+                            <input v-model="editingTemplate.badge" type="text" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Status Publikasi</label>
+                            <select v-model="editingTemplate.status" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400">
+                                <option value="Published">Published (Aktif)</option>
+                                <option value="Draft">Draft (Tersembunyi)</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-end space-x-3">
+                    <button @click="showEditTemplateModal = false" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">
+                        Batal
+                    </button>
+                    <button @click="saveTemplateChanges" class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs shadow-md transition flex items-center">
+                        <Check class="w-4 h-4 mr-1.5 text-emerald-400" /> Simpan Perubahan
+                    </button>
+                </div>
+            </div>
         </div>
 
     </AuthenticatedLayout>

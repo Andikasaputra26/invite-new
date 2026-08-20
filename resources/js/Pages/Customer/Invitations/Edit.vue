@@ -344,9 +344,19 @@ const saveCustomization = () => {
         
         // Save to specific customer invitation instance key
         localStorage.setItem(`customer_invitation_${invitationId}`, jsonStr);
+
+        // Save to specific template key
+        if (config.templateId) {
+            localStorage.setItem(`template_config_${config.templateId}`, jsonStr);
+        }
         
         // Also update current active customInvitationData for live preview
         localStorage.setItem('customInvitationData', jsonStr);
+
+        // Dispatch custom sync event
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('invitation-config-updated'));
+        }
         
         isSaved.value = true;
         saveMessage.value = 'Kustomisasi & foto berhasil disimpan secara otomatis!';
