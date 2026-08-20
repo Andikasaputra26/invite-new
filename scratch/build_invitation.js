@@ -1,4 +1,6 @@
-<script setup>
+import fs from 'fs';
+
+const code = `<script setup>
 import { ref, onMounted, onUnmounted, reactive, computed, nextTick, watch } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import gsap from 'gsap';
@@ -230,12 +232,12 @@ const googleCalendarUrl = computed(() => {
     const rawDate = customConfig.value?.event?.date || '2026-08-24';
     const groomName = customConfig.value?.groom?.nickname || templateStyle.value.defaultGroom;
     const brideName = customConfig.value?.bride?.nickname || templateStyle.value.defaultBride;
-    const title = encodeURIComponent(`${groomName} & ${brideName} Wedding`);
+    const title = encodeURIComponent(\`\${groomName} & \${brideName} Wedding\`);
     const venue = encodeURIComponent(customConfig.value?.event?.venueName || customConfig.value?.event?.akadVenue || 'Gedung Acara');
     const details = encodeURIComponent('Undangan Pernikahan Digital');
     const startDate = rawDate.replace(/[^0-9]/g, '').slice(0, 8) + 'T080000Z';
     const endDate = rawDate.replace(/[^0-9]/g, '').slice(0, 8) + 'T120000Z';
-    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${venue}`;
+    return \`https://calendar.google.com/calendar/render?action=TEMPLATE&text=\${title}&dates=\${startDate}/\${endDate}&details=\${details}&location=\${venue}\`;
 });
 
 // Hero Photos Carousel State
@@ -304,8 +306,8 @@ let timerInterval = null;
 
 const updateCountdown = () => {
     const rawDate = customConfig.value?.event?.date || '2026-08-24';
-    const cleanDateStr = rawDate.match(/\d{4}-\d{2}-\d{2}/) ? rawDate.match(/\d{4}-\d{2}-\d{2}/)[0] : '2026-08-24';
-    const targetDate = new Date(`${cleanDateStr}T08:00:00+07:00`).getTime();
+    const cleanDateStr = rawDate.match(/\\d{4}-\\d{2}-\\d{2}/) ? rawDate.match(/\\d{4}-\\d{2}-\\d{2}/)[0] : '2026-08-24';
+    const targetDate = new Date(\`\${cleanDateStr}T08:00:00+07:00\`).getTime();
     const now = new Date().getTime();
     const difference = targetDate - now;
 
@@ -315,10 +317,10 @@ const updateCountdown = () => {
         const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const s = Math.floor((difference % (1000 * 60)) / 1000);
 
-        countdown.days = d < 10 ? `0${d}` : `${d}`;
-        countdown.hours = h < 10 ? `0${h}` : `${h}`;
-        countdown.minutes = m < 10 ? `0${m}` : `${m}`;
-        countdown.seconds = s < 10 ? `0${s}` : `${s}`;
+        countdown.days = d < 10 ? \`0\${d}\` : \`\${d}\`;
+        countdown.hours = h < 10 ? \`0\${h}\` : \`\${h}\`;
+        countdown.minutes = m < 10 ? \`0\${m}\` : \`\${m}\`;
+        countdown.seconds = s < 10 ? \`0\${s}\` : \`\${s}\`;
     } else {
         countdown.days = '00';
         countdown.hours = '00';
@@ -461,10 +463,10 @@ const loadConfig = () => {
     const tKey = templateMap[routeTemplate] || routeTemplate || 'midnight-gold';
     
     let stored = null;
-    if (invitationId && localStorage.getItem(`customer_invitation_${invitationId}`)) {
-        stored = localStorage.getItem(`customer_invitation_${invitationId}`);
-    } else if (localStorage.getItem(`template_config_${tKey}`)) {
-        stored = localStorage.getItem(`template_config_${tKey}`);
+    if (invitationId && localStorage.getItem(\`customer_invitation_\${invitationId}\`)) {
+        stored = localStorage.getItem(\`customer_invitation_\${invitationId}\`);
+    } else if (localStorage.getItem(\`template_config_\${tKey}\`)) {
+        stored = localStorage.getItem(\`template_config_\${tKey}\`);
     }
 
     if (stored) {
@@ -504,7 +506,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <Head :title="`Undangan Pernikahan (${templateStyle.name}) - ${customConfig?.groom?.nickname || templateStyle.defaultGroom} & ${customConfig?.bride?.nickname || templateStyle.defaultBride}`" />
+    <Head :title="\`Undangan Pernikahan (\${templateStyle.name}) - \${customConfig?.groom?.nickname || templateStyle.defaultGroom} & \${customConfig?.bride?.nickname || templateStyle.defaultBride}\`" />
 
     <audio ref="audioRef" loop preload="auto">
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-piano-113064.mp3" type="audio/mpeg" />
@@ -882,7 +884,7 @@ onUnmounted(() => {
 
             <!-- FOOTER -->
             <footer class="relative min-h-screen flex flex-col justify-between items-center text-center p-8 overflow-hidden bg-slate-900">
-                <div class="absolute inset-0 bg-cover bg-center filter brightness-[0.75]" :style="{ backgroundImage: `url('${customConfig?.background?.imageUrl || heroPhotos[0]}')` }"></div>
+                <div class="absolute inset-0 bg-cover bg-center filter brightness-[0.75]" :style="{ backgroundImage: \`url('\${customConfig?.background?.imageUrl || heroPhotos[0]}')\` }"></div>
                 <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/90"></div>
                 <div class="relative z-10 pt-16 md:pt-24 space-y-4 max-w-xl mx-auto gsap-fade-up">
                     <p class="font-script text-4xl md:text-6xl text-white font-normal">Thankyou</p>
@@ -904,7 +906,7 @@ onUnmounted(() => {
             <!-- HERO -->
             <section id="hero" class="min-h-screen relative flex flex-col justify-end p-4 sm:p-6 overflow-hidden">
                 <div class="absolute inset-0 overflow-hidden z-0">
-                    <div class="flex h-full w-full transition-transform duration-1000 ease-in-out" :style="{ transform: `translateX(-${heroSlideIndex * 100}%)` }">
+                    <div class="flex h-full w-full transition-transform duration-1000 ease-in-out" :style="{ transform: \`translateX(-\${heroSlideIndex * 100}%)\` }">
                         <div v-for="(photo, idx) in heroPhotos" :key="idx" class="w-full h-full shrink-0 relative">
                             <img :src="photo" class="w-full h-full object-cover" />
                             <div class="absolute inset-0 bg-gradient-to-t from-[#4f5e43]/90 via-transparent to-black/20"></div>
@@ -1503,3 +1505,11 @@ onUnmounted(() => {
 
     </div>
 </template>
+`;
+
+fs.writeFileSync('resources/js/Pages/Demo/Invitation.vue', code, 'utf8');
+console.log('Successfully wrote template-isolated Invitation.vue!');
+`;
+
+fs.writeFileSync('scratch/build_invitation.js', code, 'utf8');
+console.log('Written scratch/build_invitation.js!');
