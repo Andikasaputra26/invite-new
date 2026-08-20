@@ -136,11 +136,14 @@ const recentWishes = [
     { name: 'Dion Amanda', status: 'Ragu', time: '5 jam lalu', text: 'Selamat ya! Nanti diusahakan banget bisa hadir.' }
 ];
 
-// Master Template Catalog
+// Master Template Catalog (6 Unique Themes)
 const templateCatalog = ref([
     { id: 'midnight-gold', name: 'Midnight Serenade Gold', category: 'Luxury & Royal', price: 'Rp 149.000', salesCount: 1204, status: 'Published', badge: 'Terpopuler', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80' },
     { id: 'rose-romance', name: 'Floral Garden Romance', category: 'Romantic & Pastel', price: 'Rp 129.000', salesCount: 856, status: 'Published', badge: 'Terbaru', img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80' },
-    { id: 'emerald-botanical', name: 'Emerald Botanical Haven', category: 'Nature & Glass', price: 'Rp 139.000', salesCount: 512, status: 'Published', badge: 'Unik & Mint', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80' }
+    { id: 'emerald-botanical', name: 'Emerald Botanical Haven', category: 'Nature & Glass', price: 'Rp 139.000', salesCount: 512, status: 'Published', badge: 'Unik & Mint', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80' },
+    { id: 'royal-velvet', name: 'Royal Velvet Sapphire', category: 'Regal Sapphire', price: 'Rp 159.000', salesCount: 420, status: 'Published', badge: 'Eksklusif', img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80' },
+    { id: 'boho-terracotta', name: 'Terracotta Rustic Warmth', category: 'Warm Boho Amber', price: 'Rp 139.000', salesCount: 380, status: 'Published', badge: 'Boho Vintage', img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80' },
+    { id: 'minimalist-monochrome', name: 'Nordic Monochrome Minimalist', category: 'Modern B&W', price: 'Rp 119.000', salesCount: 290, status: 'Published', badge: 'Minimalis', img: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=400&q=80' }
 ]);
 
 const editingTemplate = ref(null);
@@ -357,7 +360,7 @@ onMounted(() => {
                                         </Link>
                                         
                                         <a 
-                                            :href="`/v/${inv.slug}`" 
+                                            :href="`/demo/invitation/${inv.templateId}?id=${inv.id}`" 
                                             target="_blank"
                                             class="px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold rounded-xl text-xs transition flex items-center justify-center"
                                         >

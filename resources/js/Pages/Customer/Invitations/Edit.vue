@@ -36,7 +36,7 @@ const wizardSteps = [
 const customSlug = ref(props.invitation?.slug || 'arya-sekar');
 const isSaving = ref(false);
 
-// --- Preset Templates ---
+// --- Preset Templates Katalog ---
 const templates = [
     {
         id: 'midnight-gold',
@@ -132,104 +132,131 @@ const quotePresets = [
     }
 ];
 
+// --- DEFAULT TEMPLATE PRESETS DICTIONARY (SETIAP TEMPLATE MEMILIKI DATA PRESET UNIK) ---
+const defaultPresets = {
+    'midnight-gold': {
+        templateId: 'midnight-gold',
+        paletteId: 'gold',
+        fontId: 'serif',
+        components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
+        groom: { name: 'Raden Arya Wijaya, S.T.', nickname: 'Arya', father: 'Bpk. Hj. Suryo Wijaya', mother: 'Ibu Hj. Endang Rahayu', orderText: 'Putra pertama dari', instagram: '@aryawijaya', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
+        bride: { name: 'Putri Sekar Arum, S.Ked', nickname: 'Sekar', father: 'Bpk. Dr. H. Bambang Subroto', mother: 'Ibu Hj. Dewi Lestari', orderText: 'Putri kedua dari', instagram: '@sekararum', photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+        quote: { selectedPresetIndex: 0, customText: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri...' },
+        event: { date: '2026-08-24', akadTime: '08:00 WIB - 10:00 WIB', akadVenue: 'Masjid Agung Trans Studio', resepsiTime: '11:00 WIB - 14:00 WIB', venueName: 'Gedung Serbaguna Senayan', locationCity: 'Jakarta Pusat', address: 'Jl. Jend. Gatot Subroto No.1, Jakarta Pusat', mapsUrl: 'https://maps.google.com' },
+        loveStories: [
+            { year: '2021', title: 'Pertama Bertemu', description: 'Pertemuan tidak sengaja saat kegiatan kampus di Universitas Indonesia.', bgImage: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80' },
+            { year: '2023', title: 'Momen Lamaran', description: 'Arya secara resmi melamar Sekar di hadapan kedua keluarga besar.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
+            { year: '2026', title: 'Hari Pernikahan', description: 'Awal dari babak baru perjalanan kehidupan suci kami.', bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80' }
+        ],
+        gallery: { photos: ['https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80', 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80', 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80'] },
+        gift: { bankName1: 'Bank BCA', accountNo1: '8830192834', accountName1: 'Raden Arya Wijaya', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=INVITATION_GIFT_QRIS', shippingAddress: 'Jl. Wijaya Kusuma No. 45, Jakarta Selatan' },
+        background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80' }
+    },
+    'rose-romance': {
+        templateId: 'rose-romance',
+        paletteId: 'rose',
+        fontId: 'script',
+        components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
+        groom: { name: 'Dimas Prasetya, M.B.A.', nickname: 'Dimas', father: 'Bpk. Ir. Handoko Prasetya', mother: 'Ibu Hj. Ratna Sari', orderText: 'Putra kedua dari', instagram: '@dimaspras', photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80' },
+        bride: { name: 'Kiara Anindya, S.Psi', nickname: 'Kiara', father: 'Bpk. Prof. Dr. Suhartono', mother: 'Ibu Dra. Maya Indah', orderText: 'Putri tunggal dari', instagram: '@kiaraanindya', photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80' },
+        quote: { selectedPresetIndex: 1, customText: 'Cinta bukanlah tentang saling menatap satu sama lain, tetapi tentang bersama-sama melihat ke satu arah yang sama.' },
+        event: { date: '2026-09-15', akadTime: '09:00 WIB - 11:00 WIB', akadVenue: 'Bambini Garden Resto', resepsiTime: '12:00 WIB - 15:00 WIB', venueName: 'The Westin Ballroom Jakarta', locationCity: 'Jakarta Selatan', address: 'Jl. H.R. Rasuna Said Kav. C-22, Jakarta Selatan', mapsUrl: 'https://maps.google.com' },
+        loveStories: [
+            { year: '2022', title: 'Tak Sanggup Berpaling', description: 'Pertama kali bertukar pandang di pameran seni rupa modern.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
+            { year: '2024', title: 'Janji Kasih', description: 'Dimas mengutarakan niat suci melamar Kiara di tepi pantai Bali.', bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80' }
+        ],
+        gallery: { photos: ['https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80', 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80'] },
+        gift: { bankName1: 'Bank Mandiri', accountNo1: '1370009849201', accountName1: 'Kiara Anindya', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ROSE_QRIS', shippingAddress: 'Jl. Senopati No. 88, Jakarta Selatan' },
+        background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1920&q=80' }
+    },
+    'emerald-botanical': {
+        templateId: 'emerald-botanical',
+        paletteId: 'emerald',
+        fontId: 'sans',
+        components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
+        groom: { name: 'Farhan Ramadhan, S.T.', nickname: 'Farhan', father: 'Bpk. Hj. Mansyur Ramadhan', mother: 'Ibu Hj. Rosita Farida', orderText: 'Putra bungsu dari', instagram: '@farhanrmd', photo: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80' },
+        bride: { name: 'Nadia Salsabila, S.T.', nickname: 'Nadia', father: 'Bpk. Dr. Eng. Hermawan', mother: 'Ibu Hj. Yulia Anita', orderText: 'Putri pertama dari', instagram: '@nadiasalsa', photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' },
+        quote: { selectedPresetIndex: 2, customText: 'Seperti dedaunan zamrud yang tumbuh rindang bersama, demikianlah cinta kami berakar dalam keharmonisan alam.' },
+        event: { date: '2026-10-18', akadTime: '08:30 WIB - 10:30 WIB', akadVenue: 'Hutan Kota by Plataran', resepsiTime: '11:30 WIB - 14:30 WIB', venueName: 'Plataran Senayan Glasshouse', locationCity: 'Jakarta Pusat', address: 'Kawasan GBK, Jl. Jend. Sudirman No. 54, Jakarta Pusat', mapsUrl: 'https://maps.google.com' },
+        loveStories: [
+            { year: '2020', title: 'Sahabat Arsitek', description: 'Menyelesaikan tugas akhir arsitektur hijau bersama di perpustakaan.', bgImage: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80' },
+            { year: '2026', title: 'Pernikahan Botanical', description: 'Mengikat janji nikah di tengah sejuknya keasrian kaca dan pepohonan.', bgImage: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80' }
+        ],
+        gallery: { photos: ['https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80', 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=500&q=80'] },
+        gift: { bankName1: 'Bank BNI', accountNo1: '0981237465', accountName1: 'Farhan Ramadhan', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BOTANICAL_QRIS', shippingAddress: 'Jl. Menteng Raya No. 12, Jakarta Pusat' },
+        background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80' }
+    },
+    'royal-velvet': {
+        templateId: 'royal-velvet',
+        paletteId: 'sapphire',
+        fontId: 'serif',
+        components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
+        groom: { name: 'Bramantyo Satria, S.E.', nickname: 'Bram', father: 'Bpk. Mayjen (Purn) Satria', mother: 'Ibu Hj. Nindya Satria', orderText: 'Putra pertama dari', instagram: '@bramantyo', photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80' },
+        bride: { name: 'Valensia Clarissa, B.A.', nickname: 'Valen', father: 'Bpk. Robertus Winata', mother: 'Ibu Angela Winata', orderText: 'Putri kedua dari', instagram: '@valensiaclarissa', photo: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80' },
+        quote: { selectedPresetIndex: 0, customText: 'Di bawah naungan kemegahan kasih dan ketetapan Takdir, kami menyatukan dua ikatan keluarga besar.' },
+        event: { date: '2026-11-20', akadTime: '10:00 WIB - 12:00 WIB', akadVenue: 'Grand Hyatt Hotel Ballroom', resepsiTime: '18:30 WIB - 21:30 WIB', venueName: 'The Ritz-Carlton Pacific Place', locationCity: 'Jakarta Selatan', address: 'SCBD Jl. Jend. Sudirman Kav. 52-53, Jakarta Selatan', mapsUrl: 'https://maps.google.com' },
+        loveStories: [
+            { year: '2021', title: 'Royal Encounter', description: 'Pertemuan perdana dalam acara gala dinner diplomatik internasional.', bgImage: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80' }
+        ],
+        gallery: { photos: ['https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=500&q=80'] },
+        gift: { bankName1: 'Bank CIMB Niaga', accountNo1: '700192837465', accountName1: 'Bramantyo Satria', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ROYAL_QRIS', shippingAddress: 'Jl. Pondok Indah Utama No. 10, Jakarta Selatan' },
+        background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80' }
+    },
+    'boho-terracotta': {
+        templateId: 'boho-terracotta',
+        paletteId: 'terracotta',
+        fontId: 'serif',
+        components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
+        groom: { name: 'Raka Alamsyah, S.Sn', nickname: 'Raka', father: 'Bpk. Gunawan Alamsyah', mother: 'Ibu Ratmi Alamsyah', orderText: 'Putra pertama dari', instagram: '@rakaalamsyah', photo: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80' },
+        bride: { name: 'Alya Maharani, S.Ds', nickname: 'Alya', father: 'Bpk. Mahfud Hendarto', mother: 'Ibu Endah Hendarto', orderText: 'Putri kedua dari', instagram: '@alyamaharani', photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' },
+        quote: { selectedPresetIndex: 2, customText: 'Hangatnya warna terakota dan hembusan angin bohemian menjadi saksi bisu Janji Suci kita di bawah rimbunnya ilalang.' },
+        event: { date: '2026-12-05', akadTime: '15:30 WIB - 17:00 WIB', akadVenue: 'Pine Hill Organic Farm', resepsiTime: '17:30 WIB - 21:00 WIB', venueName: 'Pine Hill Outdoor Lembang', locationCity: 'Bandung Barat', address: 'Jl. Maribaya No. 120, Lembang, Bandung Barat', mapsUrl: 'https://maps.google.com' },
+        loveStories: [
+            { year: '2022', title: 'Senja di Lembang', description: 'Pertama kali berdiskusi desain interior studio dengan nuansa rustic hangat.', bgImage: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80' }
+        ],
+        gallery: { photos: ['https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=500&q=80'] },
+        gift: { bankName1: 'Bank BCA', accountNo1: '5420192837', accountName1: 'Raka Alamsyah', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BOHO_QRIS', shippingAddress: 'Jl. Dago Asri No. 45, Coblong, Bandung' },
+        background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80' }
+    },
+    'minimalist-monochrome': {
+        templateId: 'minimalist-monochrome',
+        paletteId: 'monochrome',
+        fontId: 'sans',
+        components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
+        groom: { name: 'Reza Mahendra, B.Arch', nickname: 'Reza', father: 'Bpk. Ir. Lukman Mahendra', mother: 'Ibu Sylvia Mahendra', orderText: 'Putra pertama dari', instagram: '@rezamahendra', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
+        bride: { name: 'Fiona Adeline, M.A.', nickname: 'Fiona', father: 'Bpk. Henry Adeline', mother: 'Ibu Clarissa Adeline', orderText: 'Putri pertama dari', instagram: '@fionaadeline', photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+        quote: { selectedPresetIndex: 0, customText: 'Simplicity is the ultimate sophistication. Dua jiwa, satu estetika minimalis modern dalam komitmen abadi.' },
+        event: { date: '2027-01-16', akadTime: '10:00 WIB - 12:00 WIB', akadVenue: 'Museum Macan Gallery Space', resepsiTime: '18:00 WIB - 21:00 WIB', venueName: 'Alila SCBD Event Gallery', locationCity: 'Jakarta Selatan', address: 'SCBD Lot 11, Jl. Jend. Sudirman Kav. 52-53, Jakarta Selatan', mapsUrl: 'https://maps.google.com' },
+        loveStories: [
+            { year: '2022', title: 'Studio Architecture', description: 'Kolaborasi pameran seni kontemporer hitam putih di Tokyo.', bgImage: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80' }
+        ],
+        gallery: { photos: ['https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=500&q=80'] },
+        gift: { bankName1: 'Bank BCA', accountNo1: '0019283746', accountName1: 'Reza Mahendra', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=MONO_QRIS', shippingAddress: 'Jl. Gunawarman No. 22, Jakarta Selatan' },
+        background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1920&q=80' }
+    }
+};
+
 // --- Main Config State ---
 const config = reactive({
     templateId: props.invitation?.template_slug || props.templateSlug || 'midnight-gold',
     paletteId: 'gold',
     fontId: 'serif',
     
-    // Component Toggles
-    components: {
-        music: true,
-        quote: true,
-        mempelai: true,
-        acara: true,
-        countdown: true,
-        story: true,
-        gallery: true,
-        gift: true,
-        rsvp: true
-    },
-
-    // Mempelai Pria
-    groom: {
-        name: 'Raden Arya Wijaya, S.T.',
-        nickname: 'Arya',
-        father: 'Bpk. Hj. Suryo Wijaya',
-        mother: 'Ibu Hj. Endang Rahayu',
-        orderText: 'Putra pertama dari',
-        instagram: '@aryawijaya',
-        photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'
-    },
-
-    // Mempelai Wanita
-    bride: {
-        name: 'Putri Sekar Arum, S.Ked',
-        nickname: 'Sekar',
-        father: 'Bpk. Dr. H. Bambang Subroto',
-        mother: 'Ibu Hj. Dewi Lestari',
-        orderText: 'Putri kedua dari',
-        instagram: '@sekararum',
-        photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
-    },
-
-    // Quote Section
-    quote: {
-        selectedPresetIndex: 0,
-        customText: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya...'
-    },
-
-    // Event & Location
-    event: {
-        date: '2026-08-24',
-        akadTime: '08:00 WIB - 10:00 WIB',
-        akadVenue: 'Masjid Agung Trans Studio',
-        resepsiTime: '11:00 WIB - 14:00 WIB',
-        venueName: 'Gedung Serbaguna Senayan',
-        locationCity: 'Jakarta Pusat',
-        address: 'Jl. Jend. Gatot Subroto No.1, Gelora, Tanah Abang, Jakarta Pusat',
-        mapsUrl: 'https://maps.google.com'
-    },
-
-    // Love Story List
+    components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
+    groom: { name: 'Raden Arya Wijaya, S.T.', nickname: 'Arya', father: 'Bpk. Hj. Suryo Wijaya', mother: 'Ibu Hj. Endang Rahayu', orderText: 'Putra pertama dari', instagram: '@aryawijaya', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
+    bride: { name: 'Putri Sekar Arum, S.Ked', nickname: 'Sekar', father: 'Bpk. Dr. H. Bambang Subroto', mother: 'Ibu Hj. Dewi Lestari', orderText: 'Putri kedua dari', instagram: '@sekararum', photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+    quote: { selectedPresetIndex: 0, customText: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri...' },
+    event: { date: '2026-08-24', akadTime: '08:00 WIB - 10:00 WIB', akadVenue: 'Masjid Agung Trans Studio', resepsiTime: '11:00 WIB - 14:00 WIB', venueName: 'Gedung Serbaguna Senayan', locationCity: 'Jakarta Pusat', address: 'Jl. Jend. Gatot Subroto No.1, Gelora, Tanah Abang, Jakarta Pusat', mapsUrl: 'https://maps.google.com' },
     loveStories: [
-        { year: '2021', title: 'Pertama Bertemu', description: 'Pertemuan tidak sengaja saat kegiatan kampus di Universitas Indonesia.', bgImage: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80' },
-        { year: '2023', title: 'Momen Lamaran', description: 'Arya secara resmi melamar Sekar di hadapan kedua keluarga besar.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
-        { year: '2026', title: 'Hari Pernikahan', description: 'Awal dari babak baru perjalanan kehidupan suci kami.', bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80' }
+        { year: '2021', title: 'Pertama Bertemu', description: 'Pertemuan tidak sengaja saat kegiatan kampus di Universitas Indonesia.', bgImage: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80' }
     ],
-
-    // Photo Gallery
-    gallery: {
-        layout: 'grid',
-        photos: [
-            'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80',
-            'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80',
-            'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80',
-            'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=500&q=80'
-        ]
-    },
-
-    // Gift & Envelope
-    gift: {
-        bankName1: 'Bank BCA',
-        accountNo1: '8830192834',
-        accountName1: 'Raden Arya Wijaya',
-        bankName2: 'Bank Mandiri',
-        accountNo2: '1370009849201',
-        accountName2: 'Putri Sekar Arum',
-        qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=INVITATION_GIFT_QRIS',
-        shippingAddress: 'Jl. Wijaya Kusuma No. 45, Kebayoran Baru, Jakarta Selatan (UP: Arya & Sekar)'
-    },
-
-    // Background Customization
-    background: {
-        useImage: true,
-        imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80'
-    }
+    gallery: { layout: 'grid', photos: ['https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80'] },
+    gift: { bankName1: 'Bank BCA', accountNo1: '8830192834', accountName1: 'Raden Arya Wijaya', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=INVITATION_GIFT_QRIS', shippingAddress: 'Jl. Wijaya Kusuma No. 45, Kebayoran Baru, Jakarta Selatan' },
+    background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80' }
 });
 
 // Active Sub-section for Step 3 (Content Editor)
-const activeContentSubSection = ref('mempelai'); // 'mempelai' | 'quote' | 'event' | 'story' | 'gallery' | 'gift'
+const activeContentSubSection = ref('mempelai');
 
 // UI Live Preview Drawer State
 const showLivePreviewModal = ref(false);
@@ -385,18 +412,20 @@ const copyPublicLink = () => {
     setTimeout(() => isSlugCopied.value = false, 2500);
 };
 
-// Save changes to localStorage & Database
+// Save changes to localStorage & Database (TERISOLASI DENGAN template_config_{id})
 const saveCustomization = () => {
     isSaving.value = true;
-    const invitationId = props.invitation?.id || new URLSearchParams(window.location.search).get('id') || '1';
+    const params = new URLSearchParams(window.location.search);
+    const invitationId = props.invitation?.id || params.get('id');
     
     try {
         const jsonStr = JSON.stringify(config);
-        localStorage.setItem(`customer_invitation_${invitationId}`, jsonStr);
+        if (invitationId) {
+            localStorage.setItem(`customer_invitation_${invitationId}`, jsonStr);
+        }
         if (config.templateId) {
             localStorage.setItem(`template_config_${config.templateId}`, jsonStr);
         }
-        localStorage.setItem('customInvitationData', jsonStr);
 
         if (typeof window !== 'undefined') {
             window.dispatchEvent(new Event('invitation-config-updated'));
@@ -428,7 +457,7 @@ const saveCustomization = () => {
     } else {
         isSaving.value = false;
         isSaved.value = true;
-        saveMessage.value = 'Kustomisasi & foto berhasil disimpan!';
+        saveMessage.value = `Kustomisasi ${activeTemplate.value.name} berhasil disimpan!`;
         setTimeout(() => isSaved.value = false, 3500);
     }
 };
@@ -436,7 +465,7 @@ const saveCustomization = () => {
 // Open final invitation preview page in new tab
 const openFinalPreview = () => {
     saveCustomization();
-    const url = props.invitation?.slug ? `/v/${customSlug.value}` : `/demo/invitation/${config.templateId}?id=${props.invitation?.id || 1}`;
+    const url = props.invitation?.slug ? `/v/${customSlug.value}` : `/demo/invitation/${config.templateId}`;
     window.open(url, '_blank');
 };
 
@@ -450,28 +479,39 @@ watch(() => config.templateId, (newId) => {
 
 onMounted(() => {
     const params = new URLSearchParams(window.location.search);
-    const chosenTemplate = params.get('template') || props.invitation?.template_slug || props.templateSlug;
-    const invitationId = props.invitation?.id || params.get('id') || '1';
+    const chosenTemplate = params.get('template') || props.invitation?.template_slug || props.templateSlug || 'midnight-gold';
+    const invitationId = props.invitation?.id || params.get('id');
 
-    if (chosenTemplate) {
-        config.templateId = chosenTemplate;
+    // 1. Terapkan data preset asli khusus untuk template yang dipilih
+    if (defaultPresets[chosenTemplate]) {
+        Object.assign(config, JSON.parse(JSON.stringify(defaultPresets[chosenTemplate])));
     }
+    config.templateId = chosenTemplate;
 
+    // 2. Jika ada data kustomisasi dari database (User Invitation)
     if (props.invitation?.custom_data) {
         try {
             Object.assign(config, props.invitation.custom_data);
         } catch (e) {
             console.error('Failed parsing props invitation data:', e);
         }
-    } else {
-        const storedInstance = localStorage.getItem(`customer_invitation_${invitationId}`) || localStorage.getItem('customInvitationData');
-        if (storedInstance) {
-            try {
-                const parsed = JSON.parse(storedInstance);
-                Object.assign(config, parsed);
-            } catch (e) {
-                console.error('Failed loading local stored customer config:', e);
-            }
+    } 
+    // 3. Jika ada simpanan khusus per invitationId
+    else if (invitationId && localStorage.getItem(`customer_invitation_${invitationId}`)) {
+        try {
+            const parsed = JSON.parse(localStorage.getItem(`customer_invitation_${invitationId}`));
+            Object.assign(config, parsed);
+        } catch (e) {
+            console.error('Failed loading local stored customer config:', e);
+        }
+    }
+    // 4. Jika ada simpanan khusus per templateId
+    else if (localStorage.getItem(`template_config_${chosenTemplate}`)) {
+        try {
+            const parsed = JSON.parse(localStorage.getItem(`template_config_${chosenTemplate}`));
+            Object.assign(config, parsed);
+        } catch (e) {
+            console.error('Failed loading template config:', e);
         }
     }
 });
@@ -507,7 +547,7 @@ onMounted(() => {
                 </div>
             </div>
 
-            <!-- STEPPER PROGRESS BAR WIZARD (Matching exact reference design) -->
+            <!-- STEPPER PROGRESS BAR WIZARD -->
             <div class="mb-10 px-2 sm:px-6">
                 <div class="relative flex items-center justify-between">
                     
@@ -559,7 +599,7 @@ onMounted(() => {
                 </div>
             </transition>
 
-            <!-- MAIN STEP CONTENT CARD (Clean White Container matching reference UI) -->
+            <!-- MAIN STEP CONTENT CARD -->
             <div class="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
 
                 <!-- STEP 1: INFORMASI UTAMA & LINK -->
@@ -569,22 +609,22 @@ onMounted(() => {
                         <p class="text-xs text-slate-500 mt-1">Lengkapi rincian informasi dan buat link tautan khusus undangan Anda</p>
                     </div>
 
-                    <!-- Purchased Template Status Banner Card -->
+                    <!-- Template Terpilih Badge Card -->
                     <div class="bg-gradient-to-r from-orange-50 via-white to-amber-50 border border-orange-200/80 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div class="flex items-center space-x-3.5">
                             <img :src="activeTemplate.previewImg" class="w-14 h-14 rounded-xl object-cover border border-orange-300 shadow-xs flex-shrink-0" />
                             <div>
                                 <div class="flex items-center space-x-2">
-                                    <span class="bg-orange-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">Template Terbeli</span>
+                                    <span class="bg-orange-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">Template Terpilih</span>
                                     <span class="text-xs text-orange-600 font-bold">{{ activeTemplate.category }}</span>
                                 </div>
                                 <h3 class="text-sm font-bold text-slate-900 mt-0.5">{{ activeTemplate.name }}</h3>
                             </div>
                         </div>
                         <div class="bg-white border border-slate-200 px-3 py-2 rounded-lg text-right sm:text-right">
-                            <span class="text-[10px] text-slate-400 block font-bold uppercase">Status Pembayaran</span>
+                            <span class="text-[10px] text-slate-400 block font-bold uppercase">Status Lisensi</span>
                             <span class="text-xs font-extrabold text-emerald-600 flex items-center justify-end">
-                                <ShieldCheck class="w-3.5 h-3.5 mr-1" /> LUNAS & AKTIF
+                                <ShieldCheck class="w-3.5 h-3.5 mr-1" /> AKTIF & LUNAS
                             </span>
                         </div>
                     </div>
@@ -931,7 +971,7 @@ onMounted(() => {
                             <div v-for="f in fontStyles" :key="f.id"
                                  @click="config.fontId = f.id"
                                  :class="['p-4 rounded-xl border cursor-pointer transition text-center', config.fontId === f.id ? 'border-orange-500 bg-orange-50/60 font-bold shadow-xs' : 'border-slate-200 bg-white hover:border-slate-300']">
-                                <div :class="[f.fontClass, 'text-lg font-bold text-orange-600 mb-1']">Arya & Sekar</div>
+                                <div :class="[f.fontClass, 'text-lg font-bold text-orange-600 mb-1']">{{ config.groom.nickname }} & {{ config.bride.nickname }}</div>
                                 <div class="text-xs text-slate-600">{{ f.name }}</div>
                             </div>
                         </div>
@@ -950,7 +990,7 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <!-- BOTTOM NAVIGATION CONTROL BUTTONS (Exact match to reference design) -->
+                <!-- BOTTOM NAVIGATION CONTROL BUTTONS -->
                 <div class="pt-6 border-t border-slate-100 flex items-center justify-between">
                     
                     <!-- Previous Button -->
@@ -1001,7 +1041,7 @@ onMounted(() => {
                     
                     <!-- Close Bar -->
                     <div class="bg-slate-900 px-4 py-3 border-b border-slate-800 flex items-center justify-between text-white text-xs font-bold z-30">
-                        <span class="flex items-center"><Smartphone class="w-4 h-4 mr-1.5 text-orange-400" /> Pratinjau HP</span>
+                        <span class="flex items-center"><Smartphone class="w-4 h-4 mr-1.5 text-orange-400" /> Pratinjau HP ({{ activeTemplate.name }})</span>
                         <button @click="showLivePreviewModal = false" class="text-slate-400 hover:text-white font-bold text-sm px-2">✕ Tutup</button>
                     </div>
 
