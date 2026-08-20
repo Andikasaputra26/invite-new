@@ -31,7 +31,7 @@ const customerTransactions = ref([
     },
     {
         id: 'TRX-20260615-002',
-        templateName: 'Floral Garden Romance',
+        templateName: 'Serenade Green',
         date: '15 Juni 2026, 09:15 WIB',
         amount: 'Rp 129.000',
         paymentMethod: 'Transfer BCA',
@@ -63,7 +63,7 @@ const customerInvitations = ref([
         id: 2,
         title: 'Floral Wedding Kiara & Dimas',
         templateId: 'rose-romance',
-        templateName: 'Floral Garden Romance',
+        templateName: 'Serenade Green',
         status: 'draft',
         statusText: 'Draft',
         date: '10 September 2026',
@@ -125,7 +125,7 @@ const copyShareLink = (inv) => {
 // Admin/Owner Recent Orders Data
 const recentOrders = [
     { id: '#ORD-9021', customer: 'Ahmad Wijaya', template: 'Midnight Serenade Gold', status: 'Lunas', date: '27 Jul 2026', amount: 'Rp 149.000' },
-    { id: '#ORD-9020', customer: 'Siska Larasati', template: 'Floral Garden Romance', status: 'Menunggu', date: '27 Jul 2026', amount: 'Rp 129.000' },
+    { id: '#ORD-9020', customer: 'Siska Larasati', template: 'Serenade Green', status: 'Menunggu', date: '27 Jul 2026', amount: 'Rp 129.000' },
     { id: '#ORD-9019', customer: 'Rian Hidayat', template: 'Emerald Botanical Haven', status: 'Lunas', date: '26 Jul 2026', amount: 'Rp 139.000' }
 ];
 
@@ -139,7 +139,7 @@ const recentWishes = [
 // Master Template Catalog (6 Unique Themes)
 const templateCatalog = ref([
     { id: 'midnight-gold', name: 'Midnight Serenade Gold', category: 'Luxury & Royal', price: 'Rp 149.000', salesCount: 1204, status: 'Published', badge: 'Terpopuler', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80' },
-    { id: 'rose-romance', name: 'Floral Garden Romance', category: 'Romantic & Pastel', price: 'Rp 129.000', salesCount: 856, status: 'Published', badge: 'Terbaru', img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80' },
+    { id: 'rose-romance', name: 'Serenade Green', category: 'Sage Green & Nature', price: 'Rp 129.000', salesCount: 856, status: 'Published', badge: 'Terbaru', img: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80' },
     { id: 'emerald-botanical', name: 'Emerald Botanical Haven', category: 'Nature & Glass', price: 'Rp 139.000', salesCount: 512, status: 'Published', badge: 'Unik & Mint', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80' },
     { id: 'royal-velvet', name: 'Royal Velvet Sapphire', category: 'Regal Sapphire', price: 'Rp 159.000', salesCount: 420, status: 'Published', badge: 'Eksklusif', img: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&q=80' },
     { id: 'boho-terracotta', name: 'Terracotta Rustic Warmth', category: 'Warm Boho Amber', price: 'Rp 139.000', salesCount: 380, status: 'Published', badge: 'Boho Vintage', img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80' },

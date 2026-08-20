@@ -7,7 +7,8 @@ import {
     Heart, Calendar, MapPin, Clock, Volume2, VolumeX, 
     Copy, Check, Gift, MessageSquare, Send, Sparkles, 
     ChevronDown, ChevronLeft, ChevronRight, UserCheck, Eye, Compass, Image as ImageIcon,
-    Flower2, Shield, Leaf, Diamond, Crown, Star, Mail
+    Flower2, Shield, Leaf, Diamond, Crown, Star, Mail, Facebook, Instagram, Mouse,
+    Gift as GiftIcon, CreditCard, User
 } from 'lucide-vue-next';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,16 +38,16 @@ const customConfig = ref(props.customData || null);
 
 // Google Calendar URL Generator
 const googleCalendarUrl = computed(() => {
-    const rawDate = customConfig.value?.event?.date || '2026-08-24';
-    const title = encodeURIComponent((customConfig.value?.groom?.name || 'Raden Arya') + ' & ' + (customConfig.value?.bride?.name || 'Putri Sekar') + ' Wedding');
-    const venue = encodeURIComponent(customConfig.value?.event?.venue || 'Gedung Acara');
+    const rawDate = customConfig.value?.event?.date || '2026-09-15';
+    const title = encodeURIComponent((customConfig.value?.groom?.nickname || 'Galuh') + ' & ' + (customConfig.value?.bride?.nickname || 'Puspa') + ' Wedding');
+    const venue = encodeURIComponent(customConfig.value?.event?.venueName || customConfig.value?.event?.venue || 'Serenade Green Garden');
     const details = encodeURIComponent('Undangan Pernikahan Digital');
     const startDate = rawDate.replace(/-/g, '') + 'T080000Z';
     const endDate = rawDate.replace(/-/g, '') + 'T120000Z';
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${venue}`;
 });
 
-// Hero Slider State for Template 2 (rose-romance)
+// Hero Slider State for Template 2 (serenade-green / rose-romance)
 const heroSlideIndex = ref(0);
 let heroSlideTimer = null;
 
@@ -56,9 +57,9 @@ const heroPhotos = computed(() => {
     }
     return [
         'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80',
         'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80'
+        'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'
     ];
 });
 
@@ -87,21 +88,21 @@ const activeTemplateId = computed(() => {
 // Dynamic Template Styling & Layout Config
 const templateStyle = computed(() => {
     const tId = activeTemplateId.value;
-    if (tId === 'rose-romance') {
+    if (tId === 'rose-romance' || tId === 'serenade-green') {
         return {
             id: 'rose-romance',
-            name: 'Floral Garden Romance',
-            bgClass: 'bg-[#1f1318] text-[#fff1f2]',
-            coverBg: 'bg-[#180d12]',
-            cardBg: 'bg-[#2a1720]/95 border-[#f472b6]/30 rounded-t-[40px] sm:rounded-t-[50px] rounded-b-[20px] sm:rounded-b-[24px] shadow-[0_10px_30px_rgba(244,114,182,0.15)]',
-            accentText: 'text-[#f472b6]',
-            accentBorder: 'border-[#f472b6]/40',
-            accentBg: 'bg-[#f472b6]/15',
-            buttonBg: 'bg-gradient-to-r from-[#f472b6] via-[#fb7185] to-[#f43f5e] text-white shadow-lg shadow-[#f472b6]/30 hover:scale-105',
-            badgeBg: 'bg-[#f472b6] text-white',
-            iconColor: 'text-[#f472b6]',
-            heroTitleClass: 'font-serif text-4xl sm:text-5xl md:text-7xl italic font-normal text-pink-100 tracking-wide',
-            photoFrameClass: 'rounded-t-full rounded-b-3xl border-4 border-[#f472b6]/50 shadow-2xl p-1.5 bg-[#2a1720]'
+            name: 'Serenade Green',
+            bgClass: 'bg-[#e2e8db] text-[#3d4a34]',
+            coverBg: 'bg-[#48553d]',
+            cardBg: 'bg-[#637454] border-[#8a9e79]/40 rounded-tr-[40px] rounded-tl-2xl rounded-b-2xl shadow-[0_15px_40px_rgba(40,50,30,0.3)]',
+            accentText: 'text-[#e2ebda]',
+            accentBorder: 'border-[#8a9e79]/50',
+            accentBg: 'bg-[#4e5d41]/60',
+            buttonBg: 'bg-gradient-to-r from-[#5a6b4c] via-[#4e5c41] to-[#3f4b34] text-white shadow-lg hover:scale-105',
+            badgeBg: 'bg-[#637454] text-white',
+            iconColor: 'text-emerald-200',
+            heroTitleClass: 'font-serif text-4xl sm:text-5xl md:text-7xl font-normal text-[#f4f7f1] tracking-wide',
+            photoFrameClass: 'rounded-tr-[70px] border-4 border-[#8a9e79]/50 shadow-2xl p-1 bg-[#4e5d41]'
         };
     } else if (tId === 'emerald-botanical') {
         return {
@@ -211,7 +212,7 @@ const countdown = reactive({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 let timerInterval = null;
 
 const updateCountdown = () => {
-    const rawDateStr = customConfig.value?.event?.date || '2026-08-24';
+    const rawDateStr = customConfig.value?.event?.date || '2026-09-15';
     const targetDate = new Date(rawDateStr + 'T08:00:00');
     const now = new Date();
     const diff = targetDate - now;
@@ -239,9 +240,9 @@ const isSubmittingRSVP = ref(false);
 const rsvpSubmitted = ref(false);
 
 const wishesList = ref(props.wishes || [
-    { name: 'Budi Santoso & Keluarga', text: 'Selamat! Semoga sakinah, mawaddah, warahmah.', status: 'Hadir', date: '2 jam lalu' },
-    { name: 'Siti Rahmawati', text: 'Barakallahu lakuma wa baraka alaikuma. Sangat bahagia melihat momen ini!', status: 'Hadir', date: '4 jam lalu' },
-    { name: 'Dion Amanda', text: 'Selamat ya! Nanti diusahakan banget bisa hadir.', status: 'Ragu-ragu', date: '6 jam lalu' }
+    { name: 'gjhg', text: 'dgf', status: 'Hadir', date: '14 hours, 1 min ago' },
+    { name: 'tes', text: 'gfhg', status: 'Hadir', date: '14 hours, 12 mins ago' },
+    { name: 'jhgj', text: 'jghjg', status: 'Hadir', date: '21 hours, 39 mins ago' }
 ]);
 
 const submitRSVP = () => {
@@ -362,7 +363,7 @@ const initGSAPAnimations = () => {
                     ease: 'power3.out',
                     scrollTrigger: {
                         trigger: el,
-                        start: 'top 85%',
+                        start: 'top 88%',
                         toggleActions: 'play none none none'
                     }
                 }
@@ -371,7 +372,7 @@ const initGSAPAnimations = () => {
 
         gsap.utils.toArray('.gsap-scale-up').forEach(el => {
             gsap.fromTo(el,
-                { opacity: 0, scale: 0.92 },
+                { opacity: 0, scale: 0.9 },
                 {
                     opacity: 1,
                     scale: 1,
@@ -379,7 +380,59 @@ const initGSAPAnimations = () => {
                     ease: 'power3.out',
                     scrollTrigger: {
                         trigger: el,
-                        start: 'top 85%',
+                        start: 'top 88%',
+                        toggleActions: 'play none none none'
+                    }
+                }
+            );
+        });
+
+        gsap.utils.toArray('.gsap-slide-left').forEach(el => {
+            gsap.fromTo(el,
+                { opacity: 0, x: -60 },
+                {
+                    opacity: 1,
+                    x: 0,
+                    duration: 1.0,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 88%',
+                        toggleActions: 'play none none none'
+                    }
+                }
+            );
+        });
+
+        gsap.utils.toArray('.gsap-slide-right').forEach(el => {
+            gsap.fromTo(el,
+                { opacity: 0, x: 60 },
+                {
+                    opacity: 1,
+                    x: 0,
+                    duration: 1.0,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 88%',
+                        toggleActions: 'play none none none'
+                    }
+                }
+            );
+        });
+
+        gsap.utils.toArray('.gsap-rotate-in').forEach(el => {
+            gsap.fromTo(el,
+                { opacity: 0, scale: 0.6, rotation: -20 },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    rotation: 0,
+                    duration: 1.1,
+                    ease: 'back.out(1.7)',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 88%',
                         toggleActions: 'play none none none'
                     }
                 }
@@ -450,58 +503,65 @@ const templatePresets = {
 
     'rose-romance': {
         templateId: 'rose-romance',
-        paletteId: 'rose',
-        fontId: 'script',
+        monogram: 'GP',
+        paletteId: 'sage',
+        fontId: 'serif',
         components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
         groom: {
-            name: 'Dimas Prasetya, M.B.A.',
-            nickname: 'Dimas',
-            father: 'Bpk. Ir. Handoko Prasetya',
-            mother: 'Ibu Hj. Ratna Sari',
-            orderText: 'Putra kedua dari',
-            instagram: '@dimaspras',
-            photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80'
+            name: 'Aria Galuh Arandaka',
+            nickname: 'Galuh',
+            father: 'Bpk. (Alm)',
+            mother: 'Ibu Sri Rahayu Intan Bayduri',
+            orderText: 'Putra Tunggal dari',
+            instagram: '@aria_galuh',
+            facebook: 'aria.galuh',
+            photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'
         },
         bride: {
-            name: 'Kiara Anindya, S.Psi',
-            nickname: 'Kiara',
-            father: 'Bpk. Prof. Dr. Suhartono',
-            mother: 'Ibu Dra. Maya Indah',
-            orderText: 'Putri tunggal dari',
-            instagram: '@kiaraanindya',
-            photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80'
+            name: 'Puspa Rema',
+            nickname: 'Puspa',
+            father: 'Bapak Andi Sugandi',
+            mother: 'Ibu Rosiah (Alm)',
+            orderText: 'Putri Keempat dari',
+            instagram: '@pusparema',
+            facebook: 'puspa.rema',
+            photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'
         },
         quote: {
-            customText: 'Cinta bukanlah tentang saling menatap satu sama lain, tetapi tentang bersama-sama melihat ke satu arah yang sama dalam kasih dan ketulusan.'
+            customText: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berfikir.'
         },
         event: {
-            date: '2026-09-15',
-            akadTime: '09:00 WIB - 11:00 WIB',
-            akadVenue: 'Bambini Garden Resto',
-            resepsiTime: '12:00 WIB - 15:00 WIB',
-            venueName: 'The Westin Ballroom Jakarta',
-            locationCity: 'Jakarta Selatan',
-            address: 'Jl. H.R. Rasuna Said Kav. C-22, Karet Kuningan, Jakarta Selatan',
+            date: '2024-01-21',
+            akadTime: 'Pukul 10.00 s.d 12.00 WIB',
+            akadVenue: 'Jl. Batu Jajar RT3 RW1 (Samping MCD HAYAM WURUK)',
+            resepsiTime: 'Pukul 12.00 s.d 21.00 WIB',
+            venueName: 'Jl. Batu Jajar RT3 RW1 (Samping MCD HAYAM WURUK)',
+            locationCity: 'Jakarta Pusat',
+            address: 'Jl. Batu Jajar RT3 RW1 (Samping MCD HAYAM WURUK)',
             mapsUrl: 'https://maps.google.com'
         },
         loveStories: [
-            { year: '2022', title: 'Tak Sanggup Berpaling', description: 'Pertama kali bertukar pandang di pameran seni rupa modern.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
-            { year: '2024', title: 'Janji Kasih', description: 'Dimas mengutarakan niat suci melamar Kiara di tepi pantai Bali.', bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80' },
-            { year: '2026', title: 'Resepsi Taman Bunga', description: 'Merayakan hari keabadian cinta berhiaskan indahnya ribuan bunga pastel.', bgImage: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80' }
+            { year: '2016', description: 'Kita dipertemukan setelah lulus dari SMA dan menjalin komitmen untuk masa depan.', bgImage: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80' },
+            { year: 'Januari 2023', description: 'Dengan izin Allah SWT dan restu dari kedua keluarga. Saya berniat untuk melamar dan memintanya untuk menikah dengan saya.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
+            { year: 'Januari 2024', title: 'Akad Nikah', description: 'Hingga diputuskanlah Akad nikah pada tanggal 3 Juni 2023.', bgImage: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80' }
         ],
         gallery: {
             photos: [
                 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80',
-                'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80',
                 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80',
-                'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'
+                'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
+                'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80'
             ]
         },
         gift: {
-            bankName1: 'Bank Mandiri',
-            accountNo1: '1370009849201',
-            accountName1: 'Kiara Anindya',
-            shippingAddress: 'Jl. Senopati No. 88, Kebayoran Baru, Jakarta Selatan'
+            bankName1: 'Bank BCA',
+            accountNo1: '0123456789',
+            accountName1: 'Puspa Rema',
+            bankName2: 'DANA',
+            accountNo2: '081234567890',
+            accountName2: 'Puspa Rema',
+            shippingAddress: 'Jl. Cinta Gg. Damai No. 001'
         },
         background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1920&q=80' }
     },
@@ -772,7 +832,7 @@ onMounted(() => {
         } catch (e) { console.error(e); }
     }
 
-    // 4. Default Fallback: Use the SPECIFIC preset for this template slug, so each template has its own unique content!
+    // 4. Default Fallback: Use the SPECIFIC preset for this template slug
     if (!loadedConfig) {
         const key = routeTemplate || 'midnight-gold';
         const preset = templatePresets[key] || templatePresets['midnight-gold'];
@@ -798,7 +858,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <Head :title="`Undangan Pernikahan (${templateStyle.name}) - ${customConfig?.groom?.nickname || 'Arya'} & ${customConfig?.bride?.nickname || 'Sekar'}`" />
+    <Head :title="`Undangan Pernikahan (${templateStyle.name}) - ${customConfig?.groom?.nickname || 'Galuh'} & ${customConfig?.bride?.nickname || 'Puspa'}`" />
 
     <audio ref="audioRef" loop preload="auto">
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-piano-113064.mp3" type="audio/mpeg" />
@@ -809,92 +869,82 @@ onUnmounted(() => {
         <div v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.background?.useImage !== false)" class="parallax-bg fixed -inset-x-0 -top-[15vh] h-[135vh] w-full bg-cover bg-center opacity-40 mix-blend-overlay pointer-events-none z-0 filter brightness-90 saturate-125 transition duration-700" :style="{ backgroundImage: `url(${customConfig?.background?.imageUrl || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80'})` }"></div>
         <div v-if="activeTemplateId === 'midnight-gold'" class="fixed inset-0 bg-gradient-to-b from-[#061811]/90 via-[#061811]/75 to-[#092219]/95 z-0 pointer-events-none"></div>
 
-        <!-- ENVELOPE COVER (FULLY RESPONSIVE) -->
-        <div id="envelope-cover" class="fixed inset-0 z-50 flex flex-col justify-between items-center px-4 sm:px-6 py-8 sm:py-10 md:py-14 text-center shadow-2xl overflow-y-auto bg-slate-100">
-            <!-- Full Height Background Image -->
-            <img :src="customConfig?.background?.imageUrl || customConfig?.groom?.photo || 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80'" 
-                 class="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.97] contrast-[1.02] transition duration-700" />
+        <!-- ENVELOPE COVER (RESPONSIVE MATCHING USER DESIGN) -->
+        <div id="envelope-cover" class="fixed inset-0 z-50 flex flex-col justify-between items-center px-4 sm:px-6 py-8 sm:py-10 md:py-14 text-center shadow-2xl overflow-y-auto bg-slate-900">
+            <img :src="customConfig?.background?.imageUrl || customConfig?.groom?.photo || 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80'" 
+                 class="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.02] transition duration-700" />
 
-            <!-- Soft Top & Bottom Vignette Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-b from-slate-200/80 via-transparent to-slate-900/65 pointer-events-none"></div>
+            <div v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" class="absolute inset-0 bg-gradient-to-b from-black/20 via-[#49573e]/50 to-[#3b4732]/95 pointer-events-none"></div>
+            <div v-else class="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-transparent to-slate-950/90 pointer-events-none"></div>
 
-            <!-- TOP SECTION: Wedding Invitation Header -->
-            <div class="relative z-10 pt-2 sm:pt-4 md:pt-8 space-y-2 sm:space-y-3 max-w-lg mx-auto w-full">
-                <p class="font-serif text-[#3f4b59] text-xl sm:text-2xl md:text-3xl font-normal tracking-wide drop-shadow-sm">Wedding Invitation</p>
+            <div class="relative z-10 pt-4 sm:pt-6 md:pt-10 space-y-2 sm:space-y-3 max-w-lg mx-auto w-full">
+                <p class="font-serif text-amber-100/90 text-xs sm:text-sm md:text-base font-medium tracking-[0.25em] uppercase drop-shadow">THE WEDDING OF</p>
                 
-                <h1 class="font-serif text-3xl sm:text-4xl md:text-6xl font-extrabold text-[#2b3545] tracking-[0.06em] sm:tracking-[0.08em] uppercase leading-tight sm:leading-[1.12] drop-shadow break-words px-2">
-                    {{ customConfig?.groom?.nickname || 'GROOM' }} &amp;<br />
-                    {{ customConfig?.bride?.nickname || 'BRIDE' }}
+                <h1 class="font-serif text-4xl sm:text-5xl md:text-7xl font-normal text-white tracking-wide leading-tight drop-shadow-lg break-words px-2">
+                    {{ customConfig?.groom?.nickname || 'Galuh' }} &amp; {{ customConfig?.bride?.nickname || 'Puspa' }}
                 </h1>
-
-                <p class="font-sans text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#2b3545] uppercase pt-1">
-                    {{ customConfig?.event?.date ? customConfig.event.date.toUpperCase() : 'SABTU, 30 JANUARI 2027' }}
-                </p>
             </div>
 
-            <!-- BOTTOM SECTION: Recipient & Open Button -->
-            <div class="relative z-10 pb-2 sm:pb-4 md:pb-8 space-y-3 max-w-sm mx-auto w-full flex flex-col items-center">
-                <div class="text-center text-[#2b3545] drop-shadow-sm px-2">
-                    <p class="font-serif italic text-xs sm:text-sm md:text-base font-semibold text-[#3b4756] mb-0.5">Dear,</p>
-                    <h3 class="font-serif text-lg sm:text-xl md:text-3xl font-bold text-[#1f2834] tracking-wide break-words">
-                        {{ props.guestName || 'Tamu Undangan' }}
+            <div class="relative z-10 pb-6 sm:pb-8 md:pb-12 space-y-3.5 max-w-sm mx-auto w-full flex flex-col items-center">
+                <div class="text-center text-white drop-shadow px-2 space-y-1">
+                    <p class="font-serif italic text-xs sm:text-sm text-amber-100/90">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide break-words">
+                        {{ props.guestName || 'Nama Tamu' }}
                     </h3>
+                    <p class="text-[10px] italic text-amber-100/70 pt-1">
+                        *Mohon maaf apabila ada kesalahan pada penulisan nama dan gelar
+                    </p>
                 </div>
 
-                <button @click="openInvitation" class="mt-2 sm:mt-3 bg-[#2c3746] hover:bg-[#1b232e] active:scale-95 text-white font-medium text-xs sm:text-sm px-6 sm:px-8 py-3 sm:py-3.5 rounded-full shadow-2xl transition duration-300 flex items-center justify-center space-x-2 cursor-pointer border border-white/20">
-                    <Mail class="w-4 h-4 text-white" />
+                <button @click="openInvitation" class="mt-3 bg-[#4e5d41]/90 hover:bg-[#3d4a32] active:scale-95 text-white font-medium text-xs sm:text-sm px-7 py-3 rounded-full shadow-2xl transition duration-300 flex items-center justify-center space-x-2 cursor-pointer border border-white/30 backdrop-blur-md">
+                    <span>[</span>
+                    <Mail class="w-4 h-4 text-amber-200" />
                     <span class="tracking-wide">Open Invitation</span>
+                    <span>]</span>
                 </button>
             </div>
         </div>
 
-        <!-- FLOATING MUSIC CONTROLLER -->
-        <button v-if="isOpen && (!customConfig || customConfig.components?.music !== false)" @click="toggleMusic" 
-                :class="activeTemplateId === 'midnight-gold' ? 'bg-[#2c3746] border-white/20 text-white' : templateStyle.accentBorder + ' bg-black/80 text-white'" 
-                class="fixed top-4 right-4 sm:top-6 sm:right-6 z-40 backdrop-blur border p-2.5 sm:p-3 rounded-full shadow-xl hover:scale-110 transition-all cursor-pointer flex items-center justify-center">
-            <div :class="[activeTemplateId === 'midnight-gold' ? 'text-amber-300' : templateStyle.accentText, {'animate-spin': isPlayingMusic}]" style="animation-duration: 4s;">
-                <Volume2 v-if="isPlayingMusic" class="w-4 h-4 sm:w-5 sm:h-5" />
-                <VolumeX v-else class="w-4 h-4 sm:w-5 sm:h-5 opacity-50" />
-            </div>
-        </button>
+        <!-- FLOATING MUSIC CONTROLLER & MOUSE SCROLL INDICATOR -->
+        <div v-if="isOpen" class="fixed top-4 right-4 sm:top-6 sm:right-6 z-40 flex flex-col space-y-2">
+            <button @click="toggleMusic" 
+                    class="bg-[#4e5d41]/95 text-white border border-white/30 p-2.5 sm:p-3 rounded-full shadow-xl hover:scale-110 transition-all cursor-pointer flex items-center justify-center backdrop-blur-md">
+                <Volume2 v-if="isPlayingMusic" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-200 animate-spin" style="animation-duration: 4s;" />
+                <VolumeX v-else class="w-4 h-4 sm:w-5 sm:h-5 opacity-60" />
+            </button>
+        </div>
 
         <!-- FLOATING MOBILE BOTTOM NAVIGATION DOCK -->
         <div v-if="isOpen" class="fixed bottom-3 sm:bottom-4 inset-x-0 z-40 flex justify-center px-3 sm:px-4">
-            <div :class="activeTemplateId === 'midnight-gold' ? 'bg-[#2c3746]/95 border-white/20' : templateStyle.accentBorder + ' bg-black/90'" 
-                 class="backdrop-blur-xl border rounded-full px-4 sm:px-6 py-2 sm:py-2.5 shadow-2xl flex items-center space-x-3 sm:space-x-6 text-white max-w-full overflow-x-auto scrollbar-none">
-                <button @click="scrollToSection('hero')" :class="{'text-amber-300 font-bold': activeTabNav === 'hero'}" class="hover:text-amber-200 transition flex flex-col items-center shrink-0">
-                    <Sparkles class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span class="text-[8px] sm:text-[9px] font-bold mt-0.5 uppercase tracking-wider">Home</span>
+            <div class="bg-[#637454]/95 border border-white/30 backdrop-blur-xl rounded-full px-4 sm:px-6 py-2 shadow-2xl flex items-center space-x-3 sm:space-x-5 text-white max-w-full overflow-x-auto scrollbar-none">
+                <button @click="scrollToSection('hero')" :class="{'bg-white text-[#4e5d41] font-bold': activeTabNav === 'hero'}" class="p-2 rounded-full hover:bg-white/20 transition flex items-center justify-center shrink-0">
+                    <Sparkles class="w-4 h-4" />
                 </button>
-                <button v-if="!customConfig || customConfig.components?.mempelai !== false" @click="scrollToSection('mempelai')" :class="{'text-amber-400': activeTabNav === 'mempelai'}" class="hover:text-amber-300 transition flex flex-col items-center shrink-0">
-                    <Heart class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span class="text-[8px] sm:text-[9px] font-bold mt-0.5 uppercase tracking-wider">Mempelai</span>
+                <button v-if="!customConfig || customConfig.components?.mempelai !== false" @click="scrollToSection('mempelai')" :class="{'bg-white text-[#4e5d41]': activeTabNav === 'mempelai'}" class="p-2 rounded-full hover:bg-white/20 transition flex items-center justify-center shrink-0">
+                    <Heart class="w-4 h-4" />
                 </button>
-                <button v-if="!customConfig || customConfig.components?.acara !== false" @click="scrollToSection('acara')" :class="{'text-amber-400': activeTabNav === 'acara'}" class="hover:text-amber-300 transition flex flex-col items-center shrink-0">
-                    <Calendar class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span class="text-[8px] sm:text-[9px] font-bold mt-0.5 uppercase tracking-wider">Acara</span>
+                <button v-if="!customConfig || customConfig.components?.acara !== false" @click="scrollToSection('acara')" :class="{'bg-white text-[#4e5d41]': activeTabNav === 'acara'}" class="p-2 rounded-full hover:bg-white/20 transition flex items-center justify-center shrink-0">
+                    <Calendar class="w-4 h-4" />
                 </button>
-                <button v-if="!customConfig || customConfig.components?.gallery !== false" @click="scrollToSection('galeri')" :class="{'text-amber-400': activeTabNav === 'galeri'}" class="hover:text-amber-300 transition flex flex-col items-center shrink-0">
-                    <ImageIcon class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span class="text-[8px] sm:text-[9px] font-bold mt-0.5 uppercase tracking-wider">Galeri</span>
+                <button v-if="!customConfig || customConfig.components?.gallery !== false" @click="scrollToSection('galeri')" :class="{'bg-white text-[#4e5d41]': activeTabNav === 'galeri'}" class="p-2 rounded-full hover:bg-white/20 transition flex items-center justify-center shrink-0">
+                    <ImageIcon class="w-4 h-4" />
                 </button>
-                <button v-if="!customConfig || customConfig.components?.rsvp !== false" @click="scrollToSection('rsvp')" :class="{'text-amber-400': activeTabNav === 'rsvp'}" class="hover:text-amber-300 transition flex flex-col items-center shrink-0">
-                    <MessageSquare class="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span class="text-[8px] sm:text-[9px] font-bold mt-0.5 uppercase tracking-wider">RSVP</span>
+                <button v-if="!customConfig || customConfig.components?.gift !== false" @click="scrollToSection('gift')" :class="{'bg-white text-[#4e5d41]': activeTabNav === 'gift'}" class="p-2 rounded-full hover:bg-white/20 transition flex items-center justify-center shrink-0">
+                    <Gift class="w-4 h-4" />
+                </button>
+                <button v-if="!customConfig || customConfig.components?.rsvp !== false" @click="scrollToSection('rsvp')" :class="{'bg-white text-[#4e5d41]': activeTabNav === 'rsvp'}" class="p-2 rounded-full hover:bg-white/20 transition flex items-center justify-center shrink-0">
+                    <MessageSquare class="w-4 h-4" />
                 </button>
             </div>
         </div>
 
         <!-- MAIN HERO SECTION FOR TEMPLATE 1 (midnight-gold) -->
         <section v-if="activeTemplateId === 'midnight-gold'" id="hero" class="min-h-screen relative flex flex-col justify-center items-center text-center p-4 sm:p-6 md:p-12 overflow-hidden bg-[#f7f5f0]">
-            <!-- Leaf Shadow Motif Overlay -->
             <div class="absolute -top-10 -left-10 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 opacity-20 pointer-events-none mix-blend-multiply bg-contain bg-no-repeat bg-left-top" style="background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80')"></div>
 
             <div class="max-w-xl w-full mx-auto relative z-10 pt-6 sm:pt-8 pb-10 sm:pb-12">
-                <!-- Subheader Script -->
                 <p class="font-script text-3xl sm:text-4xl md:text-6xl text-[#2c3746] font-normal mb-2 sm:mb-3">Menuju Hari Bahagia</p>
 
-                <!-- Compact Countdown Line -->
                 <div class="flex justify-center items-center space-x-3 sm:space-x-6 text-[#2c3746] mb-6 sm:mb-8 font-sans">
                     <div class="text-center min-w-[50px] sm:min-w-[60px]">
                         <div class="text-lg sm:text-xl md:text-2xl font-bold leading-none">{{ countdown.days }}</div>
@@ -914,7 +964,6 @@ onUnmounted(() => {
                     </div>
                 </div>
 
-                <!-- Center Landscape Photo Box -->
                 <div class="w-full max-w-[280px] sm:max-w-md mx-auto aspect-[4/3] rounded-xl sm:rounded-2xl border-2 sm:border-4 border-[#2c3746] shadow-2xl overflow-hidden mb-6 sm:mb-8 bg-slate-200">
                     <img :src="customConfig?.background?.imageUrl || customConfig?.groom?.photo || 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'" 
                          class="w-full h-full object-cover filter brightness-[0.98] contrast-[1.02]" />
@@ -930,641 +979,543 @@ onUnmounted(() => {
             </div>
         </section>
 
-        <!-- HERO SECTION FOR OTHER TEMPLATES -->
-        <section v-else id="hero" class="min-h-screen relative flex flex-col justify-center items-center text-center p-4 sm:p-6 overflow-hidden">
-            <div v-if="!customConfig || customConfig.background?.useImage !== false" class="absolute inset-0 bg-cover bg-center bg-fixed opacity-30 mix-blend-overlay pointer-events-none" :style="{ backgroundImage: `url(${customConfig?.background?.imageUrl || 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1920&q=80'})` }"></div>
-
-            <div class="hero-content max-w-3xl relative z-10 space-y-4 sm:space-y-6 pt-8 sm:pt-12">
-                <div :class="[templateStyle.accentBg, templateStyle.accentBorder, templateStyle.accentText]" class="inline-block px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border text-[10px] sm:text-xs font-extrabold tracking-[0.2em] sm:tracking-[0.25em] uppercase">
-                    {{ templateStyle.name }}
-                </div>
-                
-                <h1 :class="templateStyle.heroTitleClass" class="leading-tight break-words">
-                    {{ customConfig?.groom?.nickname || 'Mempelai Pria' }} <br />
-                    <span :class="templateStyle.accentText" class="font-serif italic text-3xl sm:text-4xl md:text-6xl font-normal">&amp;</span> <br />
-                    {{ customConfig?.bride?.nickname || 'Mempelai Wanita' }}
-                </h1>
-
-                <p class="text-xs sm:text-sm md:text-base text-gray-300 font-light max-w-md mx-auto leading-relaxed px-2">
-                    Kami mengundang Bapak/Ibu/Saudara/i untuk hadir memberikan doa restu pada hari kebahagiaan kami.
-                </p>
-
-                <div v-if="activeTemplateId === 'rose-romance'" class="relative w-full max-w-[240px] sm:max-w-xs md:max-w-sm mx-auto h-60 sm:h-72 md:h-80 rounded-t-[100px] sm:rounded-t-[140px] rounded-b-[30px] sm:rounded-b-[40px] overflow-hidden border-4 border-[#f472b6]/50 shadow-[0_15px_40px_rgba(244,114,182,0.35)] my-4 sm:my-6 group">
-                    <div v-for="(photo, idx) in heroPhotos" :key="idx" 
-                         :class="['absolute inset-0 transition-opacity duration-1000 ease-in-out', heroSlideIndex === idx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0']">
+        <!-- MAIN HERO SECTION FOR TEMPLATE 2 (SERENADE GREEN - MATCHING IMAGE 2 EXACTLY) -->
+        <section v-else-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" id="hero" class="min-h-screen relative flex flex-col justify-end p-4 sm:p-6 overflow-hidden">
+            <div class="absolute inset-0 overflow-hidden z-0">
+                <div class="flex h-full w-full transition-transform duration-1000 ease-in-out" :style="{ transform: `translateX(-${heroSlideIndex * 100}%)` }">
+                    <div v-for="(photo, idx) in heroPhotos" :key="idx" class="w-full h-full shrink-0 relative">
                         <img :src="photo" class="w-full h-full object-cover" />
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#1f1318] via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#4f5e43]/90 via-transparent to-black/20"></div>
                     </div>
-                    
-                    <button @click="prevHeroSlide" class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-[#f472b6] text-white p-1.5 sm:p-2 rounded-full backdrop-blur-md transition shadow-lg">
-                        <ChevronLeft class="w-4 h-4" />
-                    </button>
-                    <button @click="nextHeroSlide" class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-[#f472b6] text-white p-1.5 sm:p-2 rounded-full backdrop-blur-md transition shadow-lg">
-                        <ChevronRight class="w-4 h-4" />
-                    </button>
-                    
-                    <div class="absolute bottom-3 inset-x-0 z-20 flex justify-center space-x-1.5">
-                        <span v-for="(p, idx) in heroPhotos" :key="idx" @click="heroSlideIndex = idx"
-                              :class="['h-2 rounded-full transition-all duration-300 cursor-pointer shadow', heroSlideIndex === idx ? 'w-6 bg-[#f472b6]' : 'w-2 bg-white/60']"></span>
+                </div>
+            </div>
+
+            <div class="relative z-10 w-full max-w-md mx-auto bg-[#637454]/95 border border-white/30 backdrop-blur-md rounded-tr-[40px] rounded-tl-2xl rounded-b-2xl p-6 sm:p-8 text-white space-y-4 shadow-2xl mb-14 sm:mb-16 gsap-fade-up">
+                <div>
+                    <span class="text-[10px] sm:text-xs font-serif tracking-[0.25em] uppercase text-amber-100/90 block mb-1">THE WEDDING OF</span>
+                    <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-wide leading-tight">
+                        {{ customConfig?.groom?.nickname || 'Galuh' }} &amp; {{ customConfig?.bride?.nickname || 'Puspa' }}
+                    </h1>
+                </div>
+
+                <div class="flex items-center space-x-4 sm:space-x-6 pt-2 font-serif text-white">
+                    <div class="text-center">
+                        <div class="text-2xl sm:text-3xl font-normal leading-none">{{ String(countdown.days).padStart(2, '0') }}</div>
+                        <div class="text-[10px] text-amber-100/80 font-sans uppercase mt-1">Day</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl sm:text-3xl font-normal leading-none">{{ String(countdown.hours).padStart(2, '0') }}</div>
+                        <div class="text-[10px] text-amber-100/80 font-sans uppercase mt-1">Hour</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl sm:text-3xl font-normal leading-none">{{ String(countdown.minutes).padStart(2, '0') }}</div>
+                        <div class="text-[10px] text-amber-100/80 font-sans uppercase mt-1">Min</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl sm:text-3xl font-normal leading-none">{{ String(countdown.seconds).padStart(2, '0') }}</div>
+                        <div class="text-[10px] text-amber-100/80 font-sans uppercase mt-1">Sec</div>
                     </div>
                 </div>
 
-                <div class="pt-2 sm:pt-4">
-                    <div :class="templateStyle.accentBorder" class="inline-flex items-center space-x-2 sm:space-x-3 bg-black/60 border px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl shadow-xl backdrop-blur-md text-xs sm:text-sm">
-                        <Calendar :class="templateStyle.iconColor" class="w-4 h-4 sm:w-5 sm:h-5" />
-                        <span class="font-bold tracking-widest uppercase text-white">
-                            {{ customConfig?.event?.date || 'Sabtu, 24 Agustus 2026' }}
-                        </span>
-                    </div>
+                <div class="pt-2">
+                    <a :href="googleCalendarUrl" target="_blank" class="inline-flex items-center space-x-2 text-xs font-medium px-5 py-2.5 rounded-full border border-white/40 bg-white/10 hover:bg-white/20 transition text-white shadow">
+                        <span>[</span>
+                        <Calendar class="w-4 h-4 text-amber-200" />
+                        <span>Save to Calendar</span>
+                        <span>]</span>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- AYAT SECTION FOR TEMPLATE 1 -->
-        <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.quote !== false)" id="ayat" class="py-16 sm:py-20 px-4 sm:px-6 text-center relative bg-[#f7f5f0] border-t border-b border-[#2c3746]/15">
-            <div class="max-w-3xl mx-auto gsap-fade-up">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#2c3746]/10 border border-[#2c3746]/30 flex items-center justify-center mx-auto mb-4 sm:mb-5 text-[#2c3746]">
-                    <Heart class="w-5 h-5 sm:w-6 sm:h-6 fill-current text-[#2c3746]" />
-                </div>
-                
-                <p class="font-serif italic text-base sm:text-lg md:text-2xl text-[#2c3746] leading-relaxed mb-4 sm:mb-5 font-normal px-2">
-                    "{{ customConfig?.quote?.customText || 'Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri...' }}"
-                </p>
-                <p class="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#4a5668] uppercase">KUTIPAN &amp; AYAT SUCI</p>
-            </div>
-        </section>
+        <!-- MONOGRAM & QUOTE SECTION FOR SERENADE GREEN (MATCHING IMAGE 3) -->
+        <section v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" id="ayat" class="relative">
+            <div class="bg-[#637454] text-amber-50 pt-16 pb-12 px-4 sm:px-6 text-center">
+                <div class="max-w-2xl mx-auto space-y-6">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 border-2 border-amber-100/60 rounded-full flex items-center justify-center mx-auto text-2xl sm:text-3xl font-serif tracking-widest text-amber-100 font-bold shadow-lg uppercase gsap-rotate-in">
+                        {{ customConfig?.monogram || 'GP' }}
+                    </div>
 
-        <!-- AYAT SECTION FOR OTHER TEMPLATES -->
-        <section v-else-if="!customConfig || customConfig.components?.quote !== false" id="ayat" class="py-16 sm:py-24 px-4 sm:px-6 text-center relative border-t border-b border-white/10">
-            <div class="max-w-3xl mx-auto gsap-fade-up">
-                <div :class="[templateStyle.accentBg, templateStyle.accentBorder]" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border flex items-center justify-center mx-auto mb-5 sm:mb-6">
-                    <Heart :class="templateStyle.iconColor" class="w-6 h-6 sm:w-7 sm:h-7 fill-current" />
-                </div>
-                
-                <p class="font-serif italic text-base sm:text-lg md:text-2xl text-white leading-relaxed mb-5 sm:mb-6 px-2">
-                    "{{ customConfig?.quote?.customText || 'Dan di antara tanda-tanda (kebesaran-Nya) ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri...' }}"
-                </p>
-                <p :class="templateStyle.accentText" class="text-xs font-extrabold tracking-widest uppercase">KUTIPAN &amp; AYAT SUCI</p>
-            </div>
-        </section>
-
-        <!-- MEMPELAI SECTION FOR TEMPLATE 1 -->
-        <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.mempelai !== false)" id="mempelai" class="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden bg-[#f7f5f0]">
-            <div class="max-w-3xl mx-auto text-center">
-                <div class="mb-10 sm:mb-14 gsap-fade-up">
-                    <h2 class="font-script text-4xl sm:text-5xl md:text-6xl text-[#2c3746] font-normal">Bride and Groom</h2>
-                </div>
-
-                <div class="space-y-12 sm:space-y-20">
-                    
-                    <!-- Mempelai Wanita -->
-                    <div class="gsap-scale-up text-center max-w-md mx-auto">
-                        <div class="w-full max-w-[240px] sm:max-w-xs md:max-w-sm mx-auto aspect-[3/4] border-2 sm:border-4 border-[#2c3746] shadow-xl overflow-hidden mb-4 sm:mb-5 bg-slate-200">
-                            <img :src="customConfig?.bride?.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'" 
-                                 class="w-full h-full object-cover filter brightness-[0.98] contrast-[1.02]" />
+                    <div class="grid grid-cols-4 gap-2 sm:gap-3 my-6 max-w-xl mx-auto gsap-scale-up">
+                        <div v-for="(photo, idx) in heroPhotos.slice(0, 4)" :key="idx" class="aspect-[3/4] rounded-xl overflow-hidden shadow-md border border-white/20 bg-slate-800">
+                            <img :src="photo" class="w-full h-full object-cover" />
                         </div>
+                    </div>
 
-                        <h3 class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#2c3746] mb-2 px-2">
-                            {{ customConfig?.bride?.name || 'Amanda Putri' }}
-                        </h3>
+                    <p class="font-serif text-sm sm:text-base md:text-lg leading-relaxed text-amber-100/90 font-normal px-2 gsap-fade-up">
+                        "{{ customConfig?.quote?.customText || 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berfikir.' }}"
+                    </p>
+                    <p class="text-xs font-serif text-amber-200 tracking-wider font-semibold gsap-fade-up">
+                        (Q.S Ar Rum : 21)
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white text-slate-800 py-12 px-4 sm:px-6 text-center">
+                <div class="max-w-xl mx-auto space-y-3 gsap-fade-up">
+                    <h2 class="font-script text-3xl sm:text-4xl text-[#4e5d41] font-normal">Assalamualaikum Wr. Wb.</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans max-w-md mx-auto">
+                        Dengan memohon Rahmat dan Ridho Allah SWT, Kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dalam pernikahan kami
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEMPELAI SECTION FOR SERENADE GREEN (MATCHING IMAGE 4 & IMAGE 5 EXACTLY) -->
+        <section v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" id="mempelai" class="py-12 sm:py-16 bg-white text-slate-900 px-4 sm:px-6">
+            <div class="max-w-lg mx-auto space-y-12">
+                <div class="space-y-4 gsap-slide-left">
+                    <div class="relative flex items-stretch">
+                        <div class="bg-[#637454] text-white flex items-center justify-center px-3 py-6 rounded-l-2xl shrink-0">
+                            <span class="font-serif text-sm sm:text-base font-bold uppercase tracking-[0.25em] rotate-180 [writing-mode:vertical-lr]">THE GROOM</span>
+                        </div>
                         
-                        <div class="mb-3">
-                            <a :href="`https://instagram.com/${(customConfig?.bride?.instagram || 'amandaput').replace('@','')}`" target="_blank" class="inline-flex items-center space-x-2 bg-[#2c3746] hover:bg-[#1b232e] text-white text-xs font-medium px-4 py-2 rounded-md shadow transition">
-                                <Eye class="w-3.5 h-3.5" />
-                                <span>{{ customConfig?.bride?.instagram || '@amandaput' }}</span>
+                        <div class="flex-1 relative aspect-[3/4] rounded-tr-[70px] overflow-hidden bg-slate-200 border-2 border-[#637454]">
+                            <img :src="customConfig?.groom?.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover" />
+                            <div class="absolute bottom-3 left-4 text-amber-100 font-script text-3xl sm:text-4xl drop-shadow-md">
+                                {{ customConfig?.groom?.nickname || 'Galuh' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1 text-left pt-1">
+                        <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#4e5d41]">{{ customConfig?.groom?.name || 'Aria Galuh Arandaka' }}</h3>
+                        <p class="text-xs text-slate-600 font-serif">
+                            {{ customConfig?.groom?.orderText || 'Putra Tunggal dari' }} <strong class="text-slate-900">{{ customConfig?.groom?.mother || 'Ibu Sri Rahayu Intan Bayduri' }}</strong>
+                        </p>
+                        
+                        <div class="flex items-center space-x-2 pt-2">
+                            <a href="#" class="w-8 h-8 rounded-lg bg-[#637454] text-white flex items-center justify-center hover:bg-[#4e5d41] transition">
+                                <Facebook class="w-4 h-4" />
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-lg bg-[#637454] text-white flex items-center justify-center hover:bg-[#4e5d41] transition">
+                                <Instagram class="w-4 h-4" />
                             </a>
                         </div>
-
-                        <div class="flex items-center justify-center space-x-3 my-3 max-w-xs mx-auto text-[#2c3746]">
-                            <div class="h-0.5 w-8 sm:w-12 bg-[#2c3746]/60"></div>
-                            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider">{{ customConfig?.bride?.orderText || 'Putri Pertama dari' }}</span>
-                            <div class="h-0.5 w-8 sm:w-12 bg-[#2c3746]/60"></div>
-                        </div>
-
-                        <p class="text-xs sm:text-sm md:text-base text-[#4a5668] leading-relaxed max-w-xs mx-auto font-normal px-2">
-                            {{ customConfig?.bride?.father || 'Bapak Iwan Susanto' }} dan {{ customConfig?.bride?.mother || 'Ibu Ani Wulandari' }}
-                        </p>
                     </div>
-
-                    <!-- Mempelai Pria -->
-                    <div class="gsap-scale-up text-center max-w-md mx-auto">
-                        <div class="w-full max-w-[240px] sm:max-w-xs md:max-w-sm mx-auto aspect-[3/4] border-2 sm:border-4 border-[#2c3746] shadow-xl overflow-hidden mb-4 sm:mb-5 bg-slate-200">
-                            <img :src="customConfig?.groom?.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'" 
-                                 class="w-full h-full object-cover filter brightness-[0.98] contrast-[1.02]" />
-                        </div>
-
-                        <h3 class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#2c3746] mb-2 px-2">
-                            {{ customConfig?.groom?.name || 'Aditya Kusuma' }}
-                        </h3>
-                        
-                        <div class="mb-3">
-                            <a :href="`https://instagram.com/${(customConfig?.groom?.instagram || 'adityakusuma').replace('@','')}`" target="_blank" class="inline-flex items-center space-x-2 bg-[#2c3746] hover:bg-[#1b232e] text-white text-xs font-medium px-4 py-2 rounded-md shadow transition">
-                                <Eye class="w-3.5 h-3.5" />
-                                <span>{{ customConfig?.groom?.instagram || '@adityakusuma' }}</span>
-                            </a>
-                        </div>
-
-                        <div class="flex items-center justify-center space-x-3 my-3 max-w-xs mx-auto text-[#2c3746]">
-                            <div class="h-0.5 w-8 sm:w-12 bg-[#2c3746]/60"></div>
-                            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider">{{ customConfig?.groom?.orderText || 'Putra Pertama dari' }}</span>
-                            <div class="h-0.5 w-8 sm:w-12 bg-[#2c3746]/60"></div>
-                        </div>
-
-                        <p class="text-xs sm:text-sm md:text-base text-[#4a5668] leading-relaxed max-w-xs mx-auto font-normal px-2">
-                            {{ customConfig?.groom?.father || 'Bapak Hendra Wijaya' }} dan {{ customConfig?.groom?.mother || 'Ibu Ratna Wijaya' }}
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- MEMPELAI SECTION FOR OTHER TEMPLATES -->
-        <section v-else-if="!customConfig || customConfig.components?.mempelai !== false" id="mempelai" class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
-            <div class="max-w-5xl mx-auto text-center">
-                <div class="mb-12 sm:mb-16 gsap-fade-up">
-                    <span :class="templateStyle.accentText" class="text-xs font-extrabold tracking-[0.3em] uppercase">PASANGAN MEMPELAI</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl md:text-5xl font-bold text-white mt-2">Mempelai Pria &amp; Wanita</h2>
-                    <div :class="templateStyle.badgeBg" class="w-16 h-1 mx-auto mt-4 rounded-full"></div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    
-                    <!-- Mempelai Pria Card -->
-                    <div :class="templateStyle.cardBg" class="gsap-scale-up text-center relative overflow-hidden group hover:-translate-y-2 transition duration-500 flex flex-col p-0 border shadow-2xl">
-                        <div class="w-full h-64 sm:h-80 md:h-[380px] relative overflow-hidden">
-                            <img :src="customConfig?.groom?.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
-                            <div class="absolute bottom-4 inset-x-0 text-center">
-                                <span :class="[templateStyle.accentBg, templateStyle.accentBorder, templateStyle.accentText]" class="text-[10px] font-extrabold px-3 py-1 rounded-full border tracking-widest uppercase shadow">
-                                    MEMPELAI PRIA
-                                </span>
+                <div class="flex items-center justify-center space-x-4 my-6 gsap-scale-up">
+                    <div class="h-[1px] flex-1 bg-slate-300"></div>
+                    <span class="font-serif italic text-2xl text-slate-400">&amp;</span>
+                    <div class="h-[1px] flex-1 bg-slate-300"></div>
+                </div>
+
+                <div class="space-y-4 gsap-slide-right">
+                    <div class="relative flex items-stretch">
+                        <div class="flex-1 relative aspect-[3/4] rounded-tl-[70px] overflow-hidden bg-slate-200 border-2 border-[#637454]">
+                            <img :src="customConfig?.bride?.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover" />
+                            <div class="absolute bottom-3 right-4 text-amber-100 font-script text-3xl sm:text-4xl drop-shadow-md">
+                                {{ customConfig?.bride?.nickname || 'Puspa' }}
                             </div>
                         </div>
 
-                        <div class="p-5 sm:p-6 md:p-8 space-y-3">
-                            <h3 class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">{{ customConfig?.groom?.name || 'Mempelai Pria, S.T.' }}</h3>
-                            
-                            <p class="text-xs text-gray-300 leading-relaxed max-w-xs mx-auto">
-                                {{ customConfig?.groom?.orderText || 'Putra pertama dari' }} <br />
-                                <strong class="text-white">{{ customConfig?.groom?.father || 'Bpk. Ayah Mempelai' }}</strong> <br />
-                                &amp; <strong class="text-white">{{ customConfig?.groom?.mother || 'Ibu Ibu Mempelai' }}</strong>
-                            </p>
+                        <div class="bg-[#637454] text-white flex items-center justify-center px-3 py-6 rounded-r-2xl shrink-0">
+                            <span class="font-serif text-sm sm:text-base font-bold uppercase tracking-[0.25em] rotate-180 [writing-mode:vertical-lr]">THE BRIDE</span>
+                        </div>
+                    </div>
 
-                            <div class="pt-2">
-                                <a href="#" :class="[templateStyle.accentBg, templateStyle.accentBorder, templateStyle.accentText]" class="inline-flex items-center space-x-2 text-xs font-bold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full border hover:scale-105 transition shadow">
-                                    <span>{{ customConfig?.groom?.instagram || '@instagram' }}</span>
+                    <div class="space-y-1 text-right pt-1">
+                        <h3 class="font-serif text-xl sm:text-2xl font-bold text-[#4e5d41]">{{ customConfig?.bride?.name || 'Puspa Rema' }}</h3>
+                        <p class="text-xs text-slate-600 font-serif">
+                            {{ customConfig?.bride?.orderText || 'Putri Keempat dari' }} <strong class="text-slate-900">{{ customConfig?.bride?.father || 'Bapak Andi Sugandi' }}</strong> dan <strong class="text-slate-900">{{ customConfig?.bride?.mother || 'Ibu Rosiah (Alm)' }}</strong>
+                        </p>
+                        
+                        <div class="flex items-center justify-end space-x-2 pt-2">
+                            <a href="#" class="w-8 h-8 rounded-lg bg-[#637454] text-white flex items-center justify-center hover:bg-[#4e5d41] transition">
+                                <Facebook class="w-4 h-4" />
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-lg bg-[#637454] text-white flex items-center justify-center hover:bg-[#4e5d41] transition">
+                                <Instagram class="w-4 h-4" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACARA SECTION FOR SERENADE GREEN -->
+        <section v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" id="acara" class="py-12 sm:py-16 bg-[#e2e8db] text-[#3d4a34] px-4 sm:px-6 border-t border-[#4e5d41]/20">
+            <div class="max-w-lg mx-auto space-y-12">
+                <div class="flex items-center space-x-3 gsap-fade-up">
+                    <div>
+                        <span class="font-serif text-2xl sm:text-3xl font-extrabold text-[#4e5d41] tracking-wider block">WEDDING</span>
+                        <span class="font-script text-3xl sm:text-4xl text-[#5a6b4c] block -mt-3 ml-8">Event</span>
+                    </div>
+                    <div class="h-[1px] bg-[#4e5d41]/40 flex-1"></div>
+                </div>
+
+                <div class="space-y-3 gsap-slide-left">
+                    <div class="w-full aspect-[16/10] rounded-tr-[60px] overflow-hidden bg-slate-300 border-2 border-[#637454] shadow-md">
+                        <img :src="heroPhotos[0] || 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover" />
+                    </div>
+
+                    <div class="flex items-stretch shadow-lg">
+                        <div class="bg-[#637454] text-white flex items-center justify-center px-3.5 py-6 rounded-l-xl shrink-0">
+                            <span class="font-serif text-sm sm:text-base font-bold uppercase tracking-[0.25em] rotate-180 [writing-mode:vertical-lr]">AKAD NIKAH</span>
+                        </div>
+                        <div class="flex-1 bg-white p-5 sm:p-6 rounded-r-xl border border-slate-200 text-left space-y-3">
+                            <div>
+                                <h4 class="font-serif text-base sm:text-lg font-bold text-[#4e5d41] mb-1">
+                                    {{ customConfig?.event?.date || 'Minggu, 21 Januari 2024' }}
+                                </h4>
+                                <p class="text-xs text-slate-600 font-sans">
+                                    {{ customConfig?.event?.akadTime || 'Pukul 10.00 s.d 12.00 WIB' }}
+                                </p>
+                            </div>
+
+                            <div class="h-[1px] bg-slate-200"></div>
+
+                            <div>
+                                <h5 class="font-serif text-sm font-bold text-[#4e5d41] mb-1">Lokasi</h5>
+                                <p class="text-xs text-slate-700 font-sans leading-relaxed">
+                                    {{ customConfig?.event?.akadVenue || customConfig?.event?.address || 'Jl. Batu Jajar RT3 RW1 (Samping MCD HAYAM WURUK)' }}
+                                </p>
+                            </div>
+
+                            <div class="pt-1">
+                                <a :href="customConfig?.event?.mapsUrl || 'https://maps.google.com'" target="_blank" class="inline-flex items-center space-x-2 bg-[#637454] hover:bg-[#4e5d41] text-white text-xs font-medium px-4 py-2 rounded-xl transition shadow">
+                                    <Compass class="w-4 h-4 text-amber-200" />
+                                    <span>Google Maps Lokasi</span>
                                 </a>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Mempelai Wanita Card -->
-                    <div :class="templateStyle.cardBg" class="gsap-scale-up text-center relative overflow-hidden group hover:-translate-y-2 transition duration-500 flex flex-col p-0 border shadow-2xl">
-                        <div class="w-full h-64 sm:h-80 md:h-[380px] relative overflow-hidden">
-                            <img :src="customConfig?.bride?.photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
-                            <div class="absolute bottom-4 inset-x-0 text-center">
-                                <span :class="[templateStyle.accentBg, templateStyle.accentBorder, templateStyle.accentText]" class="text-[10px] font-extrabold px-3 py-1 rounded-full border tracking-widest uppercase shadow">
-                                    MEMPELAI WANITA
-                                </span>
+                <div class="space-y-3 gsap-slide-right">
+                    <div class="w-full aspect-[16/10] rounded-tl-[60px] overflow-hidden bg-slate-300 border-2 border-[#637454] shadow-md">
+                        <img :src="heroPhotos[1] || 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover" />
+                    </div>
+
+                    <div class="flex items-stretch shadow-lg">
+                        <div class="flex-1 bg-white p-5 sm:p-6 rounded-l-xl border border-slate-200 text-left space-y-3">
+                            <div>
+                                <h4 class="font-serif text-base sm:text-lg font-bold text-[#4e5d41] mb-1">
+                                    {{ customConfig?.event?.date || 'Minggu, 21 Januari 2024' }}
+                                </h4>
+                                <p class="text-xs text-slate-600 font-sans">
+                                    {{ customConfig?.event?.resepsiTime || 'Pukul 12.00 s.d 21.00 WIB' }}
+                                </p>
                             </div>
-                        </div>
 
-                        <div class="p-5 sm:p-6 md:p-8 space-y-3">
-                            <h3 class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1">{{ customConfig?.bride?.name || 'Mempelai Wanita, S.Ked' }}</h3>
-                            
-                            <p class="text-xs text-gray-300 leading-relaxed max-w-xs mx-auto">
-                                {{ customConfig?.bride?.orderText || 'Putri kedua dari' }} <br />
-                                <strong class="text-white">{{ customConfig?.bride?.father || 'Bpk. Ayah Mempelai' }}</strong> <br />
-                                &amp; <strong class="text-white">{{ customConfig?.bride?.mother || 'Ibu Ibu Mempelai' }}</strong>
-                            </p>
+                            <div class="h-[1px] bg-slate-200"></div>
 
-                            <div class="pt-2">
-                                <a href="#" :class="[templateStyle.accentBg, templateStyle.accentBorder, templateStyle.accentText]" class="inline-flex items-center space-x-2 text-xs font-bold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full border hover:scale-105 transition shadow">
-                                    <span>{{ customConfig?.bride?.instagram || '@instagram' }}</span>
+                            <div>
+                                <h5 class="font-serif text-sm font-bold text-[#4e5d41] mb-1">Lokasi</h5>
+                                <p class="text-xs text-slate-700 font-sans leading-relaxed">
+                                    {{ customConfig?.event?.venueName || customConfig?.event?.address || 'Jl. Batu Jajar RT3 RW1 (Samping MCD HAYAM WURUK)' }}
+                                </p>
+                            </div>
+
+                            <div class="pt-1">
+                                <a :href="customConfig?.event?.mapsUrl || 'https://maps.google.com'" target="_blank" class="inline-flex items-center space-x-2 bg-[#637454] hover:bg-[#4e5d41] text-white text-xs font-medium px-4 py-2 rounded-xl transition shadow">
+                                    <Compass class="w-4 h-4 text-amber-200" />
+                                    <span>Google Maps Lokasi</span>
                                 </a>
                             </div>
                         </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- ACARA SECTION FOR TEMPLATE 1 -->
-        <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.acara !== false)" id="acara" class="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden bg-[#f7f5f0]">
-            <div class="max-w-3xl mx-auto">
-                <div class="text-center mb-10 sm:mb-16 gsap-fade-up">
-                    <h2 class="font-script text-4xl sm:text-5xl md:text-6xl text-[#2c3746] font-normal">Wedding Ceremonial</h2>
-                </div>
-
-                <div class="space-y-12 sm:space-y-16">
-                    
-                    <!-- Holy Matrimony -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center gsap-scale-up">
-                        <div class="flex justify-center md:justify-end">
-                            <div class="w-40 sm:w-48 md:w-56 aspect-[3/4] rounded-tl-[80px] sm:rounded-tl-[120px] rounded-br-[20px] overflow-hidden shadow-2xl bg-slate-200 border-2 border-white">
-                                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover filter brightness-[0.98]" />
-                            </div>
+                        <div class="bg-[#637454] text-white flex items-center justify-center px-3.5 py-6 rounded-r-xl shrink-0">
+                            <span class="font-serif text-sm sm:text-base font-bold uppercase tracking-[0.25em] rotate-180 [writing-mode:vertical-lr]">RESEPSI</span>
                         </div>
-
-                        <div class="text-center md:text-left space-y-2 sm:space-y-3">
-                            <h3 class="font-serif text-lg sm:text-xl md:text-2xl font-bold text-[#2c3746] uppercase tracking-wider">HOLY MATRIMONY</h3>
-                            
-                            <div class="flex items-center justify-center md:justify-start space-x-3 sm:space-x-4 text-[#2c3746] font-sans py-1 sm:py-2">
-                                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider">SABTU</span>
-                                <div class="h-7 sm:h-9 w-[1.5px] bg-[#2c3746]"></div>
-                                <div class="text-center leading-tight">
-                                    <div class="text-lg sm:text-xl md:text-2xl font-bold">30</div>
-                                    <div class="text-[9px] sm:text-[10px] font-bold uppercase">JAN</div>
-                                </div>
-                                <div class="h-7 sm:h-9 w-[1.5px] bg-[#2c3746]"></div>
-                                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider">2027</span>
-                            </div>
-
-                            <p class="text-xs sm:text-sm font-bold text-[#2c3746] uppercase tracking-wider">
-                                {{ customConfig?.event?.akadTime || '08.00 WIB - SELESAI' }}
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Reception -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center gsap-scale-up">
-                        <div class="text-center md:text-right space-y-2 sm:space-y-3 order-2 md:order-1">
-                            <h3 class="font-serif text-lg sm:text-xl md:text-2xl font-bold text-[#2c3746] uppercase tracking-wider">RECEPTION</h3>
-                            
-                            <div class="flex items-center justify-center md:justify-end space-x-3 sm:space-x-4 text-[#2c3746] font-sans py-1 sm:py-2">
-                                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider">SABTU</span>
-                                <div class="h-7 sm:h-9 w-[1.5px] bg-[#2c3746]"></div>
-                                <div class="text-center leading-tight">
-                                    <div class="text-lg sm:text-xl md:text-2xl font-bold">30</div>
-                                    <div class="text-[9px] sm:text-[10px] font-bold uppercase">JAN</div>
-                                </div>
-                                <div class="h-7 sm:h-9 w-[1.5px] bg-[#2c3746]"></div>
-                                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider">2027</span>
-                            </div>
-
-                            <p class="text-xs sm:text-sm font-bold text-[#2c3746] uppercase tracking-wider">
-                                {{ customConfig?.event?.resepsiTime || '11.00 - 14.00 WIB' }}
-                            </p>
-                        </div>
-
-                        <div class="flex justify-center md:justify-start order-1 md:order-2">
-                            <div class="w-40 sm:w-48 md:w-56 aspect-[3/4] rounded-tr-[80px] sm:rounded-tr-[120px] rounded-bl-[20px] overflow-hidden shadow-2xl bg-slate-200 border-2 border-white">
-                                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover filter brightness-[0.98]" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Venue Name & Full Address Section -->
-                    <div class="text-center pt-6 sm:pt-8 space-y-3 gsap-fade-up">
-                        <h3 class="font-serif text-lg sm:text-xl md:text-3xl font-extrabold text-[#2c3746] uppercase tracking-wider max-w-lg mx-auto leading-snug px-2">
-                            {{ customConfig?.event?.venueName || customConfig?.event?.akadVenue || 'GEDUNG SASANA MANGGALA SUKOWATI SRAGEN' }}
-                        </h3>
-
-                        <p class="text-xs md:text-sm text-[#4a5668] max-w-md mx-auto leading-relaxed font-normal px-2">
-                            {{ customConfig?.event?.address || 'Jl. Dr. Sutomo, Sine, Sragen Kulon, Kec. Sragen, Kabupaten Sragen' }}
-                        </p>
-
-                        <div class="pt-2 sm:pt-4">
-                            <a :href="customConfig?.event?.mapsUrl || 'https://maps.google.com'" target="_blank" class="inline-flex items-center space-x-2 bg-[#2c3746] hover:bg-[#1b232e] text-white text-xs font-medium px-5 sm:px-7 py-2.5 sm:py-3 rounded-full shadow-lg transition">
-                                <Compass class="w-4 h-4 text-white" />
-                                <span>Petunjuk Lokasi Google Maps</span>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- ACARA SECTION FOR OTHER TEMPLATES -->
-        <section v-else-if="!customConfig || customConfig.components?.acara !== false" id="acara" class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden">
-            <div class="max-w-5xl mx-auto text-center">
-                <div class="mb-12 sm:mb-16 gsap-fade-up">
-                    <span :class="templateStyle.accentText" class="text-xs font-extrabold tracking-[0.3em] uppercase">JADWAL PERNIKAHAN</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl md:text-5xl font-bold text-white mt-2">Rangkaian Acara</h2>
-                    <div :class="templateStyle.badgeBg" class="w-16 h-1 mx-auto mt-4 rounded-full"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
-                    <!-- Akad Nikah -->
-                    <div :class="templateStyle.cardBg" class="gsap-scale-up p-6 sm:p-8 flex flex-col justify-between text-center relative overflow-hidden group hover:scale-[1.02] transition duration-500">
-                        <div>
-                            <div :class="[templateStyle.accentBg, templateStyle.accentBorder]" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl border flex items-center justify-center mx-auto mb-5 sm:mb-6">
-                                <Sparkles :class="templateStyle.iconColor" class="w-6 h-6 sm:w-7 sm:h-7" />
-                            </div>
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white mb-2">Akad Nikah</h3>
-                            <p :class="templateStyle.accentText" class="text-xs font-extrabold tracking-wider uppercase mb-5 sm:mb-6">{{ customConfig?.event?.date || 'Sabtu, 24 Agustus 2026' }}</p>
-
-                            <div class="space-y-3 text-xs text-gray-300 mb-6 sm:mb-8">
-                                <p class="flex items-center justify-center space-x-2">
-                                    <Clock :class="templateStyle.iconColor" class="w-4 h-4" />
-                                    <span>{{ customConfig?.event?.akadTime || 'Pukul 08.00 WIB - 10.00 WIB' }}</span>
-                                </p>
-                                <p class="flex items-start justify-center space-x-2">
-                                    <MapPin :class="templateStyle.iconColor" class="w-4 h-4 shrink-0 mt-0.5" />
-                                    <span class="text-left">
-                                        <strong class="text-white block">{{ customConfig?.event?.akadVenue || 'Tempat Akad Nikah' }}</strong>
-                                        <span class="text-[11px] text-slate-300 block mt-0.5">{{ customConfig?.event?.address || 'Alamat Lokasi Akad' }}</span>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <a :href="customConfig?.event?.mapsUrl || 'https://maps.google.com'" target="_blank" :class="[templateStyle.accentBg, templateStyle.accentBorder, templateStyle.accentText]" class="w-full border font-bold text-xs py-3 rounded-xl hover:scale-105 transition flex items-center justify-center space-x-2">
-                            <Compass class="w-4 h-4" />
-                            <span>Petunjuk Lokasi Google Maps</span>
-                        </a>
-                    </div>
-
-                    <!-- Resepsi -->
-                    <div :class="templateStyle.cardBg" class="gsap-scale-up p-6 sm:p-8 flex flex-col justify-between text-center relative overflow-hidden group hover:scale-[1.02] transition duration-500">
-                        <div>
-                            <div :class="[templateStyle.accentBg, templateStyle.accentBorder]" class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl border flex items-center justify-center mx-auto mb-5 sm:mb-6">
-                                <Heart :class="templateStyle.iconColor" class="w-6 h-6 sm:w-7 sm:h-7" />
-                            </div>
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white mb-2">Resepsi Pernikahan</h3>
-                            <p :class="templateStyle.accentText" class="text-xs font-extrabold tracking-wider uppercase mb-5 sm:mb-6">{{ customConfig?.event?.date || 'Sabtu, 24 Agustus 2026' }}</p>
-
-                            <div class="space-y-3 text-xs text-gray-300 mb-6 sm:mb-8">
-                                <p class="flex items-center justify-center space-x-2">
-                                    <Clock :class="templateStyle.iconColor" class="w-4 h-4" />
-                                    <span>{{ customConfig?.event?.resepsiTime || 'Pukul 11.00 - 14.00 WIB' }}</span>
-                                </p>
-                                <p class="flex items-start justify-center space-x-2">
-                                    <MapPin :class="templateStyle.iconColor" class="w-4 h-4 shrink-0 mt-0.5" />
-                                    <span class="text-left">
-                                        <strong class="text-white block">{{ customConfig?.event?.venueName || 'Gedung Resepsi' }}</strong>
-                                        <span class="text-[11px] text-slate-300 block mt-0.5">{{ customConfig?.event?.address || 'Alamat Lokasi Resepsi' }}</span>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <a :href="customConfig?.event?.mapsUrl || 'https://maps.google.com'" target="_blank" :class="[templateStyle.accentBg, templateStyle.accentBorder, templateStyle.accentText]" class="w-full border font-bold text-xs py-3 rounded-xl hover:scale-105 transition flex items-center justify-center space-x-2">
-                            <Compass class="w-4 h-4" />
-                            <span>Petunjuk Lokasi Google Maps</span>
-                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- LOVE STORY FOR TEMPLATE 1 -->
-        <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.story !== false)" id="story" class="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden bg-[#f7f5f0]">
-            <div class="absolute inset-0 bg-cover bg-center filter brightness-[0.92] contrast-[1.02] pointer-events-none transition-all duration-700 opacity-40 mix-blend-multiply" 
-                 :style="{ backgroundImage: `url('${customConfig?.loveStories?.[0]?.bgImage || heroPhotos[0] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'}')` }"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-[#f7f5f0]/90 via-[#f7f5f0]/80 to-[#f7f5f0]/95 pointer-events-none"></div>
-
-            <div class="max-w-xl mx-auto text-center relative z-10">
-                <div class="w-full max-w-lg mx-auto aspect-[16/9] rounded-xl sm:rounded-2xl border-2 sm:border-4 border-[#2c3746] shadow-2xl overflow-hidden mb-8 sm:mb-12 relative bg-slate-200 group hover:scale-[1.01] transition duration-500 gsap-scale-up">
-                    <img :src="customConfig?.loveStories?.[0]?.bgImage || heroPhotos[0] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80'" 
-                         class="w-full h-full object-cover filter brightness-[0.88] contrast-[1.05] group-hover:scale-105 transition-transform duration-700" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/40 flex items-center justify-center">
-                        <h2 class="font-script text-4xl sm:text-5xl md:text-7xl text-white font-normal drop-shadow-lg tracking-wide">Our love Journey</h2>
+        <!-- OUR STORY TIMELINE FOR SERENADE GREEN -->
+        <section v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" id="story" class="py-12 sm:py-16 bg-[#637454] text-white px-4 sm:px-6">
+            <div class="max-w-lg mx-auto space-y-10">
+                <div class="flex items-center space-x-3 gsap-fade-up">
+                    <div>
+                        <span class="font-serif text-2xl sm:text-3xl font-extrabold text-white tracking-wider block">OUR</span>
+                        <span class="font-script text-3xl sm:text-4xl text-amber-100 block -mt-3 ml-6">Story</span>
                     </div>
+                    <div class="h-[1px] bg-white/30 flex-1"></div>
                 </div>
 
-                <div class="space-y-8 sm:space-y-10 max-w-lg mx-auto">
+                <div class="relative border-l-2 border-amber-100/40 ml-4 space-y-8 pl-6 sm:pl-8">
                     <div v-for="(story, idx) in (customConfig?.loveStories || [
-                        { year: '2020', title: 'Awal Bertemu', description: '2020 Kami bertemu di sebuah acara kampus. Meski hanya singkat, kami merasa saling tertarik dan saling ingin mengenal lebih lanjut satu sama lain.' },
-                        { year: '2022', title: 'Menjalin Kasih', description: '2022 Kami mulai berkencan dan membangun komitmen bersama untuk saling mendukung dalam suka dan duka.' },
-                        { year: '2026', title: 'Hari Pernikahan', description: '2026 Mengikat janji suci pernikahan di hadapan keluarga dan sahabat tercinta.' }
-                    ])" :key="idx" class="gsap-fade-up text-center space-y-2 px-2">
+                        { year: '2016', description: 'Kita dipertemukan setelah lulus dari SMA dan menjalin komitmen untuk masa depan.', bgImage: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80' },
+                        { year: 'Januari 2023', description: 'Dengan izin Allah SWT dan restu dari kedua keluarga. Saya berniat untuk melamar dan memintanya untuk menikah dengan saya.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
+                        { year: 'Januari 2024', title: 'Akad Nikah', description: 'Hingga diputuskanlah Akad nikah pada tanggal 3 Juni 2023.', bgImage: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80' }
+                    ])" :key="idx" class="relative group gsap-fade-up">
                         
-                        <h3 class="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#2c3746] tracking-wide">
-                            {{ story.title }} - {{ story.year }}
-                        </h3>
+                        <div class="absolute -left-[41px] sm:-left-[49px] top-3 w-8 h-8 rounded-full bg-[#e2e8db] text-[#637454] border-2 border-white flex items-center justify-center shadow-lg gsap-rotate-in">
+                            <Heart class="w-4 h-4 fill-current" />
+                        </div>
 
-                        <p class="text-xs md:text-sm text-[#4a5668] leading-relaxed max-w-md mx-auto font-normal">
-                            {{ story.description }}
-                        </p>
+                        <div class="bg-[#e2e8db] text-slate-800 rounded-2xl p-4 sm:p-5 border border-white/60 shadow-xl space-y-3">
+                            <div class="w-full aspect-[16/10] rounded-xl overflow-hidden bg-slate-300">
+                                <img :src="story.bgImage || heroPhotos[idx % heroPhotos.length]" class="w-full h-full object-cover" />
+                            </div>
 
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- LOVE STORY FOR OTHER TEMPLATES -->
-        <section v-else-if="!customConfig || customConfig.components?.story !== false" id="story" class="py-20 sm:py-24 px-4 sm:px-6 relative">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-12 sm:mb-16 gsap-fade-up">
-                    <span :class="templateStyle.accentText" class="text-xs font-extrabold tracking-[0.3em] uppercase">PERJALANAN CINTA</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl md:text-5xl font-bold text-white mt-2">Kisah Cinta Kami</h2>
-                    <div :class="templateStyle.badgeBg" class="w-16 h-1 mx-auto mt-4 rounded-full"></div>
-                </div>
-
-                <div :class="templateStyle.accentBorder" class="relative border-l-2 ml-4 md:ml-12 space-y-8 sm:space-y-10 pl-6 md:pl-10">
-                    <div v-for="(story, idx) in customConfig?.loveStories" :key="idx" class="gsap-fade-up relative group">
-                        <div :class="templateStyle.badgeBg" class="absolute -left-[31px] md:-left-[47px] top-4 w-6 h-6 rounded-full border-4 border-black z-10 shadow-lg"></div>
-
-                        <div :class="templateStyle.cardBg" class="relative overflow-hidden p-5 sm:p-6 md:p-8 transition duration-500 hover:-translate-y-1.5 shadow-2xl group">
-                            <div v-if="story.bgImage" class="absolute inset-0 bg-cover bg-center opacity-30 group-hover:scale-105 transition-transform duration-700 pointer-events-none" :style="{ backgroundImage: `url(${story.bgImage})` }"></div>
-                            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/90 pointer-events-none"></div>
-
-                            <div class="relative z-10 space-y-2">
-                                <div class="flex items-center space-x-3">
-                                    <span :class="[templateStyle.accentBg, templateStyle.accentBorder, templateStyle.accentText]" class="text-xs font-extrabold px-3 py-1 rounded-full border tracking-widest uppercase">
-                                        {{ story.year }}
-                                    </span>
-                                    <h4 class="font-serif text-lg sm:text-xl md:text-2xl font-bold text-white">{{ story.title }}</h4>
-                                </div>
-                                <p class="text-xs md:text-sm text-gray-200 leading-relaxed pt-1">
+                            <div class="space-y-1 text-left">
+                                <h4 class="font-serif text-lg font-bold text-[#4e5d41]">{{ story.year }}</h4>
+                                <h5 v-if="story.title" class="font-serif text-sm font-bold text-slate-900">{{ story.title }}</h5>
+                                <p class="text-xs text-slate-700 leading-relaxed font-sans">
                                     {{ story.description }}
                                 </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- GALLERY SECTION FOR TEMPLATE 1 -->
-        <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.gallery !== false)" id="galeri" class="py-16 sm:py-24 px-4 sm:px-6 relative text-center overflow-hidden min-h-screen flex flex-col justify-center bg-[#f7f5f0]">
-            <div class="absolute inset-0 bg-cover bg-center filter brightness-[0.9] contrast-[1.02] pointer-events-none transition-all duration-700" 
-                 :style="{ backgroundImage: `url('${allGalleryPhotos[activeGalleryIndex] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'}')` }"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-[#f7f5f0]/85 via-black/30 to-[#f7f5f0]/90 pointer-events-none"></div>
-
-            <div class="max-w-xl mx-auto relative z-10 w-full">
-                <div class="mb-6 sm:mb-8 gsap-fade-up">
-                    <h2 class="font-script text-4xl sm:text-5xl md:text-6xl text-[#2c3746] font-normal drop-shadow-sm">Our Gallery</h2>
-                </div>
-
-                <div class="relative w-full max-w-[300px] sm:max-w-md mx-auto aspect-[3/4] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border-2 sm:border-4 border-[#2c3746] mb-4 group gsap-scale-up">
-                    <img :src="allGalleryPhotos[activeGalleryIndex]" @click="activeLightbox = allGalleryPhotos[activeGalleryIndex]" class="w-full h-full object-cover transition-all duration-500 cursor-pointer" />
-                    
-                    <button @click.stop="prevGalleryPhoto" class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 text-white/90 hover:text-white p-2 sm:p-2.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm transition shadow-lg cursor-pointer">
-                        <ChevronLeft class="w-5 h-5 sm:w-6 sm:h-6" />
-                    </button>
-
-                    <button @click.stop="nextGalleryPhoto" class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 text-white/90 hover:text-white p-2 sm:p-2.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm transition shadow-lg cursor-pointer">
-                        <ChevronRight class="w-5 h-5 sm:w-6 sm:h-6" />
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-4 sm:grid-cols-5 gap-1.5 sm:gap-2.5 max-w-[300px] sm:max-w-md mx-auto gsap-fade-up">
-                    <div v-for="(photo, idx) in allGalleryPhotos" :key="idx" 
-                         @click="activeGalleryIndex = idx" 
-                         :class="activeGalleryIndex === idx ? 'border-2 sm:border-4 border-[#2c3746] scale-105 shadow-xl' : 'border border-white/60 opacity-70 hover:opacity-100'" 
-                         class="aspect-square rounded-lg sm:rounded-xl overflow-hidden cursor-pointer transition-all duration-300 bg-slate-200 shadow">
-                        <img :src="photo" class="w-full h-full object-cover" />
+        <!-- OUR MOMENT GALLERY FOR SERENADE GREEN -->
+        <section v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" id="galeri" class="py-12 sm:py-16 bg-[#e2e8db] text-[#3d4a34] px-4 sm:px-6">
+            <div class="max-w-lg mx-auto space-y-8">
+                <div class="flex items-center space-x-3 text-center justify-center gsap-fade-up">
+                    <div class="h-[1px] bg-[#4e5d41]/40 flex-1"></div>
+                    <div class="text-center px-2">
+                        <span class="font-serif text-2xl sm:text-3xl font-extrabold text-[#4e5d41] tracking-wider block">OUR MOMENT</span>
+                        <span class="font-script text-3xl sm:text-4xl text-[#5a6b4c] block -mt-3">Gallery</span>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- GALLERY SECTION FOR OTHER TEMPLATES -->
-        <section v-else-if="!customConfig || customConfig.components?.gallery !== false" id="galeri" class="py-20 sm:py-28 px-4 sm:px-6">
-            <div class="max-w-5xl mx-auto text-center">
-                <div class="mb-12 sm:mb-16 gsap-fade-up">
-                    <span :class="templateStyle.accentText" class="text-xs font-extrabold tracking-[0.3em] uppercase">MOMEN INDAH</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl md:text-5xl font-bold text-white mt-2">Galeri Foto</h2>
-                    <div :class="templateStyle.badgeBg" class="w-16 h-1 mx-auto mt-4 rounded-full"></div>
+                    <div class="h-[1px] bg-[#4e5d41]/40 flex-1"></div>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
-                    <div v-for="(img, idx) in allGalleryPhotos" :key="idx" @click="activeLightbox = img" :class="templateStyle.accentBorder" class="gsap-scale-up aspect-square rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer group relative border shadow-lg">
-                        <img :src="img" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <Eye :class="templateStyle.iconColor" class="w-6 h-6 sm:w-8 sm:h-8" />
+                <div class="bg-[#d4ded0] p-2.5 sm:p-3 rounded-2xl border border-white/60 shadow-xl space-y-2 gsap-scale-up">
+                    <div class="grid grid-cols-5 gap-2">
+                        <div class="col-span-3 aspect-[4/3] rounded-lg overflow-hidden border border-white bg-slate-300 cursor-pointer" @click="activeLightbox = heroPhotos[0]">
+                            <img :src="heroPhotos[0]" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                        </div>
+                        <div class="col-span-2 aspect-[3/4] rounded-lg overflow-hidden border border-white bg-slate-300 cursor-pointer" @click="activeLightbox = heroPhotos[1]">
+                            <img :src="heroPhotos[1]" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-5 gap-2 items-center">
+                        <div class="col-span-2 aspect-[3/4] rounded-lg overflow-hidden border border-white bg-slate-300 cursor-pointer" @click="activeLightbox = heroPhotos[2]">
+                            <img :src="heroPhotos[2]" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                        </div>
+                        <div class="col-span-3 aspect-[4/3] rounded-lg overflow-hidden border border-white bg-slate-300 cursor-pointer" @click="activeLightbox = heroPhotos[3]">
+                            <img :src="heroPhotos[3]" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-5 gap-2">
+                        <div class="col-span-3 aspect-[4/3] rounded-lg overflow-hidden border border-white bg-slate-300 cursor-pointer" @click="activeLightbox = heroPhotos[0]">
+                            <img :src="heroPhotos[0]" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                        </div>
+                        <div class="col-span-2 aspect-[3/4] rounded-lg overflow-hidden border border-white bg-slate-300 cursor-pointer" @click="activeLightbox = heroPhotos[1]">
+                            <img :src="heroPhotos[1]" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- LIGHTBOX MODAL -->
-        <div v-if="activeLightbox" @click="activeLightbox = null" class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 backdrop-blur-md cursor-pointer">
-            <img :src="activeLightbox" :class="templateStyle.accentBorder" class="max-w-full max-h-[85vh] rounded-xl sm:rounded-2xl shadow-2xl border-2" />
-        </div>
-
-        <!-- LOVE GIFT SECTION FOR TEMPLATE 1 -->
-        <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.gift !== false)" id="gift" class="py-16 sm:py-24 px-4 sm:px-6 text-center bg-[#f7f5f0] relative border-t border-[#2c3746]/10">
-            <div class="max-w-xl mx-auto gsap-fade-up">
-                <h2 class="font-script text-4xl sm:text-5xl md:text-6xl text-[#2c3746] font-normal mb-3">love Gift</h2>
+        <!-- VIDEO PREWEDDING & WEDDING GIFT SECTION FOR SERENADE GREEN (MATCHING NEW IMAGE 1 & IMAGE 2) -->
+        <section v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" id="gift" class="py-12 sm:py-16 bg-[#e2e8db] text-[#3d4a34] px-4 sm:px-6 border-t border-[#4e5d41]/20">
+            <div class="max-w-lg mx-auto space-y-12">
                 
-                <p class="text-xs md:text-sm text-[#4a5668] max-w-md mx-auto leading-relaxed font-normal mb-6 px-2">
-                    Tanpa mengurangi rasa hormat, bagi tamu undangan yang ingin memberikan tanda kasih , dapat melalui virtual account di bawah ini
-                </p>
+                <!-- 1. Youtube Prewedding Video Embed -->
+                <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-[#637454] bg-slate-900 gsap-scale-up">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Prewedding Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
 
-                <button @click="showBankModal = !showBankModal" class="bg-[#2c3746] hover:bg-[#1c2430] text-white text-xs font-medium px-6 py-2.5 rounded-lg shadow-md inline-flex items-center space-x-2 cursor-pointer transition mb-6">
-                    <span>💳 Rekening</span>
-                </button>
-
-                <transition name="fade">
-                    <div v-if="showBankModal" class="max-w-sm sm:max-w-md mx-auto bg-[#2c3746] p-5 sm:p-6 text-white rounded-2xl shadow-xl text-left space-y-4 border border-white/20">
-                        <div class="flex justify-between items-center pb-2 border-b border-white/10">
-                            <span class="text-amber-300 font-bold text-sm sm:text-base">{{ customConfig?.gift?.bankName1 || 'Bank Central Asia (BCA)' }}</span>
-                            <span class="text-[10px] text-gray-300 font-mono">Transfer Bank</span>
-                        </div>
+                <!-- 2. WEDDING Gift Header -->
+                <div class="space-y-4 gsap-fade-up">
+                    <div class="flex items-center space-x-3">
                         <div>
-                            <p class="text-[10px] text-gray-300 uppercase tracking-wider mb-0.5">Nomor Rekening:</p>
-                            <p class="font-mono text-base sm:text-lg font-bold text-white tracking-widest">{{ customConfig?.gift?.accountNo1 || '8830192834' }}</p>
-                            <p class="text-xs text-gray-300 mt-1">a.n. {{ customConfig?.gift?.accountName1 || 'Nama Pemilik Rekening' }}</p>
+                            <span class="font-serif text-2xl sm:text-3xl font-extrabold text-[#4e5d41] tracking-wider block">WEDDING</span>
+                            <span class="font-script text-3xl sm:text-4xl text-[#5a6b4c] block -mt-3 ml-8">Gift</span>
                         </div>
-                        <button @click="copyToClipboard(customConfig?.gift?.accountNo1 || '8830192834', 'bank1')" class="w-full bg-white text-[#2c3746] hover:bg-slate-100 font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center space-x-2 cursor-pointer shadow">
-                            <Check v-if="copiedBank === 'bank1'" class="w-4 h-4 text-emerald-600" />
-                            <Copy v-else class="w-4 h-4 text-[#2c3746]" />
-                            <span>{{ copiedBank === 'bank1' ? 'Disalin!' : 'Salin Rekening' }}</span>
-                        </button>
+                        <div class="h-[1px] bg-[#4e5d41]/40 flex-1"></div>
                     </div>
-                </transition>
-            </div>
-        </section>
 
-        <!-- RSVP & WISHES SECTION FOR TEMPLATE 1 -->
-        <section v-if="activeTemplateId === 'midnight-gold' && (!customConfig || customConfig.components?.rsvp !== false)" id="rsvp" class="py-16 sm:py-24 px-4 sm:px-6 pb-28 sm:pb-32 relative overflow-hidden bg-[#f7f5f0]">
-            <div class="absolute inset-0 bg-cover bg-center filter brightness-[0.92] contrast-[1.02] pointer-events-none transition-all duration-700 opacity-60 mix-blend-multiply" 
-                 :style="{ backgroundImage: `url('${allGalleryPhotos[0] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'}')` }"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-[#f7f5f0]/90 via-[#f7f5f0]/75 to-[#f7f5f0]/95 pointer-events-none"></div>
-
-            <div class="max-w-xl mx-auto relative z-10">
-                <div class="text-center mb-8 sm:mb-10 gsap-fade-up">
-                    <h2 class="font-script text-4xl sm:text-5xl md:text-6xl text-[#2c3746] font-normal mb-3 drop-shadow-sm">love Wishes</h2>
-                    <p class="text-xs md:text-sm text-[#4a5668] max-w-lg mx-auto leading-relaxed font-normal px-2">
-                        Do'a restu keluarga dan sahabat dipernikahan kami sudah sangat cukup sebagai hadiah, tetapi jika memberi merupakan tanda kasih, kami dengan senang hati menerimanya.
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans text-left">
+                        Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara cashless.
                     </p>
                 </div>
 
-                <div class="max-w-sm sm:max-w-md mx-auto bg-[#2c3746] p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-xl text-white mb-6 sm:mb-8 text-left gsap-scale-up border border-white/20">
-                    <form @submit.prevent="submitRSVP" class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-bold text-white mb-1.5">Nama Tamu:</label>
-                            <input v-model="rsvpForm.name" type="text" required placeholder="Nama Anda" 
-                                   class="w-full bg-white text-[#2c3746] font-medium rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300" />
+                <!-- 3. Bank Cards Stack (Matching Image 1 & 2) -->
+                <div class="space-y-4">
+                    
+                    <!-- Bank BCA Credit Card -->
+                    <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-200 relative overflow-hidden space-y-4 text-left gsap-slide-left">
+                        <div class="flex justify-between items-center">
+                            <!-- Microchip Icon -->
+                            <div class="w-11 h-8 rounded-md bg-amber-200 border border-amber-400/60 flex items-center justify-center shadow-inner">
+                                <div class="w-8 h-5 border border-amber-500/40 rounded"></div>
+                            </div>
+                            <!-- BCA Logo -->
+                            <span class="font-extrabold text-blue-800 text-lg sm:text-xl tracking-tighter flex items-center">
+                                <span class="text-blue-600 mr-1">💳</span> BCA
+                            </span>
+                        </div>
+
+                        <div class="space-y-1">
+                            <p class="font-mono text-xl sm:text-2xl font-bold tracking-widest text-slate-800">
+                                {{ customConfig?.gift?.accountNo1 || '0123456789' }}
+                            </p>
+                            <p class="text-xs font-bold text-slate-600 font-sans">
+                                {{ customConfig?.gift?.accountName1 || 'Puspa Rema' }}
+                            </p>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-white mb-1.5">Ucapan &amp; Doa:</label>
-                            <textarea v-model="rsvpForm.message" rows="3" required placeholder="Pesan doa restu..." 
-                                      class="w-full bg-white text-[#2c3746] font-medium rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-300"></textarea>
-                        </div>
-
-                        <div class="pt-2">
-                            <button type="submit" :disabled="isSubmittingRSVP" class="bg-white hover:bg-slate-100 text-[#2c3746] font-bold text-xs px-5 py-2.5 rounded-xl shadow cursor-pointer transition inline-flex items-center space-x-2">
-                                <MessageSquare class="w-4 h-4 text-[#2c3746]" />
-                                <span>{{ isSubmittingRSVP ? 'Mengirim...' : 'Beri Ucapan' }}</span>
+                            <button @click="copyToClipboard(customConfig?.gift?.accountNo1 || '0123456789', 'bank1')" class="bg-[#637454] hover:bg-[#4e5d41] text-white font-medium text-xs px-4 py-2 rounded-xl transition inline-flex items-center space-x-1.5 shadow">
+                                <Copy class="w-3.5 h-3.5" />
+                                <span>{{ copiedBank === 'bank1' ? 'Tersalin!' : 'Salin No. Rekening' }}</span>
                             </button>
                         </div>
-
-                        <p v-if="rsvpSubmitted" class="text-xs font-bold text-emerald-300 pt-2">
-                            Terima kasih! Ucapan Anda telah berhasil terkirim.
-                        </p>
-                    </form>
-                </div>
-
-                <div class="max-w-sm sm:max-w-md mx-auto bg-[#2c3746] p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-xl text-white text-center gsap-fade-up border border-white/20">
-                    <h3 class="font-serif text-base sm:text-lg md:text-xl font-bold text-white mb-3">Ucapan dan Doa Para Tamu</h3>
-                    
-                    <div class="mb-5">
-                        <span class="bg-[#e67e22] text-white text-xs font-bold px-4 py-1.5 rounded-xl inline-block shadow">
-                            Jumlah: {{ wishesList.length }} Ucapan
-                        </span>
                     </div>
 
-                    <div class="max-h-[300px] sm:max-h-[380px] overflow-y-auto space-y-3.5 pr-1 text-left custom-scrollbar">
-                        <div v-if="wishesList.length === 0" class="text-center text-xs text-slate-400 py-6 italic bg-[#202936] rounded-xl border border-white/5 px-4">
-                            Belum ada ucapan &amp; doa. Berikan ucapan pertama Anda di atas!
+                    <!-- DANA E-Wallet Card -->
+                    <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-200 relative overflow-hidden space-y-4 text-left gsap-slide-right">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-7 h-7 rounded-full bg-blue-500 text-white font-bold flex items-center justify-center text-xs">D</span>
+                            <span class="font-extrabold text-blue-500 text-lg tracking-wider">DANA</span>
                         </div>
-                        <div v-for="(wish, index) in wishesList" :key="index" class="bg-[#202936] border border-white/10 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-inner">
-                            <h4 class="font-bold text-xs sm:text-sm text-white mb-1">{{ wish.name }}</h4>
-                            <p class="text-xs text-slate-200 leading-relaxed">{{ wish.message || wish.text }}</p>
-                            <span class="text-[10px] text-slate-400 font-medium block mt-2">{{ wish.date || wish.time || 'Baru saja' }}</span>
+
+                        <div class="space-y-1">
+                            <p class="font-mono text-xl sm:text-2xl font-bold tracking-widest text-slate-800">
+                                {{ customConfig?.gift?.accountNo2 || '081234567890' }}
+                            </p>
+                            <p class="text-xs font-bold text-slate-600 font-sans">
+                                {{ customConfig?.gift?.accountName2 || customConfig?.gift?.accountName1 || 'Puspa Rema' }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <button @click="copyToClipboard(customConfig?.gift?.accountNo2 || '081234567890', 'bank2')" class="bg-[#637454] hover:bg-[#4e5d41] text-white font-medium text-xs px-4 py-2 rounded-xl transition inline-flex items-center space-x-1.5 shadow">
+                                <Copy class="w-3.5 h-3.5" />
+                                <span>{{ copiedBank === 'bank2' ? 'Tersalin!' : 'Salin Nomor' }}</span>
+                            </button>
                         </div>
                     </div>
+
+                    <!-- Kirim Hadiah Card -->
+                    <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-200 relative overflow-hidden space-y-3 text-left gsap-fade-up">
+                        <div class="flex items-center space-x-2 text-[#4e5d41]">
+                            <GiftIcon class="w-6 h-6" />
+                            <span class="font-serif font-bold text-sm uppercase tracking-wider text-slate-900">KIRIM HADIAH</span>
+                        </div>
+
+                        <div class="space-y-1 text-xs text-slate-700 font-sans">
+                            <p class="font-bold text-slate-900">{{ customConfig?.gift?.accountName1 || 'Puspa Rema' }}</p>
+                            <p>Alamat : {{ customConfig?.gift?.shippingAddress || 'Jl. Batu Jajar RT3 RW1 (Samping MCD HAYAM WURUK)' }}</p>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
         </section>
 
-        <!-- FOOTER FOR TEMPLATE 1 -->
-        <footer v-if="activeTemplateId === 'midnight-gold'" class="relative min-h-[80vh] sm:min-h-screen flex flex-col justify-between items-center text-center p-6 sm:p-8 overflow-hidden bg-slate-900">
-            <div class="absolute inset-0 bg-cover bg-center filter brightness-[0.75] contrast-[1.05] pointer-events-none" 
-                 :style="{ backgroundImage: `url('${customConfig?.bride?.photo || heroPhotos[0] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80'}')` }"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/90 pointer-events-none"></div>
-
-            <div class="relative z-10 pt-12 sm:pt-16 md:pt-24 space-y-3 sm:space-y-4 max-w-xl mx-auto gsap-fade-up">
-                <p class="font-script text-3xl sm:text-4xl md:text-6xl text-white font-normal drop-shadow-md">Thankyou</p>
+        <!-- UCAPAN & DOA SECTION FOR SERENADE GREEN (MATCHING NEW IMAGE 3) -->
+        <section v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" id="rsvp" class="py-12 sm:py-16 bg-[#637454] text-white px-4 sm:px-6">
+            <div class="max-w-lg mx-auto space-y-8">
                 
-                <h2 class="font-serif text-2xl sm:text-3xl md:text-5xl font-extrabold text-white uppercase tracking-[0.15em] sm:tracking-[0.2em] leading-tight drop-shadow-xl px-2">
-                    {{ customConfig?.bride?.nickname || 'SEKAR' }} &amp;<br />
-                    {{ customConfig?.groom?.nickname || 'ARYA' }}
-                </h2>
-            </div>
+                <!-- Section Title Header -->
+                <div class="space-y-2 text-center gsap-fade-up">
+                    <div class="flex items-center space-x-3 justify-center">
+                        <div>
+                            <span class="font-serif text-2xl sm:text-3xl font-extrabold text-white tracking-wider block">UCAPAN &amp; DOA</span>
+                            <span class="font-script text-3xl sm:text-4xl text-amber-100 block -mt-3 ml-12">Wishes</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-amber-100/90 font-sans">
+                        Berikan ucapan terbaik untuk kedua mempelai
+                    </p>
+                </div>
 
-            <div class="relative z-10 pb-6 sm:pb-8 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-white/70 drop-shadow">
-                Powered by {{ templateStyle.name }}
+                <!-- Inner Container (Matching Image 3) -->
+                <div class="bg-[#e2e8db] text-slate-800 rounded-2xl p-5 sm:p-6 border border-white/60 shadow-xl space-y-5 text-left gsap-scale-up">
+                    <div class="flex items-center space-x-2 font-serif font-bold text-sm text-[#4e5d41] border-b border-slate-300 pb-3">
+                        <Mail class="w-4 h-4" />
+                        <span>{{ wishesList.length }} Ucapan</span>
+                    </div>
+
+                    <!-- Form -->
+                    <form @submit.prevent="submitRSVP" class="space-y-3">
+                        <div>
+                            <input v-model="rsvpForm.name" type="text" required placeholder="Nama Anda" 
+                                   class="w-full bg-white text-slate-900 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#637454]" />
+                        </div>
+
+                        <div>
+                            <textarea v-model="rsvpForm.message" rows="3" required placeholder="Berikan Ucapan & Doa" 
+                                      class="w-full bg-white text-slate-900 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-[#637454]"></textarea>
+                        </div>
+
+                        <div>
+                            <button type="submit" :disabled="isSubmittingRSVP" class="bg-[#4e5d41] hover:bg-[#3d4a32] text-white font-bold text-xs px-5 py-2 rounded-lg transition shadow cursor-pointer">
+                                <span>{{ isSubmittingRSVP ? 'Mengirim...' : 'Kirim' }}</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="h-[1px] bg-slate-300"></div>
+
+                    <!-- Wishes Comments Feed List -->
+                    <div class="space-y-4 max-h-[350px] overflow-y-auto pr-1 custom-scrollbar">
+                        <div v-for="(wish, index) in wishesList" :key="index" class="flex items-start space-x-3 text-xs border-b border-slate-200/80 pb-3">
+                            <div class="w-8 h-8 rounded-full bg-slate-300 text-slate-600 flex items-center justify-center shrink-0 font-bold">
+                                <User class="w-4 h-4" />
+                            </div>
+                            <div class="space-y-1">
+                                <div class="font-bold text-slate-900 flex items-center space-x-2">
+                                    <span>{{ wish.name }}</span>
+                                </div>
+                                <div class="text-[10px] text-slate-500">{{ wish.date || wish.time || '14 hours, 1 min ago' }}</div>
+                                <p class="text-xs text-slate-700 leading-relaxed pt-0.5">{{ wish.message || wish.text }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER & CLOSING FOR SERENADE GREEN (MATCHING NEW IMAGE 4) -->
+        <footer v-if="activeTemplateId === 'rose-romance' || activeTemplateId === 'serenade-green'" class="bg-[#e2e8db] text-[#3d4a34] pt-12 pb-24 sm:pb-28 px-4 sm:px-6 relative text-center space-y-10 border-t border-[#4e5d41]/20">
+            <div class="max-w-lg mx-auto space-y-8">
+                
+                <!-- 4 Photo Thumbnails -->
+                <div class="grid grid-cols-4 gap-2 gsap-fade-up">
+                    <div v-for="(photo, idx) in heroPhotos.slice(0, 4)" :key="idx" class="aspect-[3/4] rounded-lg overflow-hidden border border-white shadow">
+                        <img :src="photo" class="w-full h-full object-cover" />
+                    </div>
+                </div>
+
+                <!-- Thank You & Wassalamu'alaikum Text -->
+                <div class="space-y-3 max-w-md mx-auto gsap-fade-up">
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans">
+                        Atas kehadiran dan doa restu dari Bapak/Ibu/Saudara/i sekalian, kami mengucapkan Terima Kasih.
+                    </p>
+                    <h2 class="font-script text-3xl sm:text-4xl text-[#4e5d41] font-normal pt-2">
+                        Wassalamu'alaikum Wr. Wb.
+                    </h2>
+                </div>
+
+                <!-- Full Width Bottom Photo -->
+                <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-2 border-[#637454] bg-slate-300 relative gsap-scale-up">
+                    <img :src="heroPhotos[0]" class="w-full h-full object-cover" />
+                </div>
+
+                <!-- Floating Bottom White Card with Rounded Top-Right Corner (Matching Image 4) -->
+                <div class="bg-white p-6 sm:p-8 rounded-tr-[50px] rounded-tl-xl rounded-b-xl shadow-2xl border border-slate-200 text-left space-y-1 gsap-slide-left">
+                    <p class="font-serif italic text-xs sm:text-sm text-slate-500">Kami yang berbahagia</p>
+                    <h1 class="font-serif text-3xl sm:text-4xl font-extrabold text-[#4e5d41] tracking-wide">
+                        {{ customConfig?.groom?.nickname || 'Galuh' }} &amp; {{ customConfig?.bride?.nickname || 'Puspa' }}
+                    </h1>
+                </div>
+
+                <div class="text-[10px] font-bold uppercase tracking-widest text-[#4e5d41] pt-4">
+                    Powered by Serenade Green
+                </div>
             </div>
         </footer>
 
         <!-- FOOTER FOR OTHER TEMPLATES -->
-        <footer v-else class="py-10 sm:py-12 px-4 sm:px-6 bg-black/80 text-center border-t border-white/10 text-xs text-gray-400">
-            <p class="font-serif text-base sm:text-lg text-white mb-2 font-bold">{{ customConfig?.groom?.nickname || 'Mempelai Pria' }} &amp; {{ customConfig?.bride?.nickname || 'Mempelai Wanita' }}</p>
-            <p class="text-gray-500 mb-4 sm:mb-6">Terima kasih atas doa &amp; kehadiran Bapak/Ibu/Saudara/i sekalian.</p>
-            <div :class="templateStyle.accentText" class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest">
+        <footer v-else class="py-12 px-4 sm:px-6 bg-[#3b4732] text-center border-t border-white/10 text-xs text-slate-300">
+            <p class="font-serif text-lg text-white mb-1 font-bold">{{ customConfig?.groom?.nickname || 'Galuh' }} &amp; {{ customConfig?.bride?.nickname || 'Puspa' }}</p>
+            <p class="text-slate-400 mb-4">Terima kasih atas doa &amp; kehadiran Bapak/Ibu/Saudara/i sekalian.</p>
+            <div class="text-[10px] font-bold uppercase tracking-widest text-amber-200">
                 Powered by {{ templateStyle.name }}
             </div>
         </footer>

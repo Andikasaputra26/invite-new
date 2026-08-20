@@ -88,16 +88,16 @@ import { Sliders, Eye, Plus } from 'lucide-vue-next';
                 <!-- Template 2: Floral Rose -->
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition">
                     <div class="h-48 bg-[#1f1318] relative overflow-hidden flex items-center justify-center p-4">
-                        <div class="w-full h-full bg-[#2a1720] shadow-sm flex flex-col items-center justify-center border border-pink-400/40 rounded-xl p-3 text-center">
-                            <h3 class="text-lg text-pink-300 font-serif font-bold italic">Floral Garden</h3>
-                            <span class="text-[10px] text-pink-200">Blush Rose & Pastel</span>
+                        <div class="w-full h-full bg-[#4e5d41] shadow-sm flex flex-col items-center justify-center border border-emerald-400/40 rounded-xl p-3 text-center">
+                            <h3 class="text-lg text-emerald-200 font-serif font-bold italic">Serenade Green</h3>
+                            <span class="text-[10px] text-emerald-100">Sage Green & Nature</span>
                         </div>
-                        <span class="absolute top-3 right-3 bg-pink-400 text-slate-950 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">ROMANTIC</span>
+                        <span class="absolute top-3 right-3 bg-emerald-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow uppercase">NATURAL</span>
                     </div>
                     <div class="p-5 flex-1 flex flex-col justify-between">
                         <div class="mb-3">
-                            <h3 class="text-base font-bold text-gray-900 leading-tight mb-1">Floral Garden Romance</h3>
-                            <p class="text-xs text-gray-500">Sweet Soft Rose & Cream Suite</p>
+                            <h3 class="text-base font-bold text-gray-900 leading-tight mb-1">Serenade Green</h3>
+                            <p class="text-xs text-gray-500">Sage Green & Organic Earthy Suite</p>
                         </div>
                         <div>
                             <div class="flex justify-between items-end mb-3">
@@ -114,8 +114,8 @@ import { Sliders, Eye, Plus } from 'lucide-vue-next';
                                 <span class="text-xs font-bold text-green-700 uppercase flex items-center">
                                     <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span> PUBLISHED
                                 </span>
-                                <Link href="/customer/invitations/edit?template=rose-romance" class="text-xs font-bold text-slate-900 hover:text-pink-600 transition flex items-center">
-                                    <Sliders class="w-3.5 h-3.5 mr-1 text-pink-500" /> Edit Master &rarr;
+                                <Link href="/customer/invitations/edit?template=rose-romance" class="text-xs font-bold text-slate-900 hover:text-emerald-700 transition flex items-center">
+                                    <Sliders class="w-3.5 h-3.5 mr-1 text-emerald-600" /> Edit Master &rarr;
                                 </Link>
                             </div>
                         </div>

@@ -50,11 +50,11 @@ const templates = [
     },
     {
         id: 'rose-romance',
-        name: 'Floral Garden Romance',
-        category: 'Romantic & Pastel',
+        name: 'Serenade Green',
+        category: 'Sage Green & Nature',
         badge: 'Terbaru',
-        primaryColor: '#f472b6',
-        accentColor: '#fb7185',
+        primaryColor: '#637454',
+        accentColor: '#4e5d41',
         paletteId: 'rose',
         previewImg: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80'
     },
@@ -154,19 +154,20 @@ const defaultPresets = {
     },
     'rose-romance': {
         templateId: 'rose-romance',
+        monogram: 'GP',
         paletteId: 'rose',
         fontId: 'script',
         components: { music: true, quote: true, mempelai: true, acara: true, countdown: true, story: true, gallery: true, gift: true, rsvp: true },
-        groom: { name: 'Dimas Prasetya, M.B.A.', nickname: 'Dimas', father: 'Bpk. Ir. Handoko Prasetya', mother: 'Ibu Hj. Ratna Sari', orderText: 'Putra kedua dari', instagram: '@dimaspras', photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80' },
-        bride: { name: 'Kiara Anindya, S.Psi', nickname: 'Kiara', father: 'Bpk. Prof. Dr. Suhartono', mother: 'Ibu Dra. Maya Indah', orderText: 'Putri tunggal dari', instagram: '@kiaraanindya', photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80' },
-        quote: { selectedPresetIndex: 1, customText: 'Cinta bukanlah tentang saling menatap satu sama lain, tetapi tentang bersama-sama melihat ke satu arah yang sama.' },
-        event: { date: '2026-09-15', akadTime: '09:00 WIB - 11:00 WIB', akadVenue: 'Bambini Garden Resto', resepsiTime: '12:00 WIB - 15:00 WIB', venueName: 'The Westin Ballroom Jakarta', locationCity: 'Jakarta Selatan', address: 'Jl. H.R. Rasuna Said Kav. C-22, Jakarta Selatan', mapsUrl: 'https://maps.google.com' },
+        groom: { name: 'Aria Galuh Arandaka', nickname: 'Galuh', father: 'Bpk. (Alm)', mother: 'Ibu Sri Rahayu Intan Bayduri', orderText: 'Putra Tunggal dari', instagram: '@aria_galuh', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
+        bride: { name: 'Puspa Rema', nickname: 'Puspa', father: 'Bapak Andi Sugandi', mother: 'Ibu Rosiah (Alm)', orderText: 'Putri Keempat dari', instagram: '@pusparema', photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+        quote: { selectedPresetIndex: 1, customText: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya...' },
+        event: { date: '2026-09-15', akadTime: '09:00 WIB - 11:00 WIB', akadVenue: 'Masjid & Serenade Green Garden', resepsiTime: '12:00 WIB - 15:00 WIB', venueName: 'Serenade Green Ballroom & Resort', locationCity: 'Jakarta Selatan', address: 'Jl. H.R. Rasuna Said Kav. C-22, Jakarta Selatan', mapsUrl: 'https://maps.google.com' },
         loveStories: [
-            { year: '2022', title: 'Tak Sanggup Berpaling', description: 'Pertama kali bertukar pandang di pameran seni rupa modern.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
-            { year: '2024', title: 'Janji Kasih', description: 'Dimas mengutarakan niat suci melamar Kiara di tepi pantai Bali.', bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80' }
+            { year: '2022', title: 'Pertama Bertemu', description: 'Pertama kali bertukar pandang di pameran seni rupa modern.', bgImage: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80' },
+            { year: '2024', title: 'Janji Kasih', description: 'Galuh secara resmi mengutarakan niat melamar Puspa.', bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80' }
         ],
         gallery: { photos: ['https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80', 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80'] },
-        gift: { bankName1: 'Bank Mandiri', accountNo1: '1370009849201', accountName1: 'Kiara Anindya', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ROSE_QRIS', shippingAddress: 'Jl. Senopati No. 88, Jakarta Selatan' },
+        gift: { bankName1: 'Bank Mandiri', accountNo1: '1370009849201', accountName1: 'Aria Galuh Arandaka', qrisImage: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ROSE_QRIS', shippingAddress: 'Jl. Senopati No. 88, Jakarta Selatan' },
         background: { useImage: true, imageUrl: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1920&q=80' }
     },
     'emerald-botanical': {
@@ -806,7 +807,20 @@ onMounted(() => {
 
                     <!-- Quote Sub-Section -->
                     <div v-if="activeContentSubSection === 'quote'" class="space-y-4">
-                        <h3 class="text-sm font-extrabold text-slate-900">📜 Pilihan Ayat / Kutipan Suci Pernikahan</h3>
+                        <h3 class="text-sm font-extrabold text-slate-900">📜 Pilihan Ayat / Monogram / Kutipan Suci Pernikahan</h3>
+                        
+                        <!-- Input Inisial Monogram Emblem -->
+                        <div class="bg-orange-50/60 border border-orange-200 rounded-xl p-4 space-y-2">
+                            <label class="block text-xs font-extrabold text-slate-900">Inisial Monogram Emblem (e.g. GP, A&P, M&R)</label>
+                            <input 
+                                type="text" 
+                                v-model="config.monogram" 
+                                placeholder="GP" 
+                                class="w-full sm:w-48 bg-white border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900 font-extrabold tracking-widest uppercase focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                            >
+                            <p class="text-[11px] text-slate-500">Inisial ini akan tampil di lingkaran emblem monogram (seperti GP) pada bagian atas kutipan ayat suci.</p>
+                        </div>
+
                         <div class="space-y-2">
                             <div v-for="(p, idx) in quotePresets" :key="idx" 
                                  @click="config.quote.selectedPresetIndex = idx; config.quote.customText = p.text"
