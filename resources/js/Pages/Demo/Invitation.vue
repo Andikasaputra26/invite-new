@@ -460,20 +460,24 @@ const loadConfig = () => {
     
     const tKey = templateMap[routeTemplate] || routeTemplate || 'midnight-gold';
     
-    let stored = null;
-    if (invitationId && localStorage.getItem(`customer_invitation_${invitationId}`)) {
-        stored = localStorage.getItem(`customer_invitation_${invitationId}`);
-    } else if (localStorage.getItem(`template_config_${tKey}`)) {
-        stored = localStorage.getItem(`template_config_${tKey}`);
-    }
-
-    if (stored) {
+    if (props.customData && typeof props.customData === 'object' && Object.keys(props.customData).length > 0) {
+        customConfig.value = props.customData;
+    } 
+    else if (invitationId && localStorage.getItem(`customer_invitation_${invitationId}`)) {
         try {
-            customConfig.value = JSON.parse(stored);
+            customConfig.value = JSON.parse(localStorage.getItem(`customer_invitation_${invitationId}`));
         } catch(e) {
             customConfig.value = JSON.parse(JSON.stringify(templatePresets[tKey] || templatePresets['midnight-gold']));
         }
-    } else {
+    } 
+    else if (localStorage.getItem(`template_config_${tKey}`)) {
+        try {
+            customConfig.value = JSON.parse(localStorage.getItem(`template_config_${tKey}`));
+        } catch(e) {
+            customConfig.value = JSON.parse(JSON.stringify(templatePresets[tKey] || templatePresets['midnight-gold']));
+        }
+    } 
+    else {
         customConfig.value = JSON.parse(JSON.stringify(templatePresets[tKey] || templatePresets['midnight-gold']));
     }
 
